@@ -24,7 +24,7 @@ Voor de doelgroep (BI-persoon-aanwezig, geavanceerdere analyse afwezig) is dit p
 | 04 | `migratie.html` | klant | Welke klanten zijn anders dan vorig jaar? (2024 → 2025 met pijltjes) |
 | 05 | `producten.html` | productlijn | Welke productlijnen renderen, en welke kosten je structureel geld? (marge × engineering-uitloop per machinetype) |
 | 06 | `spreiding.html` | klant × productlijn | Hoe zit de klant-machine-portefeuille in elkaar? (bubble-matrix, jaar = open/gevuld) |
-| 07 | `leerkurve.html` | productlijn | Leren we van onze fouten per productlijn? (2024 → 2025 per machinetype) |
+| 07 | `leercurve.html` | productlijn | Leren we van onze fouten per productlijn? (2024 → 2025 per machinetype) |
 
 Plot 4 en 7 zijn de wow-plots: kwadrant-migratie over twee jaren — op klant- (4) en op productlijn-niveau (7) — is moeilijk in standaard dashboards te repliceren. Plot 5/6/7 doen wat dashboards specifiek niet doen: aggregeren over meerdere projecten heen om productlijn-patronen zichtbaar te maken.
 
@@ -41,7 +41,7 @@ patroon-atlas/
 ├── migratie.html            # plot 4 — klant
 ├── producten.html           # plot 5 — productlijn
 ├── spreiding.html           # plot 6 — klant × productlijn
-├── leerkurve.html           # plot 7 — productlijn
+├── leercurve.html           # plot 7 — productlijn
 └── assets/
     ├── tokens.css           # DMT design-tokens, getrimd uit bvbv-canvas
     ├── styles.css           # paginastijlen specifiek voor patroon-atlas
@@ -53,7 +53,7 @@ patroon-atlas/
     ├── migratie-plot.js     # plot 4 — pijlen tussen 2024- en 2025-aggregaten per klant
     ├── producten-plot.js    # plot 5 — kwadrant per machinetype (marge × engineering-uitloop)
     ├── spreiding-plot.js    # plot 6 — categorische bubble-matrix klant × machine
-    └── leerkurve-plot.js    # plot 7 — pijlen tussen 2024- en 2025-aggregaten per machinetype
+    └── leercurve-plot.js    # plot 7 — pijlen tussen 2024- en 2025-aggregaten per machinetype
 ```
 
 Alle scripts attachen aan `window.PA`. Geen ES modules (werkt zo ook op `file://`). Geen externe charting library — SVG wordt met `document.createElementNS` opgebouwd. Voor 7 plots is dat ~250-350 regels per plot en geeft volledige controle over kleur, kwadrant-overlays en pijltjes (nodig voor plot 4 en 7).
