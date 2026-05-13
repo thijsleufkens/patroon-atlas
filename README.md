@@ -15,7 +15,7 @@ Vier plots, elk een vraag:
 3. **Projectfases** — waar lekken de uren binnen een project?
 4. **Migratie** — welke klanten zijn anders dan vorig jaar?
 
-Plot 1 staat uit; de andere drie zijn voor nu placeholders met de onderliggende vraag en een voorbeeld uit de data.
+Alle vier de plots staan. Plot 1 (Klanten) als kwadrant-scatterplot; plot 2 (Doorlooptijd) en plot 3 (Projectfases) gebruiken een diagonaal y = x als leeshulp; plot 4 (Migratie) tekent pijlen tussen 2024- en 2025-coördinaten per klant.
 
 ## Stack
 

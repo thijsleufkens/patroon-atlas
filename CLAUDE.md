@@ -19,9 +19,9 @@ Voor de doelgroep (BI-persoon-aanwezig, geavanceerdere analyse afwezig) is dit p
 | Nr | Pad | Vraag | Status |
 |---|---|---|---|
 | 01 | `klanten.html` | Welke projecten verdienen, en welke kosten je geld? (omzet × marge, bubble = uren) | klaar |
-| 02 | `doorlooptijd.html` | Welke projecten lopen structureel uit? (geplande × werkelijke doorlooptijd) | placeholder |
-| 03 | `fases.html` | Waar lekken de uren binnen een project? (per fase: geschat × werkelijk) | placeholder |
-| 04 | `migratie.html` | Welke klanten zijn anders dan vorig jaar? (2024 → 2025 met pijltjes) | placeholder |
+| 02 | `doorlooptijd.html` | Welke projecten lopen structureel uit? (geplande × werkelijke doorlooptijd) | klaar |
+| 03 | `fases.html` | Waar lekken de uren binnen een project? (per fase: geschat × werkelijk) | klaar |
+| 04 | `migratie.html` | Welke klanten zijn anders dan vorig jaar? (2024 → 2025 met pijltjes) | klaar |
 
 Plot 4 is de wow-plot: kwadrant-migratie over twee jaren is moeilijk in standaard dashboards te repliceren en levert het sterkste &ldquo;dat zou ik willen&rdquo;-moment op.
 
@@ -33,15 +33,18 @@ Geen build-step, geen framework, geen package manager.
 patroon-atlas/
 ├── index.html               # homepage
 ├── klanten.html             # plot 1 (klaar)
-├── doorlooptijd.html        # plot 2 (placeholder)
-├── fases.html               # plot 3 (placeholder)
-├── migratie.html            # plot 4 (placeholder)
+├── doorlooptijd.html        # plot 2 (klaar)
+├── fases.html               # plot 3 (klaar)
+├── migratie.html            # plot 4 (klaar)
 └── assets/
     ├── tokens.css           # DMT design-tokens, getrimd uit bvbv-canvas
     ├── styles.css           # paginastijlen specifiek voor patroon-atlas
     ├── data.js              # alle projecten als JS-object op window.PA
     ├── format.js            # euro/percent/uren-formattering (nl-NL)
-    └── kwadrant-plot.js     # plot 1 — vanilla JS, inline SVG, hover-coupling
+    ├── kwadrant-plot.js     # plot 1 — vanilla JS, inline SVG, hover-coupling
+    ├── doorlooptijd-plot.js # plot 2 — diagonaal y = x als leeshulp
+    ├── fases-plot.js        # plot 3 — drie fase-records per project, kleur per fase
+    └── migratie-plot.js     # plot 4 — pijlen tussen 2024- en 2025-aggregaten per klant
 ```
 
 Alle scripts attachen aan `window.PA`. Geen ES modules (werkt zo ook op `file://`). Geen externe charting library — SVG wordt met `document.createElementNS` opgebouwd. Voor 4 plots is dat ~250 regels per plot en geeft volledige controle over kleur, kwadrant-overlays en pijltjes (nodig voor plot 4).
@@ -80,8 +83,4 @@ Alle data zit in `assets/data.js` als een vast object op `window.PA.projecten`.
 
 ## Vervolg
 
-Plot 1 staat. Plot 2 / 3 / 4 zijn placeholders die uitleggen wat ze willen tonen. Volgorde van uitwerken:
-
-1. Plot 4 (migratie) — meeste demo-kracht, technisch het meest uitdagend (pijltjes tussen 2024- en 2025-coördinaten per klant). Data staat al klaar — aggregeer per klant per jaar.
-2. Plot 2 (doorlooptijd) — simpel, makkelijke uitbreiding van plot 1: vervang x/y-velden en de mediaan-lijnen door één diagonaal (`y = x`).
-3. Plot 3 (fases) — kleur per fase, drie sub-categorieën in één plot. Velden `geschat` en `werkelijk` per fase staan al klaar voor alle 2025-projecten.
+Alle vier de plots staan. Elke plot heeft een eigen `<plot-naam>-plot.js`, registreert zich op `window.PA.<naam>Plot`, en volgt hetzelfde patroon: vanilla SVG, hover-koppeling met de tabel, kleuren uit het DMT-palet. Volgend werk zit niet in nieuwe plots maar in inhoudelijke aanscherping: scherpere kwadrant-labels, betere mobiele layout, of een vijfde plot als er een nieuwe vraag bij komt.

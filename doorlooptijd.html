@@ -29,7 +29,8 @@
 </header>
 
 <main class="main">
-  <section style="max-width: 720px; margin-bottom: 24px;">
+
+  <section style="margin-bottom: 24px;">
     <div class="eyebrow">Plot 2 — Doorlooptijd</div>
     <h1 class="h1">Welke projecten lopen structureel uit?</h1>
     <p class="body-p">
@@ -40,20 +41,35 @@
     </p>
   </section>
 
+  <section class="plot-page split" style="margin-bottom: 24px;">
+    <div class="card">
+      <div id="plot"></div>
+      <p class="plot-caption">
+        Elk punt is een project. Grootte van het punt = aantal bestede uren.
+        De stippellijn is de diagonaal y = x — punten erboven lopen uit, punten
+        eronder zijn voor op planning.
+      </p>
+    </div>
+    <div id="tabel"></div>
+  </section>
+
   <section class="card" style="max-width: 720px;">
-    <div class="eyebrow" style="color: var(--fg-2);">Binnenkort</div>
-    <p class="body-p" style="color: var(--fg-1);">
-      Deze plot is nog niet uitgewerkt. Plot 1 (Klanten) staat als eerste;
-      deze drie volgen.
-    </p>
-    <p class="body-p" style="border-top: 1px solid var(--border-subtle); padding-top: 16px; margin-top: 16px; font-size: 13px;">
-      <strong style="color: var(--fg-1); font-weight: 500;">Voorbeeld:</strong>
-      een verpakkingslijn voor Vink Diepvries die 8 weken uitliep, naast een
-      kleinere trayloader-opdracht voor Westland die exact op planning lag —
-      twee getallen die in een maandrapport allebei meetellen in hetzelfde
-      gemiddelde.
+    <div class="eyebrow">Hoe lees je deze plot</div>
+    <ul class="uitleg-lijst">
+      <li><strong>Op de diagonaal</strong> — gepland en werkelijk vallen samen. Dit is wat planning belooft.</li>
+      <li><strong>Iets boven</strong> — een week extra, ruis. Hier ligt geen patroon.</li>
+      <li><strong>Ver boven</strong> — meer dan 20% uitloop. Vaak grotere, complexere projecten waar de schatting niet meeschaalt met de complexiteit.</li>
+      <li><strong>Onder</strong> — sneller dan gepland. In deze data zeldzaam; meestal een teken dat de oorspronkelijke schatting ruim zat.</li>
+    </ul>
+    <p class="body-p" style="margin-top: 16px; font-size: 13px; color: var(--fg-2);">
+      Eén project dat uitloopt is een incident. Vier projecten van dezelfde
+      orde van grootte die alle vier ver boven de lijn liggen, is een
+      kalibratie-vraag voor de calculatie. Een gemiddelde over alle projecten
+      verbergt dit, omdat de kleine projecten op tijd zijn en het beeld
+      uitmiddelen.
     </p>
   </section>
+
 </main>
 
 <footer class="footer">
@@ -62,6 +78,22 @@
     <a href="https://github.com/thijsleufkens/datawijs-met-thijs">Datawijs met Thijs</a>.
   </div>
 </footer>
+
+<script src="assets/data.js"></script>
+<script src="assets/format.js"></script>
+<script src="assets/doorlooptijd-plot.js"></script>
+<script>
+  (function () {
+    var projecten2025 = window.PA.projecten.filter(function (p) {
+      return p.jaar === 2025;
+    });
+    window.PA.doorlooptijdPlot({
+      container: document.getElementById("plot"),
+      tabel: document.getElementById("tabel"),
+      projecten: projecten2025,
+    });
+  })();
+</script>
 
 </body>
 </html>

@@ -29,7 +29,8 @@
 </header>
 
 <main class="main">
-  <section style="max-width: 720px; margin-bottom: 24px;">
+
+  <section style="margin-bottom: 24px;">
     <div class="eyebrow">Plot 3 — Projectfases</div>
     <h1 class="h1">Waar lekken de uren binnen een project?</h1>
     <p class="body-p">
@@ -40,20 +41,34 @@
     </p>
   </section>
 
+  <section class="plot-page split" style="margin-bottom: 24px;">
+    <div class="card">
+      <div id="plot"></div>
+      <p class="plot-caption">
+        Elk punt is één fase van één project. Drie punten per project dus.
+        Grootte van het punt = werkelijke uren in die fase. De stippellijn is
+        de diagonaal y = x — punten erboven hebben meer uren gekost dan
+        geschat.
+      </p>
+    </div>
+    <div id="tabel"></div>
+  </section>
+
   <section class="card" style="max-width: 720px;">
-    <div class="eyebrow" style="color: var(--fg-2);">Binnenkort</div>
-    <p class="body-p" style="color: var(--fg-1);">
-      Deze plot is nog niet uitgewerkt. Plot 1 (Klanten) staat als eerste;
-      deze drie volgen.
-    </p>
-    <p class="body-p" style="border-top: 1px solid var(--border-subtle); padding-top: 16px; margin-top: 16px; font-size: 13px;">
-      <strong style="color: var(--fg-1); font-weight: 500;">Voorbeeld:</strong>
-      de engineering-fase van de Sleevemachine S22-projecten wijkt over twee
-      jaar gemiddeld 60-80% af van de schatting, terwijl assemblage steeds
-      netjes blijft binnen 5%. Dat patroon zie je niet als je alleen op
-      totaal-uren stuurt.
+    <div class="eyebrow">Hoe lees je deze plot</div>
+    <ul class="uitleg-lijst">
+      <li><strong>Engineering</strong> — kleinste fase qua uren, maar relatief het vaakst onderschat. Onbekende klant of nieuwe machine-variant duwt de uren omhoog voordat er één bout is aangedraaid.</li>
+      <li><strong>Assemblage</strong> — grootste in absolute uren, doorgaans het meest voorspelbaar. Hier hoort het patroon dicht bij de lijn te liggen.</li>
+      <li><strong>Inbedrijfstelling</strong> — onderkant van de plot. Wijkt bij sommige projecten sterk af; dat is vaak een teken dat het op locatie niet werkt zoals op de werkvloer.</li>
+    </ul>
+    <p class="body-p" style="margin-top: 16px; font-size: 13px; color: var(--fg-2);">
+      Een totaal-urenrapport per project verbergt dit beeld: als assemblage
+      meevalt en engineering tegen, valt het netto nul uit. Maar de
+      onderschatting in engineering blijft bestaan en stapelt zich op over de
+      jaren, totdat iemand de calculatie-spreadsheet aanpakt.
     </p>
   </section>
+
 </main>
 
 <footer class="footer">
@@ -62,6 +77,22 @@
     <a href="https://github.com/thijsleufkens/datawijs-met-thijs">Datawijs met Thijs</a>.
   </div>
 </footer>
+
+<script src="assets/data.js"></script>
+<script src="assets/format.js"></script>
+<script src="assets/fases-plot.js"></script>
+<script>
+  (function () {
+    var projecten2025 = window.PA.projecten.filter(function (p) {
+      return p.jaar === 2025;
+    });
+    window.PA.fasesPlot({
+      container: document.getElementById("plot"),
+      tabel: document.getElementById("tabel"),
+      projecten: projecten2025,
+    });
+  })();
+</script>
 
 </body>
 </html>
