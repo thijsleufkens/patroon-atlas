@@ -29,6 +29,15 @@ window.PA = window.PA || {};
   }
   function niceMax(v, step) { return Math.ceil(v / step) * step; }
   function niceMin(v, step) { return Math.floor(v / step) * step; }
+  function formatEuroTick(v) {
+    if (v === 0) return "€ 0";
+    if (v >= 1000000) {
+      var m = v / 1000000;
+      var s = m % 1 === 0 ? m.toFixed(0) : m.toFixed(1).replace(".", ",");
+      return "€ " + s + "M";
+    }
+    return "€ " + Math.round(v / 1000) + "k";
+  }
 
   function el(tag, attrs, text) {
     var n = document.createElementNS(SVG_NS, tag);
@@ -113,7 +122,7 @@ window.PA = window.PA || {};
     // Domein uit alle aggregaten (beide jaren), zodat de pijlen niet wegvallen.
     var omzetVals = aggregaten.map(function (a) { return a.omzet; });
     var margeVals = aggregaten.map(function (a) { return a.margePercent; });
-    var xStep = 50000;
+    var xStep = 500000;
     var yStep = 5;
     var xMax = niceMax(Math.max.apply(null, omzetVals) * 1.05, xStep);
     var yMin = niceMin(Math.min(0, Math.min.apply(null, margeVals) - 2), yStep);
@@ -189,7 +198,7 @@ window.PA = window.PA || {};
         fill: SLATE,
         "font-size": 11,
         "font-family": "Roboto, sans-serif",
-      }, "€ " + (v / 1000) + "k"));
+      }, formatEuroTick(v)));
     });
     g.appendChild(el("text", {
       x: iw / 2, y: ih + 44,
@@ -334,7 +343,13 @@ window.PA = window.PA || {};
     function deltaEuroTekst(v) {
       if (v === 0) return "€ 0";
       var sign = v > 0 ? "+€ " : "−€ ";
-      return sign + Math.abs(Math.round(v / 1000)) + "k";
+      var abs = Math.abs(v);
+      if (abs >= 1000000) {
+        var m = abs / 1000000;
+        var s = m >= 10 ? m.toFixed(0) : m.toFixed(1).replace(".", ",");
+        return sign + s + "M";
+      }
+      return sign + Math.round(abs / 1000) + "k";
     }
 
     sorted.forEach(function (paar) {

@@ -43,6 +43,15 @@ window.PA = window.PA || {};
   function niceMin(v, step) {
     return Math.floor(v / step) * step;
   }
+  function formatEuroTick(v) {
+    if (v === 0) return "€ 0";
+    if (v >= 1000000) {
+      var m = v / 1000000;
+      var s = m % 1 === 0 ? m.toFixed(0) : m.toFixed(1).replace(".", ",");
+      return "€ " + s + "M";
+    }
+    return "€ " + Math.round(v / 1000) + "k";
+  }
 
   // ----- SVG helpers -----
   function el(tag, attrs, text) {
@@ -81,7 +90,7 @@ window.PA = window.PA || {};
     var margeVals = projecten.map(function (p) { return p.margePercent; });
     var urenVals = projecten.map(function (p) { return p.totaalUren; });
 
-    var xStep = 50000;
+    var xStep = 500000;
     var yStep = 5;
     var xMax = niceMax(Math.max.apply(null, omzetVals) * 1.05, xStep);
     var yMin = niceMin(Math.min(0, Math.min.apply(null, margeVals) - 2), yStep);
@@ -162,7 +171,7 @@ window.PA = window.PA || {};
         fill: SLATE,
         "font-size": 11,
         "font-family": "Roboto, sans-serif",
-      }, "€ " + (v / 1000) + "k"));
+      }, formatEuroTick(v)));
     });
     g.appendChild(el("text", {
       x: iw / 2, y: ih + 44,
