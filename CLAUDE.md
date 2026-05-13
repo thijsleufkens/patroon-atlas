@@ -77,7 +77,7 @@ Korver Machinebouw, ~120 FTE, special-machinebouwer voor de voedingsmiddelenindu
 - 13 projecten in 2025, 12 in 2024
 - Project-codes: K2024-XXX, K2025-XXX
 - Machine-typen: Vulstation, Sleevemachine, Trayloader, Stretchwikkelaar, Etiketteermachine, Verpakkingslijn, Inpakrobot
-- Bedragen €72k tot €420k, marges −3% tot +28%
+- Bedragen €504k tot €2,94M per project, marges −3% tot +28%
 
 Alle data zit in `assets/data.js` als een vast object op `window.PA.projecten`.
 

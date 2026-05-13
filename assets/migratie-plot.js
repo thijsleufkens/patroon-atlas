@@ -29,6 +29,15 @@ window.PA = window.PA || {};
   }
   function niceMax(v, step) { return Math.ceil(v / step) * step; }
   function niceMin(v, step) { return Math.floor(v / step) * step; }
+  function formatEuroTick(v) {
+    if (v === 0) return "€ 0";
+    if (v >= 1000000) {
+      var m = v / 1000000;
+      var s = m % 1 === 0 ? m.toFixed(0) : m.toFixed(1).replace(".", ",");
+      return "€ " + s + "M";
+    }
+    return "€ " + Math.round(v / 1000) + "k";
+  }
 
   function el(tag, attrs, text) {
     var n = document.createElementNS(SVG_NS, tag);
@@ -71,21 +80,26 @@ window.PA = window.PA || {};
     return out;
   }
 
-  // Klanten die in beide jaren voorkomen — paren {klant, voor, na}.
-  function paarOpKlant(aggregaten) {
+  // Klant-overzicht — splits in paren (beide jaren), verloren (alleen 2024)
+  // en nieuw (alleen 2025).
+  function klantenOverzicht(aggregaten) {
     var perKlant = {};
     aggregaten.forEach(function (a) {
       perKlant[a.klant] = perKlant[a.klant] || {};
       perKlant[a.klant][a.jaar] = a;
     });
-    var paren = [];
+    var paren = [], verloren = [], nieuw = [];
     Object.keys(perKlant).forEach(function (k) {
       var rec = perKlant[k];
       if (rec[2024] && rec[2025]) {
         paren.push({ klant: k, voor: rec[2024], na: rec[2025] });
+      } else if (rec[2024]) {
+        verloren.push({ klant: k, voor: rec[2024] });
+      } else if (rec[2025]) {
+        nieuw.push({ klant: k, na: rec[2025] });
       }
     });
-    return paren;
+    return { paren: paren, verloren: verloren, nieuw: nieuw };
   }
 
   function render(opts) {
@@ -107,13 +121,14 @@ window.PA = window.PA || {};
     var NEGATIVE = "#A2382B";
 
     var aggregaten = aggregeerKlantJaar(projecten);
-    var paren = paarOpKlant(aggregaten);
+    var overzicht = klantenOverzicht(aggregaten);
+    var paren = overzicht.paren;
     var idVan = function (k) { return "klant:" + k; };
 
     // Domein uit alle aggregaten (beide jaren), zodat de pijlen niet wegvallen.
     var omzetVals = aggregaten.map(function (a) { return a.omzet; });
     var margeVals = aggregaten.map(function (a) { return a.margePercent; });
-    var xStep = 50000;
+    var xStep = 500000;
     var yStep = 5;
     var xMax = niceMax(Math.max.apply(null, omzetVals) * 1.05, xStep);
     var yMin = niceMin(Math.min(0, Math.min.apply(null, margeVals) - 2), yStep);
@@ -189,7 +204,7 @@ window.PA = window.PA || {};
         fill: SLATE,
         "font-size": 11,
         "font-family": "Roboto, sans-serif",
-      }, "€ " + (v / 1000) + "k"));
+      }, formatEuroTick(v)));
     });
     g.appendChild(el("text", {
       x: iw / 2, y: ih + 44,
@@ -296,7 +311,38 @@ window.PA = window.PA || {};
       }));
 
       g.appendChild(grp);
-      groupById[id] = { el: grp, kleur: kleur };
+      groupById[id] = { el: grp, kleur: kleur, soort: "paar" };
+    });
+
+    // Verloren klanten — alleen 2024, geen pijl. Subtiele open cirkel met
+    // dashed rand, om visueel onderscheid te maken met paar-startpunten.
+    overzicht.verloren.forEach(function (rec) {
+      var id = idVan(rec.klant);
+      var cx = x(rec.voor.omzet), cy = y(rec.voor.margePercent);
+      var grp = el("g", { class: "migratie", "data-id": id });
+      grp.appendChild(el("circle", {
+        cx: cx, cy: cy, r: 5,
+        fill: "white", "fill-opacity": 0.9,
+        stroke: INK_300, "stroke-width": 1.2, "stroke-opacity": 0.9,
+        "stroke-dasharray": "2 2",
+      }));
+      g.appendChild(grp);
+      groupById[id] = { el: grp, kleur: INK_300, soort: "verloren" };
+    });
+
+    // Nieuwe klanten — alleen 2025, geen pijl. Gevulde cirkel met amber-rand
+    // als signaal "dit is een nieuwe entry, geen 2025-helft van een paar".
+    overzicht.nieuw.forEach(function (rec) {
+      var id = idVan(rec.klant);
+      var cx = x(rec.na.omzet), cy = y(rec.na.margePercent);
+      var grp = el("g", { class: "migratie", "data-id": id });
+      grp.appendChild(el("circle", {
+        cx: cx, cy: cy, r: 6,
+        fill: SLATE, "fill-opacity": 0.55,
+        stroke: AMBER_500, "stroke-width": 2, "stroke-opacity": 0.95,
+      }));
+      g.appendChild(grp);
+      groupById[id] = { el: grp, kleur: SLATE, soort: "nieuw" };
     });
 
     // ----- Tabel -----
@@ -334,7 +380,13 @@ window.PA = window.PA || {};
     function deltaEuroTekst(v) {
       if (v === 0) return "€ 0";
       var sign = v > 0 ? "+€ " : "−€ ";
-      return sign + Math.abs(Math.round(v / 1000)) + "k";
+      var abs = Math.abs(v);
+      if (abs >= 1000000) {
+        var m = abs / 1000000;
+        var s = m >= 10 ? m.toFixed(0) : m.toFixed(1).replace(".", ",");
+        return sign + s + "M";
+      }
+      return sign + Math.round(abs / 1000) + "k";
     }
 
     sorted.forEach(function (paar) {
@@ -350,6 +402,36 @@ window.PA = window.PA || {};
         "<td class=\"num\">" + F.percent(paar.na.margePercent) + "</td>" +
         "<td class=\"num" + (margeDelta < -DREMPEL_PP ? " negative" : "") + "\">" +
         deltaTekst(margeDelta, "pp") + "</td>";
+      tbody.appendChild(tr);
+      rowsById[id] = tr;
+    });
+
+    overzicht.verloren.forEach(function (rec) {
+      var id = idVan(rec.klant);
+      var tr = document.createElement("tr");
+      tr.setAttribute("data-id", id);
+      tr.innerHTML =
+        "<td><strong>" + rec.klant + "</strong>" +
+        "<div class=\"sub\">niet teruggekeerd in 2025</div></td>" +
+        "<td class=\"num muted\">" + F.euro(rec.voor.omzet) + " ('24)</td>" +
+        "<td class=\"num muted\">—</td>" +
+        "<td class=\"num muted\">" + F.percent(rec.voor.margePercent) + " ('24)</td>" +
+        "<td class=\"num muted\">—</td>";
+      tbody.appendChild(tr);
+      rowsById[id] = tr;
+    });
+
+    overzicht.nieuw.forEach(function (rec) {
+      var id = idVan(rec.klant);
+      var tr = document.createElement("tr");
+      tr.setAttribute("data-id", id);
+      tr.innerHTML =
+        "<td><strong>" + rec.klant + "</strong>" +
+        "<div class=\"sub\">nieuw in 2025</div></td>" +
+        "<td class=\"num\">" + F.euro(rec.na.omzet) + "</td>" +
+        "<td class=\"num muted\">—</td>" +
+        "<td class=\"num\">" + F.percent(rec.na.margePercent) + "</td>" +
+        "<td class=\"num muted\">—</td>";
       tbody.appendChild(tr);
       rowsById[id] = tr;
     });
@@ -387,18 +469,26 @@ window.PA = window.PA || {};
               }
             }
           } else {
-            // Reset naar baseline-kleur.
+            // Reset naar baseline. Verloren en nieuw hebben afwijkende
+            // baseline-strokes, dus per soort terugzetten.
             if (c.tagName === "line") {
               c.setAttribute("stroke", grp.kleur);
               c.setAttribute("stroke-width", 1.5);
             } else if (c.tagName === "polygon") {
               c.setAttribute("fill", grp.kleur);
             } else if (c.tagName === "circle") {
-              if (c.getAttribute("fill") === AMBER) {
-                c.setAttribute("fill", grp.kleur);
-              }
-              if (c.getAttribute("stroke") === AMBER_500) {
-                c.setAttribute("stroke", grp.kleur);
+              if (grp.soort === "nieuw") {
+                if (c.getAttribute("fill") === AMBER) c.setAttribute("fill", SLATE);
+                c.setAttribute("stroke", AMBER_500);
+              } else if (grp.soort === "verloren") {
+                c.setAttribute("stroke", INK_300);
+              } else {
+                if (c.getAttribute("fill") === AMBER) {
+                  c.setAttribute("fill", grp.kleur);
+                }
+                if (c.getAttribute("stroke") === AMBER_500) {
+                  c.setAttribute("stroke", grp.kleur);
+                }
               }
             }
           }

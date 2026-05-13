@@ -100,7 +100,7 @@ window.PA = window.PA || {};
     var geschatVals = records.map(function (r) { return r.geschat; });
     var werkelijkVals = records.map(function (r) { return r.werkelijk; });
 
-    var step = 500;
+    var step = 2500;
     var rawMax = Math.max(
       Math.max.apply(null, geschatVals),
       Math.max.apply(null, werkelijkVals)
