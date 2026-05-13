@@ -1,4 +1,4 @@
-// Leerkurve-scatterplot — vanilla JS, inline SVG.
+// Leercurve-scatterplot — vanilla JS, inline SVG.
 // Toont per machinetype een pijl van 2024-positie naar 2025-positie in
 // (omzet × marge). Aggregeert op machinetype: omzet = som, marge = omzet-
 // gewogen gemiddelde over alle projecten van dat type in dat jaar.
@@ -489,5 +489,5 @@ window.PA = window.PA || {};
     });
   }
 
-  window.PA.leerkurvePlot = render;
+  window.PA.leercurvePlot = render;
 })();
