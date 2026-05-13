@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Patroon-atlas — Datawijs met Thijs</title>
-<meta name="description" content="Vier scatterplots over een fictieve machinebouwer. Een demo van wat scatterplots ontsluiten dat operationele dashboards niet laten zien.">
+<meta name="description" content="Zeven scatterplots over een fictieve machinebouwer. Een demo van wat scatterplots ontsluiten dat operationele dashboards niet laten zien.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
@@ -26,6 +26,9 @@
     <a href="doorlooptijd.html">Doorlooptijd</a>
     <a href="fases.html">Projectfases</a>
     <a href="migratie.html">Migratie</a>
+    <a href="producten.html">Producten</a>
+    <a href="spreiding.html">Spreiding</a>
+    <a href="leerkurve.html">Leerkurve</a>
   </nav>
 </header>
 
@@ -35,11 +38,11 @@
     <div class="eyebrow">Patroon-atlas</div>
     <h1 class="h1 lead">Wat je in een scatterplot ziet, en in een KPI-tabel mist.</h1>
     <p class="lead-p">
-      Vier scatterplots, gemaakt rond een fictieve machinebouwer in Helmond.
+      Zeven scatterplots, gemaakt rond een fictieve machinebouwer in Helmond.
       Bedoeld voor bedrijven met hun operationele dashboards op orde, die merken
       dat dezelfde grafieken niet meer nieuwe inzichten opleveren. Elke plot
       probeert één vraag te beantwoorden die je in een standaard rapport zelden
-      gesteld ziet.
+      gesteld ziet — op project-, klant- of productlijn-niveau.
     </p>
   </section>
 
@@ -87,6 +90,40 @@
         <p class="body-p" style="font-size: 14px;">
           Dezelfde klanten in twee jaren, met pijltjes ertussen. Een patroon
           dat in standaard dashboards bijna nooit zichtbaar wordt.
+        </p>
+      </a>
+
+      <a href="producten.html" class="plot-card ready">
+        <div class="plot-card-head">
+          <span class="eyebrow">Plot 05</span>
+        </div>
+        <h2 class="h2">Welke productlijnen renderen, en welke kosten je structureel geld?</h2>
+        <p class="body-p" style="font-size: 14px;">
+          Aggregeert plot 1 één niveau hoger: per machinetype over beide jaren.
+          Een marge-arm project is een incident, drie marge-arme van hetzelfde
+          type is een productlijn-vraag.
+        </p>
+      </a>
+
+      <a href="spreiding.html" class="plot-card ready">
+        <div class="plot-card-head">
+          <span class="eyebrow">Plot 06</span>
+        </div>
+        <h2 class="h2">Hoe zit de klant-machine-portefeuille in elkaar?</h2>
+        <p class="body-p" style="font-size: 14px;">
+          Klant × machinetype als bubble-matrix. Eénpitter-combinaties springen
+          eruit; zo ook de lege cellen die juist een gemiste kans kunnen zijn.
+        </p>
+      </a>
+
+      <a href="leerkurve.html" class="plot-card ready">
+        <div class="plot-card-head">
+          <span class="eyebrow">Plot 07</span>
+        </div>
+        <h2 class="h2">Leren we van onze fouten per productlijn?</h2>
+        <p class="body-p" style="font-size: 14px;">
+          Plot 4-stijl maar per machinetype: pijl van 2024 naar 2025 in omzet ×
+          marge. Wordt een productlijn beter, slechter, of stilstaand?
         </p>
       </a>
 

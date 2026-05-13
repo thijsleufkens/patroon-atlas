@@ -1,6 +1,6 @@
 # Patroon-atlas
 
-Een galerij van vier scatterplots over een fictieve machinebouwer. Bedoeld als demo voor maakbedrijven die hun operationele dashboards op orde hebben, maar de stap naar patroon-herkenning nog niet zelf maken.
+Een galerij van zeven scatterplots over een fictieve machinebouwer. Bedoeld als demo voor maakbedrijven die hun operationele dashboards op orde hebben, maar de stap naar patroon-herkenning nog niet zelf maken.
 
 Onderdeel van [datawijs-met-thijs](../../README.md).
 
@@ -8,22 +8,30 @@ Onderdeel van [datawijs-met-thijs](../../README.md).
 
 Operationele dashboards beantwoorden vragen die je al hebt. Scatterplots stellen vragen die je nog niet had — door twee dimensies tegen elkaar uit te zetten en groepen zichtbaar te maken die in een tabel verstopt blijven.
 
-Vier plots, elk een vraag:
+Zeven plots, op drie niveaus:
+
+**Op project- en klant-niveau:**
 
 1. **Klanten** — welke projecten verdienen, en welke kosten je geld?
 2. **Doorlooptijd** — welke projecten lopen structureel uit?
 3. **Projectfases** — waar lekken de uren binnen een project?
 4. **Migratie** — welke klanten zijn anders dan vorig jaar?
 
-Alle vier de plots staan. Plot 1 (Klanten) als kwadrant-scatterplot; plot 2 (Doorlooptijd) en plot 3 (Projectfases) gebruiken een diagonaal y = x als leeshulp; plot 4 (Migratie) tekent pijlen tussen 2024- en 2025-coördinaten per klant.
+**Op productlijn-niveau** — patronen die alleen zichtbaar worden als je over meerdere projecten heen aggregeert:
+
+5. **Producten** — welke productlijnen renderen, en welke kosten je structureel geld?
+6. **Spreiding** — hoe zit de klant-machine-portefeuille in elkaar?
+7. **Leerkurve** — leren we van onze fouten per productlijn?
+
+Alle plots volgen hetzelfde patroon: vanilla SVG, hover-koppeling met de tabel, kleuren uit het DMT-palet. Plot 1, 4, 5 en 7 gebruiken mediaan-kwadranten als leeshulp; plot 2 en 3 een diagonaal y = x; plot 6 is een categorische bubble-matrix.
 
 ## Stack
 
-Bewust statisch: vijf HTML-bestanden, één gedeelde `assets/`-map, geen build-step. Volgt de pattern van [bvbv-canvas](https://github.com/thijsleufkens/bvbv-canvas).
+Bewust statisch: acht HTML-bestanden, één gedeelde `assets/`-map, geen build-step. Volgt de pattern van [bvbv-canvas](https://github.com/thijsleufkens/bvbv-canvas).
 
 | Onderdeel | Keuze |
 |---|---|
-| Markup | 5 statische HTML-bestanden (index + 4 plots) |
+| Markup | 8 statische HTML-bestanden (index + 7 plots) |
 | Styling | Vanilla CSS met DMT design-tokens uit bvbv-canvas |
 | Charting | Vanilla JS dat inline SVG genereert — geen library |
 | Data | Statisch JS-object in `assets/data.js` |

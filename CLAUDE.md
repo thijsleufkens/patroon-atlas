@@ -4,7 +4,7 @@
 
 ## Wat dit appje is
 
-Een statische galerij van vier scatterplots over een fictieve machinebouwer (Korver Machinebouw, Helmond). Bedoeld als demo voor maakbedrijven van 50–200 FTE die hun operationele dashboards op orde hebben, maar de stap naar patroon-herkenning nog niet zelf maken.
+Een statische galerij van zeven scatterplots over een fictieve machinebouwer (Korver Machinebouw, Helmond). Bedoeld als demo voor maakbedrijven van 50–200 FTE die hun operationele dashboards op orde hebben, maar de stap naar patroon-herkenning nog niet zelf maken.
 
 Het appje is een visueel essay, niet een tool met opslag. Klikbare scatterplots gekoppeld aan een detail-tabel, met per plot een leeswijzer.
 
@@ -14,16 +14,19 @@ Een operationeel dashboard beantwoordt vragen die je al hebt — omzet deze maan
 
 Voor de doelgroep (BI-persoon-aanwezig, geavanceerdere analyse afwezig) is dit precies het niveau dat tastbaar moet worden: zie wat scatterplots kunnen, vergelijkbaar met wat in een Power BI-rapport haalbaar is, met dezelfde data die ze al hebben.
 
-## De vier plots
+## De zeven plots
 
-| Nr | Pad | Vraag | Status |
+| Nr | Pad | Niveau | Vraag |
 |---|---|---|---|
-| 01 | `klanten.html` | Welke projecten verdienen, en welke kosten je geld? (omzet × marge, bubble = uren) | klaar |
-| 02 | `doorlooptijd.html` | Welke projecten lopen structureel uit? (geplande × werkelijke doorlooptijd) | klaar |
-| 03 | `fases.html` | Waar lekken de uren binnen een project? (per fase: geschat × werkelijk) | klaar |
-| 04 | `migratie.html` | Welke klanten zijn anders dan vorig jaar? (2024 → 2025 met pijltjes) | klaar |
+| 01 | `klanten.html` | project | Welke projecten verdienen, en welke kosten je geld? (omzet × marge, bubble = uren) |
+| 02 | `doorlooptijd.html` | project | Welke projecten lopen structureel uit? (geplande × werkelijke doorlooptijd) |
+| 03 | `fases.html` | fase | Waar lekken de uren binnen een project? (per fase: geschat × werkelijk) |
+| 04 | `migratie.html` | klant | Welke klanten zijn anders dan vorig jaar? (2024 → 2025 met pijltjes) |
+| 05 | `producten.html` | productlijn | Welke productlijnen renderen, en welke kosten je structureel geld? (marge × engineering-uitloop per machinetype) |
+| 06 | `spreiding.html` | klant × productlijn | Hoe zit de klant-machine-portefeuille in elkaar? (bubble-matrix, jaar = open/gevuld) |
+| 07 | `leerkurve.html` | productlijn | Leren we van onze fouten per productlijn? (2024 → 2025 per machinetype) |
 
-Plot 4 is de wow-plot: kwadrant-migratie over twee jaren is moeilijk in standaard dashboards te repliceren en levert het sterkste &ldquo;dat zou ik willen&rdquo;-moment op.
+Plot 4 en 7 zijn de wow-plots: kwadrant-migratie over twee jaren — op klant- (4) en op productlijn-niveau (7) — is moeilijk in standaard dashboards te repliceren. Plot 5/6/7 doen wat dashboards specifiek niet doen: aggregeren over meerdere projecten heen om productlijn-patronen zichtbaar te maken.
 
 ## Stack — bewust statisch
 
@@ -32,10 +35,13 @@ Geen build-step, geen framework, geen package manager.
 ```
 patroon-atlas/
 ├── index.html               # homepage
-├── klanten.html             # plot 1 (klaar)
-├── doorlooptijd.html        # plot 2 (klaar)
-├── fases.html               # plot 3 (klaar)
-├── migratie.html            # plot 4 (klaar)
+├── klanten.html             # plot 1 — project
+├── doorlooptijd.html        # plot 2 — project
+├── fases.html               # plot 3 — fase
+├── migratie.html            # plot 4 — klant
+├── producten.html           # plot 5 — productlijn
+├── spreiding.html           # plot 6 — klant × productlijn
+├── leerkurve.html           # plot 7 — productlijn
 └── assets/
     ├── tokens.css           # DMT design-tokens, getrimd uit bvbv-canvas
     ├── styles.css           # paginastijlen specifiek voor patroon-atlas
@@ -44,10 +50,13 @@ patroon-atlas/
     ├── kwadrant-plot.js     # plot 1 — vanilla JS, inline SVG, hover-coupling
     ├── doorlooptijd-plot.js # plot 2 — diagonaal y = x als leeshulp
     ├── fases-plot.js        # plot 3 — drie fase-records per project, kleur per fase
-    └── migratie-plot.js     # plot 4 — pijlen tussen 2024- en 2025-aggregaten per klant
+    ├── migratie-plot.js     # plot 4 — pijlen tussen 2024- en 2025-aggregaten per klant
+    ├── producten-plot.js    # plot 5 — kwadrant per machinetype (marge × engineering-uitloop)
+    ├── spreiding-plot.js    # plot 6 — categorische bubble-matrix klant × machine
+    └── leerkurve-plot.js    # plot 7 — pijlen tussen 2024- en 2025-aggregaten per machinetype
 ```
 
-Alle scripts attachen aan `window.PA`. Geen ES modules (werkt zo ook op `file://`). Geen externe charting library — SVG wordt met `document.createElementNS` opgebouwd. Voor 4 plots is dat ~250 regels per plot en geeft volledige controle over kleur, kwadrant-overlays en pijltjes (nodig voor plot 4).
+Alle scripts attachen aan `window.PA`. Geen ES modules (werkt zo ook op `file://`). Geen externe charting library — SVG wordt met `document.createElementNS` opgebouwd. Voor 7 plots is dat ~250-350 regels per plot en geeft volledige controle over kleur, kwadrant-overlays en pijltjes (nodig voor plot 4 en 7).
 
 ## Hosting
 
@@ -83,4 +92,10 @@ Alle data zit in `assets/data.js` als een vast object op `window.PA.projecten`.
 
 ## Vervolg
 
-Alle vier de plots staan. Elke plot heeft een eigen `<plot-naam>-plot.js`, registreert zich op `window.PA.<naam>Plot`, en volgt hetzelfde patroon: vanilla SVG, hover-koppeling met de tabel, kleuren uit het DMT-palet. Volgend werk zit niet in nieuwe plots maar in inhoudelijke aanscherping: scherpere kwadrant-labels, betere mobiele layout, of een vijfde plot als er een nieuwe vraag bij komt.
+Alle zeven plots staan, op drie aggregatie-niveaus:
+
+- **Project-/fase-/klant-niveau** (plot 1–4) — diagnostiek voor individuele cases.
+- **Productlijn-niveau** (plot 5, 7) — aggregeert over meerdere projecten heen om structurele patronen per machinetype te tonen.
+- **Klant × productlijn-niveau** (plot 6) — kruistabel met jaar-onderscheid.
+
+Elke plot heeft een eigen `<plot-naam>-plot.js`, registreert zich op `window.PA.<naam>Plot`, en volgt hetzelfde patroon: vanilla SVG, hover-koppeling met de tabel, kleuren uit het DMT-palet. Tijdreeksen (cumulatieve marge per maand etc.) zitten bewust niet in deze atlas — dat is dashboard-territorium en zou de positionering verwateren.

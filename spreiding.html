@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plot 6: Spreiding — Patroon-atlas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="brand">Patroon-atlas</a>
+    <div class="meta">
+      <div class="label">Demo</div>
+      <div class="value">Korver Machinebouw</div>
+    </div>
+  </div>
+  <nav class="nav">
+    <a href="klanten.html">Klanten</a>
+    <a href="doorlooptijd.html">Doorlooptijd</a>
+    <a href="fases.html">Projectfases</a>
+    <a href="migratie.html">Migratie</a>
+    <a href="producten.html">Producten</a>
+    <a href="spreiding.html" class="active">Spreiding</a>
+    <a href="leerkurve.html">Leerkurve</a>
+  </nav>
+</header>
+
+<main class="main">
+
+  <section style="margin-bottom: 24px;">
+    <div class="eyebrow">Plot 6 — Spreiding</div>
+    <h1 class="h1">Welke productlijnen hangen aan één klant, en welke klanten kopen meer dan één machine?</h1>
+    <p class="body-p">
+      Een klant-omzet-tabel zegt wat een klant doet. Een product-omzet-tabel
+      zegt wat een productlijn doet. De vraag &ldquo;hoe afhankelijk zijn we
+      van een klant-productlijn-combinatie?&rdquo; valt tussen beide tabellen
+      in. Hier komt die in één blik samen.
+    </p>
+  </section>
+
+  <section class="plot-page split" style="margin-bottom: 24px;">
+    <div class="card">
+      <div id="plot"></div>
+      <p class="plot-caption">
+        Eén bubble per project. Verticaal de klanten (gesorteerd op totale
+        omzet), horizontaal de machinetypen (idem). Bubble-grootte = omzet
+        van het project. Open cirkel = 2024, gevulde cirkel = 2025. Kleur =
+        marge-band: rood &lt; 10%, ink 10–20%, groen ≥ 20%. Lege cellen zijn
+        klant-machine-combinaties die niet voorkomen.
+      </p>
+    </div>
+    <div id="tabel"></div>
+  </section>
+
+  <section class="card" style="max-width: 720px;">
+    <div class="eyebrow">Hoe lees je deze plot</div>
+    <ul class="uitleg-lijst">
+      <li><strong>Eén kolom met één bubble</strong> — productlijn aan één klant gehangen. Concentratie-risico, vooral als die ene bubble klein of rood is. Stretchwikkelaar W8 / Verlinden is daar het scherpste voorbeeld: één productlijn, één klant, rood in beide jaren.</li>
+      <li><strong>Verticale stapel in dezelfde cel</strong> — open + gevuld bovenop elkaar betekent herhaalopdracht. Dezelfde klant, dezelfde machine, twee jaren. Zegt iets over relatie-diepte.</li>
+      <li><strong>Eén rij met meerdere bubbles</strong> — klant koopt meer dan één machinetype. Vaak een teken van diepere relatie of dat de klant de hele lijn van je afneemt.</li>
+      <li><strong>Eén kolom met veel bubbles</strong> — workhorse-productlijn die je aan veel klanten verkoopt. Trayloader T15 spreidt over 4 klanten en is daarmee minder afhankelijk van één individuele relatie.</li>
+    </ul>
+    <p class="body-p" style="margin-top: 16px; font-size: 13px; color: var(--fg-2);">
+      De kruistabel is bewust dun — 22 bubbles op 112 cellen. Die leegte is
+      juist de informatie: het toont waar je niet zit, niet alleen waar je
+      wél zit. Sterk MT-gespreksonderwerp: welke lege cellen zijn een gemiste
+      kans en welke zijn een bewuste positionering?
+    </p>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    Demo met fictieve data. Onderdeel van
+    <a href="https://github.com/thijsleufkens/datawijs-met-thijs">Datawijs met Thijs</a>.
+  </div>
+</footer>
+
+<script src="assets/data.js"></script>
+<script src="assets/format.js"></script>
+<script src="assets/spreiding-plot.js"></script>
+<script>
+  (function () {
+    window.PA.spreidingPlot({
+      container: document.getElementById("plot"),
+      tabel: document.getElementById("tabel"),
+      projecten: window.PA.projecten,
+    });
+  })();
+</script>
+
+</body>
+</html>

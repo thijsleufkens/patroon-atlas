@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Plot 3: Projectfases — Patroon-atlas</title>
+<title>Plot 5: Producten — Patroon-atlas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
@@ -23,9 +23,9 @@
   <nav class="nav">
     <a href="klanten.html">Klanten</a>
     <a href="doorlooptijd.html">Doorlooptijd</a>
-    <a href="fases.html" class="active">Projectfases</a>
+    <a href="fases.html">Projectfases</a>
     <a href="migratie.html">Migratie</a>
-    <a href="producten.html">Producten</a>
+    <a href="producten.html" class="active">Producten</a>
     <a href="spreiding.html">Spreiding</a>
     <a href="leerkurve.html">Leerkurve</a>
   </nav>
@@ -34,13 +34,14 @@
 <main class="main">
 
   <section style="margin-bottom: 24px;">
-    <div class="eyebrow">Plot 3 — Projectfases</div>
-    <h1 class="h1">Waar lekken de uren binnen een project?</h1>
+    <div class="eyebrow">Plot 5 — Producten</div>
+    <h1 class="h1">Welke productlijnen renderen, en welke kosten je structureel geld?</h1>
     <p class="body-p">
-      Per fase — engineering, assemblage, inbedrijfstelling — de geschatte uren
-      tegen de werkelijke. Per fase een eigen kleur. Soms wijst één fase
-      consistent omhoog: dat is geen pech maar een structurele onderschatting
-      in de calculatie.
+      Marge per project is voor de meeste maakbedrijven op orde, maar het
+      patroon over een hele productlijn ontstaat pas als je over meerdere
+      projecten heen aggregeert. Eén marge-arm Sleevemachine-project is een
+      incident. Drie marge-arme Sleevemachines op rij is een
+      productlijn-vraag.
     </p>
   </section>
 
@@ -48,10 +49,11 @@
     <div class="card">
       <div id="plot"></div>
       <p class="plot-caption">
-        Elk punt is één fase van één project, over zowel 2024 als 2025
-        (25 projecten × 3 fases = 75 punten). Grootte van het punt =
-        werkelijke uren in die fase. De stippellijn is de diagonaal
-        y = x — punten erboven hebben meer uren gekost dan geschat.
+        Eén punt per machinetype, geaggregeerd over alle projecten van dat
+        type in 2024 en 2025. Bubble-grootte = totale omzet van het type.
+        Stippellijnen zijn medianen over de 8 machinetypen — geen wet,
+        alleen een leeshulp. De rode tint linksboven markeert het kwadrant
+        waar je geen productlijn wilt hebben.
       </p>
     </div>
     <div id="tabel"></div>
@@ -60,15 +62,17 @@
   <section class="card" style="max-width: 720px;">
     <div class="eyebrow">Hoe lees je deze plot</div>
     <ul class="uitleg-lijst">
-      <li><strong>Engineering</strong> — kleinste fase qua uren, maar relatief het vaakst onderschat. Onbekende klant of nieuwe machine-variant duwt de uren omhoog voordat er één bout is aangedraaid.</li>
-      <li><strong>Assemblage</strong> — grootste in absolute uren, doorgaans het meest voorspelbaar. Hier hoort het patroon dicht bij de lijn te liggen.</li>
-      <li><strong>Inbedrijfstelling</strong> — onderkant van de plot. Wijkt bij sommige projecten sterk af; dat is vaak een teken dat het op locatie niet werkt zoals op de werkvloer.</li>
+      <li><strong>Rechtsonder</strong> — hoge marge, lage engineering-uitloop. Productlijnen die je beheerst. Trayloader-achtige workhorses.</li>
+      <li><strong>Rechtsboven</strong> — gezonde marge maar engineering-uitloop. Verdient kalibratie van de offerte-uren, niet noodzakelijk een prijsdiscussie.</li>
+      <li><strong>Linksonder</strong> — lage marge maar engineering wel onder controle. De marge zit dan in materiaalprijs of prijsstelling, niet in uren-uitloop.</li>
+      <li><strong>Linksboven</strong> — lage marge én structurele engineering-uitloop. Hier ligt de vraag: doorgaan met agressievere prijsstelling, terugtreden uit de productlijn, of investeren in een betere calculatie voor dit type?</li>
     </ul>
     <p class="body-p" style="margin-top: 16px; font-size: 13px; color: var(--fg-2);">
-      Een totaal-urenrapport per project verbergt dit beeld: als assemblage
-      meevalt en engineering tegen, valt het netto nul uit. Maar de
-      onderschatting in engineering blijft bestaan en stapelt zich op over de
-      jaren, totdat iemand de calculatie-spreadsheet aanpakt.
+      Plot 1 toonde dezelfde rode projecten op individueel niveau. Plot 5
+      toont dat die rode projecten geen losse incidenten zijn maar
+      clusters op machinetype. Dat opent een hele andere conversatie: niet
+      &ldquo;hoe red ik dit project?&rdquo; maar &ldquo;wat doe ik met deze
+      productlijn?&rdquo;.
     </p>
   </section>
 
@@ -83,10 +87,10 @@
 
 <script src="assets/data.js"></script>
 <script src="assets/format.js"></script>
-<script src="assets/fases-plot.js"></script>
+<script src="assets/producten-plot.js"></script>
 <script>
   (function () {
-    window.PA.fasesPlot({
+    window.PA.productenPlot({
       container: document.getElementById("plot"),
       tabel: document.getElementById("tabel"),
       projecten: window.PA.projecten,
