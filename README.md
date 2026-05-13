@@ -23,7 +23,7 @@ Zeven plots, op drie niveaus:
 6. **Spreiding** — hoe zit de klant-machine-portefeuille in elkaar?
 7. **Leercurve** — leren we van onze fouten per productlijn?
 
-Alle plots volgen hetzelfde patroon: vanilla SVG, hover-koppeling met de tabel, kleuren uit het DMT-palet. Plot 1, 4, 5 en 7 gebruiken mediaan-kwadranten als leeshulp; plot 2 en 3 een diagonaal y = x; plot 6 is een categorische bubble-matrix.
+Alle plots volgen hetzelfde patroon: vanilla SVG, hover-koppeling met de tabel, kleuren uit het DMT-palet. Plot 1, 4, 5 en 7 gebruiken mediaan-kwadranten als leeshulp; Plot 2 en 3 een diagonaal y = x; Plot 6 is een categorische bubble-matrix.
 
 ## Stack
 

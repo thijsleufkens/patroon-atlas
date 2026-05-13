@@ -56,7 +56,7 @@ patroon-atlas/
     └── leercurve-plot.js    # plot 7 — pijlen tussen 2024- en 2025-aggregaten per machinetype
 ```
 
-Alle scripts attachen aan `window.PA`. Geen ES modules (werkt zo ook op `file://`). Geen externe charting library — SVG wordt met `document.createElementNS` opgebouwd. Voor 7 plots is dat ~250-350 regels per plot en geeft volledige controle over kleur, kwadrant-overlays en pijltjes (nodig voor plot 4 en 7).
+Alle scripts attachen aan `window.PA`. Geen ES modules (werkt zo ook op `file://`). Geen externe charting library — SVG wordt met `document.createElementNS` opgebouwd. Voor 7 plots is dat ~250-350 regels per plot en geeft volledige controle over kleur, kwadrant-overlays en pijltjes (nodig voor Plot 4 en 7).
 
 ## Hosting
 
@@ -94,8 +94,8 @@ Alle data zit in `assets/data.js` als een vast object op `window.PA.projecten`.
 
 Alle zeven plots staan, op drie aggregatie-niveaus:
 
-- **Project-/fase-/klant-niveau** (plot 1–4) — diagnostiek voor individuele cases.
-- **Productlijn-niveau** (plot 5, 7) — aggregeert over meerdere projecten heen om structurele patronen per machinetype te tonen.
-- **Klant × productlijn-niveau** (plot 6) — kruistabel met jaar-onderscheid.
+- **Project-/fase-/klant-niveau** (Plot 1–4) — diagnostiek voor individuele cases.
+- **Productlijn-niveau** (Plot 5, 7) — aggregeert over meerdere projecten heen om structurele patronen per machinetype te tonen.
+- **Klant × productlijn-niveau** (Plot 6) — kruistabel met jaar-onderscheid.
 
 Elke plot heeft een eigen `<plot-naam>-plot.js`, registreert zich op `window.PA.<naam>Plot`, en volgt hetzelfde patroon: vanilla SVG, hover-koppeling met de tabel, kleuren uit het DMT-palet. Tijdreeksen (cumulatieve marge per maand etc.) zitten bewust niet in deze atlas — dat is dashboard-territorium en zou de positionering verwateren.
