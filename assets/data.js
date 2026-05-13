@@ -15,7 +15,7 @@ window.PA.projecten = [
              { fase: "assemblage",         geschat:  8960, werkelijk:  9660 },
              { fase: "inbedrijfstelling",  geschat:  2240, werkelijk:  4760 } ] },
 
-  { id: "K2025-103", klant: "Hoogland Zuivel",       machine: "Verpakkingslijn L100",  jaar: 2025, omzet: 2940000, margePercent: 19,  totaalUren: 25200, geplandeDoorlooptijdWeken: 26, werkelijkeDoorlooptijdWeken: 28,
+  { id: "K2025-103", klant: "Hoogland Zuivel",       machine: "Verpakkingslijn L100",  jaar: 2025, omzet: 2940000, margePercent: 23,  totaalUren: 25200, geplandeDoorlooptijdWeken: 26, werkelijkeDoorlooptijdWeken: 28,
     fases: [ { fase: "engineering",        geschat:  5040, werkelijk:  5600 },
              { fase: "assemblage",         geschat: 15120, werkelijk: 15400 },
              { fase: "inbedrijfstelling",  geschat:  3780, werkelijk:  4200 } ] },
@@ -40,7 +40,7 @@ window.PA.projecten = [
              { fase: "assemblage",         geschat:  4760, werkelijk:  5320 },
              { fase: "inbedrijfstelling",  geschat:  1120, werkelijk:  2520 } ] },
 
-  { id: "K2025-108", klant: "Akkermans Suikerwerk",  machine: "Vulstation M60",        jaar: 2025, omzet: 2380000, margePercent: 16,  totaalUren: 20300, geplandeDoorlooptijdWeken: 22, werkelijkeDoorlooptijdWeken: 23,
+  { id: "K2025-108", klant: "Akkermans Suikerwerk",  machine: "Vulstation M60",        jaar: 2025, omzet: 2380000, margePercent: 19,  totaalUren: 20300, geplandeDoorlooptijdWeken: 22, werkelijkeDoorlooptijdWeken: 23,
     fases: [ { fase: "engineering",        geschat:  3920, werkelijk:  4200 },
              { fase: "assemblage",         geschat: 12180, werkelijk: 12460 },
              { fase: "inbedrijfstelling",  geschat:  3080, werkelijk:  3640 } ] },
