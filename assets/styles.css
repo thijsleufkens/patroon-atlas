@@ -287,3 +287,10 @@ svg.plot circle.point {
 .uitleg-lijst li { margin-bottom: 8px; }
 .uitleg-lijst li:last-child { margin-bottom: 0; }
 .uitleg-lijst strong { font-weight: 500; }
+.uitleg-lijst a {
+  color: var(--dmt-amber-500);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.uitleg-lijst a:hover { text-decoration: underline; }
