@@ -135,6 +135,14 @@ a { color: inherit; }
   line-height: 1.6;
   max-width: 65ch;
 }
+.body-p a {
+  color: var(--dmt-amber-500);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 500;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.body-p a:hover { color: var(--dmt-ink); }
 .muted { color: var(--fg-2); }
 .subtle { color: var(--fg-3); }
 .tabular { font-variant-numeric: tabular-nums; }
@@ -217,6 +225,19 @@ a { color: inherit; }
   margin-top: 12px;
   max-width: 60ch;
   line-height: 1.5;
+}
+.plot-bridge {
+  font-size: 13px;
+  color: var(--fg-1);
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-subtle);
+  max-width: 60ch;
+  line-height: 1.55;
+}
+.plot-bridge strong {
+  font-weight: 500;
+  color: var(--dmt-amber-500);
 }
 
 /* ---------- Tabel ---------- */
