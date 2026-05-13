@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plot 1: Klanten — Patroon-atlas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="brand">Patroon-atlas</a>
+    <div class="meta">
+      <div class="label">Demo</div>
+      <div class="value">Korver Machinebouw</div>
+    </div>
+  </div>
+  <nav class="nav">
+    <a href="klanten.html" class="active">Klanten</a>
+    <a href="doorlooptijd.html">Doorlooptijd</a>
+    <a href="fases.html">Projectfases</a>
+    <a href="migratie.html">Migratie</a>
+  </nav>
+</header>
+
+<main class="main">
+
+  <section style="margin-bottom: 24px;">
+    <div class="eyebrow">Plot 1 — Kwadranten</div>
+    <h1 class="h1">Welke projecten verdienen, en welke kosten je geld?</h1>
+    <p class="body-p">
+      Een operationeel dashboard toont marge per maand of per project, meestal
+      in een tabel of bar chart. Wat het niet laat zien: hoe een project zich
+      verhoudt tot de rest. Door omzet tegen marge uit te zetten, vallen vier
+      groepen op die in het MT elk een ander gesprek verdienen.
+    </p>
+  </section>
+
+  <section class="plot-page split" style="margin-bottom: 24px;">
+    <div class="card">
+      <div id="plot"></div>
+      <p class="plot-caption">
+        Elk punt is een project. Grootte van het punt = aantal bestede uren.
+        De stippellijnen zijn de mediaan-waarden over de getoonde projecten —
+        geen wet, alleen een leeshulp.
+      </p>
+    </div>
+    <div id="tabel"></div>
+  </section>
+
+  <section class="card" style="max-width: 720px;">
+    <div class="eyebrow">Hoe lees je deze plot</div>
+    <ul class="uitleg-lijst">
+      <li><strong>Rechtsboven</strong> — grote, gezonde projecten. Begrijpen waarom dit werkt is meer waard dan optimaliseren.</li>
+      <li><strong>Rechtsonder</strong> — grote projecten met krappe marge. Hier zit het risico dat het MT structureel onderschat: omzet verhult de marge-druk.</li>
+      <li><strong>Linksboven</strong> — kleine projecten met goede marge. Vaak overgeslagen, soms onterecht.</li>
+      <li><strong>Linksonder</strong> — klein én marge-arm. Kandidaat voor &ldquo;waarom doen we dit eigenlijk nog?&rdquo;.</li>
+    </ul>
+    <p class="body-p" style="margin-top: 16px; font-size: 13px; color: var(--fg-2);">
+      De lijnen zijn medianen, geen drempelwaarden. Een project net onder de
+      marge-lijn is niet wezenlijk anders dan eentje net erboven. Wat de plot
+      doet is je oog sturen naar waar het gesprek het meeste oplevert.
+    </p>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    Demo met fictieve data. Onderdeel van
+    <a href="https://github.com/thijsleufkens/datawijs-met-thijs">Datawijs met Thijs</a>.
+  </div>
+</footer>
+
+<script src="assets/data.js"></script>
+<script src="assets/format.js"></script>
+<script src="assets/kwadrant-plot.js"></script>
+<script>
+  (function () {
+    var projecten2025 = window.PA.projecten.filter(function (p) {
+      return p.jaar === 2025;
+    });
+    window.PA.kwadrantPlot({
+      container: document.getElementById("plot"),
+      tabel: document.getElementById("tabel"),
+      projecten: projecten2025,
+    });
+  })();
+</script>
+
+</body>
+</html>

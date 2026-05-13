@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plot 3: Projectfases — Patroon-atlas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="brand">Patroon-atlas</a>
+    <div class="meta">
+      <div class="label">Demo</div>
+      <div class="value">Korver Machinebouw</div>
+    </div>
+  </div>
+  <nav class="nav">
+    <a href="klanten.html">Klanten</a>
+    <a href="doorlooptijd.html">Doorlooptijd</a>
+    <a href="fases.html" class="active">Projectfases</a>
+    <a href="migratie.html">Migratie</a>
+  </nav>
+</header>
+
+<main class="main">
+  <section style="max-width: 720px; margin-bottom: 24px;">
+    <div class="eyebrow">Plot 3 — Projectfases</div>
+    <h1 class="h1">Waar lekken de uren binnen een project?</h1>
+    <p class="body-p">
+      Per fase — engineering, assemblage, inbedrijfstelling — de geschatte uren
+      tegen de werkelijke. Per fase een eigen kleur. Soms wijst één fase
+      consistent omhoog: dat is geen pech maar een structurele onderschatting
+      in de calculatie.
+    </p>
+  </section>
+
+  <section class="card" style="max-width: 720px;">
+    <div class="eyebrow" style="color: var(--fg-2);">Binnenkort</div>
+    <p class="body-p" style="color: var(--fg-1);">
+      Deze plot is nog niet uitgewerkt. Plot 1 (Klanten) staat als eerste;
+      deze drie volgen.
+    </p>
+    <p class="body-p" style="border-top: 1px solid var(--border-subtle); padding-top: 16px; margin-top: 16px; font-size: 13px;">
+      <strong style="color: var(--fg-1); font-weight: 500;">Voorbeeld:</strong>
+      de engineering-fase van de Sleevemachine S22-projecten wijkt over twee
+      jaar gemiddeld 60-80% af van de schatting, terwijl assemblage steeds
+      netjes blijft binnen 5%. Dat patroon zie je niet als je alleen op
+      totaal-uren stuurt.
+    </p>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    Demo met fictieve data. Onderdeel van
+    <a href="https://github.com/thijsleufkens/datawijs-met-thijs">Datawijs met Thijs</a>.
+  </div>
+</footer>
+
+</body>
+</html>
