@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Patroon-atlas — Datawijs met Thijs</title>
+<meta name="description" content="Vier scatterplots over een fictieve machinebouwer. Een demo van wat scatterplots ontsluiten dat operationele dashboards niet laten zien.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="brand">Patroon-atlas</a>
+    <div class="meta">
+      <div class="label">Demo</div>
+      <div class="value">Korver Machinebouw</div>
+    </div>
+  </div>
+  <nav class="nav">
+    <a href="klanten.html">Klanten</a>
+    <a href="doorlooptijd.html">Doorlooptijd</a>
+    <a href="fases.html">Projectfases</a>
+    <a href="migratie.html">Migratie</a>
+  </nav>
+</header>
+
+<main class="main">
+
+  <section class="section" style="max-width: 720px;">
+    <div class="eyebrow">Patroon-atlas</div>
+    <h1 class="h1 lead">Wat je in een scatterplot ziet, en in een KPI-tabel mist.</h1>
+    <p class="lead-p">
+      Vier scatterplots, gemaakt rond een fictieve machinebouwer in Helmond.
+      Bedoeld voor bedrijven met hun operationele dashboards op orde, die merken
+      dat dezelfde grafieken niet meer nieuwe inzichten opleveren. Elke plot
+      probeert één vraag te beantwoorden die je in een standaard rapport zelden
+      gesteld ziet.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="plot-grid">
+
+      <a href="klanten.html" class="plot-card ready">
+        <div class="plot-card-head">
+          <span class="eyebrow">Plot 01</span>
+        </div>
+        <h2 class="h2">Welke projecten verdienen, en welke kosten je geld?</h2>
+        <p class="body-p" style="font-size: 14px;">
+          Omzet tegen marge per project, met de mediaan als leeshulp. De grootte
+          van elk punt verraadt waar de uren zitten.
+        </p>
+      </a>
+
+      <div class="plot-card">
+        <div class="plot-card-head">
+          <span class="eyebrow">Plot 02</span>
+          <span class="tag">binnenkort</span>
+        </div>
+        <h2 class="h2">Welke projecten lopen structureel uit?</h2>
+        <p class="body-p" style="font-size: 14px;">
+          Geplande versus werkelijke doorlooptijd. Wat in een KPI verstopt zit
+          als een gemiddelde, valt hier uiteen in twee groepen.
+        </p>
+      </div>
+
+      <div class="plot-card">
+        <div class="plot-card-head">
+          <span class="eyebrow">Plot 03</span>
+          <span class="tag">binnenkort</span>
+        </div>
+        <h2 class="h2">Waar lekken de uren binnen een project?</h2>
+        <p class="body-p" style="font-size: 14px;">
+          Per fase — engineering, assemblage, inbedrijfstelling — de geschatte
+          uren tegen de werkelijke. Soms wijst één fase consistent omhoog.
+        </p>
+      </div>
+
+      <div class="plot-card">
+        <div class="plot-card-head">
+          <span class="eyebrow">Plot 04</span>
+          <span class="tag">binnenkort</span>
+        </div>
+        <h2 class="h2">Welke klanten zijn anders dan vorig jaar?</h2>
+        <p class="body-p" style="font-size: 14px;">
+          Dezelfde klanten in twee jaren, met pijltjes ertussen. Een patroon
+          dat in standaard dashboards bijna nooit zichtbaar wordt.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section" style="max-width: 720px;">
+    <div class="eyebrow">Waarom deze atlas</div>
+    <p class="body-p">
+      Scatterplots staan zelden in operationele dashboards. Niet omdat ze
+      ingewikkeld zijn, maar omdat ze ander werk vragen: tabellen beantwoorden
+      vragen die je al hebt, scatterplots stellen vragen die je nog niet had.
+      Dat past slechter bij een dagelijkse stuur-cyclus, maar beter bij een
+      MT- of staf-overleg.
+    </p>
+    <p class="body-p">
+      Deze appjes maken niet meer of mooiere dashboards. Ze maken tastbaar wat
+      er nog meer met dezelfde data kan, voor wie bereid is om er een uur per
+      maand stil bij te staan.
+    </p>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    Demo met fictieve data. Onderdeel van
+    <a href="https://github.com/thijsleufkens/datawijs-met-thijs">Datawijs met Thijs</a>.
+  </div>
+</footer>
+
+</body>
+</html>

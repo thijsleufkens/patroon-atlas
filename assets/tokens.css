@@ -1,0 +1,70 @@
+/* =========================================================
+   Datawijs met Thijs — Design Tokens
+   Bron: github.com/thijsleufkens/bvbv-canvas (tokens.css)
+   Trimmed voor patroon-atlas — alleen wat hier gebruikt wordt.
+   ========================================================= */
+
+:root {
+  /* Brand palet */
+  --dmt-amber:      #F2B969;
+  --dmt-ink:        #1D0C0C;
+  --dmt-cream:      #FDF8F0;
+  --dmt-slate:      #727272;
+  --dmt-white:      #FFFFFF;
+
+  --dmt-amber-50:   #FBEBC9;
+  --dmt-amber-100:  #F8DDA8;
+  --dmt-amber-300:  #F2B969;
+  --dmt-amber-500:  #C98634;
+  --dmt-amber-700:  #6E4614;
+
+  --dmt-ink-300:    #B8B0AC;
+  --dmt-ink-100:    #E8E1D8;
+  --dmt-ink-50:     #F3ECE0;
+
+  /* Semantische surfaces */
+  --bg-page:        var(--dmt-cream);
+  --bg-card:        var(--dmt-white);
+
+  /* Foreground */
+  --fg-1:           var(--dmt-ink);
+  --fg-2:           var(--dmt-slate);
+  --fg-3:           var(--dmt-ink-300);
+
+  /* Borders */
+  --border-subtle:  #EDE4D3;
+  --border-default: #DCD1BC;
+
+  /* Signalen */
+  --signal-positive: #3F7D4E;
+  --signal-warning:  #C98634;
+  --signal-negative: #A2382B;
+
+  /* Typografie */
+  --font-sans:  'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono:  'Roboto Mono', ui-monospace, Menlo, Consolas, monospace;
+
+  /* Spacing */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+
+  /* Radii */
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   20px;
+
+  /* Schaduwen */
+  --shadow-sm:  0 1px 2px rgba(29, 12, 12, 0.06);
+  --shadow-md:  0 4px 12px rgba(29, 12, 12, 0.08);
+
+  /* Motion */
+  --ease-out:   cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur-fast:   120ms;
+  --dur-base:   200ms;
+}
