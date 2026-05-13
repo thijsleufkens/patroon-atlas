@@ -27,7 +27,7 @@ window.PA.projecten = [
 
   { id: "K2025-105", klant: "Bos Snacks",            machine: "Inpakrobot R5",         jaar: 2025, omzet:  665000, margePercent:  8,  totaalUren:  6440, geplandeDoorlooptijdWeken: 10, werkelijkeDoorlooptijdWeken: 14,
     fases: [ { fase: "engineering",        geschat:  1120, werkelijk:  1680 },
-             { fase: "assemblage",         geschat:  3920, werkelijk:  3780 },
+             { fase: "assemblage",         geschat:  3920, werkelijk:  3220 },
              { fase: "inbedrijfstelling",  geschat:   980, werkelijk:  1540 } ] },
 
   { id: "K2025-106", klant: "Den Hartog Conserven",  machine: "Etiketteermachine E12", jaar: 2025, omzet: 1176000, margePercent: 17,  totaalUren:  9660, geplandeDoorlooptijdWeken: 14, werkelijkeDoorlooptijdWeken: 15,
