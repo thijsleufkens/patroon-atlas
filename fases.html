@@ -45,10 +45,10 @@
     <div class="card">
       <div id="plot"></div>
       <p class="plot-caption">
-        Elk punt is één fase van één project. Drie punten per project dus.
-        Grootte van het punt = werkelijke uren in die fase. De stippellijn is
-        de diagonaal y = x — punten erboven hebben meer uren gekost dan
-        geschat.
+        Elk punt is één fase van één project, over zowel 2024 als 2025
+        (25 projecten × 3 fases = 75 punten). Grootte van het punt =
+        werkelijke uren in die fase. De stippellijn is de diagonaal
+        y = x — punten erboven hebben meer uren gekost dan geschat.
       </p>
     </div>
     <div id="tabel"></div>
@@ -83,13 +83,10 @@
 <script src="assets/fases-plot.js"></script>
 <script>
   (function () {
-    var projecten2025 = window.PA.projecten.filter(function (p) {
-      return p.jaar === 2025;
-    });
     window.PA.fasesPlot({
       container: document.getElementById("plot"),
       tabel: document.getElementById("tabel"),
-      projecten: projecten2025,
+      projecten: window.PA.projecten,
     });
   })();
 </script>
