@@ -70,12 +70,18 @@ window.PA.projecten = [
              { fase: "assemblage",         geschat:  5880, werkelijk:  6020 },
              { fase: "inbedrijfstelling",  geschat:  1540, werkelijk:  1540 } ] },
 
+  { id: "K2025-114", klant: "Veldhuis Banket",       machine: "Trayloader T15",        jaar: 2025, omzet:  700000, margePercent: 18,  totaalUren:  5880, geplandeDoorlooptijdWeken: 11, werkelijkeDoorlooptijdWeken: 11,
+    fases: [ { fase: "engineering",        geschat:   980, werkelijk:  1120 },
+             { fase: "assemblage",         geschat:  3640, werkelijk:  3640 },
+             { fase: "inbedrijfstelling",  geschat:  1120, werkelijk:  1120 } ] },
+
   { id: "K2024-091", klant: "Brouwer Sauzen",        machine: "Vulstation M40",        jaar: 2024, omzet: 1876000, margePercent: 20,  totaalUren: 15960, geplandeDoorlooptijdWeken: 18, werkelijkeDoorlooptijdWeken: 19, fases: [] },
   { id: "K2024-088", klant: "De Vegter Vleeswaren",  machine: "Sleevemachine S22",     jaar: 2024, omzet: 1505000, margePercent: 11,  totaalUren: 14700, geplandeDoorlooptijdWeken: 16, werkelijkeDoorlooptijdWeken: 18, fases: [] },
   { id: "K2024-082", klant: "Hoogland Zuivel",       machine: "Trayloader T15",        jaar: 2024, omzet:  966000, margePercent: 22,  totaalUren:  7980, geplandeDoorlooptijdWeken: 12, werkelijkeDoorlooptijdWeken: 12, fases: [] },
   { id: "K2024-085", klant: "Westland Bakkerijen",   machine: "Trayloader T15",        jaar: 2024, omzet:  994000, margePercent: 25,  totaalUren:  8260, geplandeDoorlooptijdWeken: 12, werkelijkeDoorlooptijdWeken: 12, fases: [] },
   { id: "K2024-079", klant: "Bos Snacks",            machine: "Inpakrobot R5",         jaar: 2024, omzet:  714000, margePercent: 14,  totaalUren:  6160, geplandeDoorlooptijdWeken: 10, werkelijkeDoorlooptijdWeken: 11, fases: [] },
   { id: "K2024-077", klant: "Den Hartog Conserven",  machine: "Etiketteermachine E12", jaar: 2024, omzet: 1064000, margePercent: 16,  totaalUren:  8820, geplandeDoorlooptijdWeken: 14, werkelijkeDoorlooptijdWeken: 14, fases: [] },
+  { id: "K2024-076", klant: "Bremer Frisdrank",      machine: "Vulstation M40",        jaar: 2024, omzet: 1610000, margePercent: 15,  totaalUren: 13860, geplandeDoorlooptijdWeken: 17, werkelijkeDoorlooptijdWeken: 18, fases: [] },
   { id: "K2024-073", klant: "Verlinden Vis",         machine: "Stretchwikkelaar W8",   jaar: 2024, omzet:  868000, margePercent:  9,  totaalUren:  8680, geplandeDoorlooptijdWeken: 11, werkelijkeDoorlooptijdWeken: 14, fases: [] },
   { id: "K2024-071", klant: "Akkermans Suikerwerk",  machine: "Vulstation M60",        jaar: 2024, omzet: 2240000, margePercent: 17,  totaalUren: 19460, geplandeDoorlooptijdWeken: 22, werkelijkeDoorlooptijdWeken: 22, fases: [] },
   { id: "K2024-068", klant: "Ravenstein Banket",     machine: "Trayloader T15",        jaar: 2024, omzet:  896000, margePercent: 19,  totaalUren:  7560, geplandeDoorlooptijdWeken: 11, werkelijkeDoorlooptijdWeken: 12, fases: [] },
