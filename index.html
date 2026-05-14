@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Patroon-atlas — Datawijs met Thijs</title>
-<meta name="description" content="Zeven scatterplots over een fictieve machinebouwer. Een demo van wat scatterplots ontsluiten dat operationele dashboards niet laten zien.">
+<meta name="description" content="Vier plots die patronen over projecten heen tonen, en drie MT-charts die uit die patronen volgen. Voor maakbedrijven die hun operationele dashboards op orde hebben.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
@@ -18,17 +18,23 @@
     <a href="index.html" class="brand">Patroon-atlas</a>
     <div class="meta">
       <div class="label">Demo</div>
-      <div class="value">Korver Machinebouw</div>
+      <div class="value">Korver Machinebouw, Helmond</div>
     </div>
   </div>
-  <nav class="nav">
-    <a href="klanten.html">Klanten</a>
-    <a href="doorlooptijd.html">Doorlooptijd</a>
-    <a href="fases.html">Projectfases</a>
-    <a href="migratie.html">Migratie</a>
-    <a href="producten.html">Producten</a>
-    <a href="spreiding.html">Spreiding</a>
-    <a href="leercurve.html">Leercurve</a>
+  <nav class="nav-multi">
+    <div class="nav-row">
+      <span class="nav-label">Verkennen</span>
+      <a href="uitloop.html">Uitloop</a>
+      <a href="erosie.html">Erosie</a>
+      <a href="spreiding.html">Spreiding</a>
+      <a href="migratie.html">Migratie</a>
+    </div>
+    <div class="nav-row">
+      <span class="nav-label">Presenteren</span>
+      <a href="mt-productlijn.html">Productlijn-besluit</a>
+      <a href="mt-kalibratie.html">Uren-kalibratie</a>
+      <a href="mt-klant.html">Klant-concentratie</a>
+    </div>
   </nav>
 </header>
 
@@ -36,94 +42,122 @@
 
   <section class="section" style="max-width: 720px;">
     <div class="eyebrow">Patroon-atlas</div>
-    <h1 class="h1 lead">Wat je in een scatterplot ziet, en in een KPI-tabel mist.</h1>
+    <h1 class="h1 lead">Wat een dashboard niet vertelt, en hoe je het wel ziet.</h1>
     <p class="lead-p">
-      Zeven scatterplots, gemaakt rond een fictieve machinebouwer in Helmond.
-      Bedoeld voor bedrijven met hun operationele dashboards op orde, die merken
-      dat dezelfde grafieken niet meer nieuwe inzichten opleveren. Elke plot
-      probeert één vraag te beantwoorden die je in een standaard rapport zelden
-      gesteld ziet — op project-, klant- of productlijn-niveau.
+      Vier plots die patronen over projecten heen laten zien, en drie
+      MT-charts die uit die patronen volgen. Bedoeld voor maakbedrijven
+      met operationele dashboards op orde, die merken dat dezelfde
+      grafieken niet meer nieuwe inzichten opleveren maar het knaagt dat
+      er over projecten heen iets moet zitten.
+    </p>
+  </section>
+
+  <section class="section" style="max-width: 720px;">
+    <div class="eyebrow">De demo</div>
+    <p class="body-p">
+      Korver Machinebouw is een fictieve special-machinebouwer in Helmond,
+      drie generaties, 85 medewerkers. Bouwt verpakkingsmachines voor de
+      Nederlandse voedingsmiddelenindustrie: sauzen, vlees, zuivel,
+      conserven. De atlas gebruikt twee jaar aan verzonnen projectdata:
+      dertien klanten, acht productlijnen, vijfentwintig projecten.
     </p>
   </section>
 
   <section class="section">
+    <div class="eyebrow" style="margin-bottom: 12px;">Deel 1 — Verkennen</div>
+    <p class="body-p" style="max-width: 720px; margin-bottom: 20px;">
+      Vier plots, elk in een andere vorm, elk een vraag die in een standaard
+      dashboard niet staat. Bedoeld om patronen te ontdekken voor je een
+      aanbeveling formuleert.
+    </p>
     <div class="plot-grid">
 
-      <a href="klanten.html" class="plot-card ready">
+      <a href="uitloop.html" class="plot-card ready">
         <div class="plot-card-head">
-          <span class="eyebrow">Plot 01</span>
+          <span class="eyebrow">Heatmap</span>
         </div>
-        <h2 class="h2">Welke projecten verdienen, en welke kosten je geld?</h2>
+        <h2 class="h2">Welke combinaties van productlijn en fase lopen structureel uit?</h2>
         <p class="body-p" style="font-size: 14px;">
-          Omzet tegen marge per project, met de mediaan als leeshulp. De grootte
-          van elk punt verraadt waar de uren zitten.
+          Per machinetype een rij, per fase een cel. Maakt zichtbaar of
+          uren-uitloop zit in offerte-calculatie of in uitvoering.
         </p>
       </a>
 
-      <a href="doorlooptijd.html" class="plot-card ready">
+      <a href="erosie.html" class="plot-card ready">
         <div class="plot-card-head">
-          <span class="eyebrow">Plot 02</span>
+          <span class="eyebrow">Decompositie</span>
         </div>
-        <h2 class="h2">Welke projecten lopen structureel uit?</h2>
+        <h2 class="h2">Bij welke productlijnen lekt de marge, en zit dat in materiaal of in uren?</h2>
         <p class="body-p" style="font-size: 14px;">
-          Geplande versus werkelijke doorlooptijd. Wat in een KPI verstopt zit
-          als een gemiddelde, valt hier uiteen in twee groepen.
-        </p>
-      </a>
-
-      <a href="fases.html" class="plot-card ready">
-        <div class="plot-card-head">
-          <span class="eyebrow">Plot 03</span>
-        </div>
-        <h2 class="h2">Waar lekken de uren binnen een project?</h2>
-        <p class="body-p" style="font-size: 14px;">
-          Per fase — engineering, assemblage, inbedrijfstelling — de geschatte
-          uren tegen de werkelijke. Soms wijst één fase consistent omhoog.
-        </p>
-      </a>
-
-      <a href="migratie.html" class="plot-card ready">
-        <div class="plot-card-head">
-          <span class="eyebrow">Plot 04</span>
-        </div>
-        <h2 class="h2">Welke klanten zijn anders dan vorig jaar?</h2>
-        <p class="body-p" style="font-size: 14px;">
-          Dezelfde klanten in twee jaren, met pijltjes ertussen. Een patroon
-          dat in standaard dashboards bijna nooit zichtbaar wordt.
-        </p>
-      </a>
-
-      <a href="producten.html" class="plot-card ready">
-        <div class="plot-card-head">
-          <span class="eyebrow">Plot 05</span>
-        </div>
-        <h2 class="h2">Welke productlijnen renderen, en welke kosten je structureel geld?</h2>
-        <p class="body-p" style="font-size: 14px;">
-          Aggregeert Plot 1 één niveau hoger: per machinetype over beide jaren.
-          Een marge-arm project is een incident, drie marge-arme van hetzelfde
-          type is een productlijn-vraag.
+          Per machinetype een balk over twee jaar samen, opgesplitst in
+          materiaal-variantie en uren-variantie.
         </p>
       </a>
 
       <a href="spreiding.html" class="plot-card ready">
         <div class="plot-card-head">
-          <span class="eyebrow">Plot 06</span>
+          <span class="eyebrow">Bubble-matrix</span>
         </div>
-        <h2 class="h2">Hoe zit de klant-machine-portefeuille in elkaar?</h2>
+        <h2 class="h2">Hoe is de klant-machine-portefeuille opgebouwd, en waar zit afhankelijkheid?</h2>
         <p class="body-p" style="font-size: 14px;">
-          Klant × machinetype als bubble-matrix. Eénpitter-combinaties springen
-          eruit; zo ook de lege cellen die juist een gemiste kans kunnen zijn.
+          Klanten op de verticale as, machinetypen op de horizontale. Toont
+          concentratie en de lege cellen die je niet bedient.
         </p>
       </a>
 
-      <a href="leercurve.html" class="plot-card ready">
+      <a href="migratie.html" class="plot-card ready">
         <div class="plot-card-head">
-          <span class="eyebrow">Plot 07</span>
+          <span class="eyebrow">Arrow-plot</span>
         </div>
-        <h2 class="h2">Leren we van onze fouten per productlijn?</h2>
+        <h2 class="h2">Welke klanten zijn anders dan vorig jaar, en wat zegt de richting?</h2>
         <p class="body-p" style="font-size: 14px;">
-          Plot 4-stijl maar per machinetype: pijl van 2024 naar 2025 in omzet ×
-          marge. Wordt een productlijn beter, slechter, of stilstaand?
+          Pijl per klant tussen 2024 en 2025. Toont verschuiving in omzet
+          en marge tegelijk, niet als twee aparte rapporten.
+        </p>
+      </a>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow" style="margin-bottom: 12px;">Deel 2 — Presenteren</div>
+    <p class="body-p" style="max-width: 720px; margin-bottom: 20px;">
+      Drie MT-charts die een aanbeveling onderbouwen, voortgekomen uit de
+      verkenning. Basis-vormen, één boodschap per chart, geschikt voor een
+      staf- of MT-overleg waar een besluit moet vallen.
+    </p>
+    <div class="plot-grid">
+
+      <a href="mt-productlijn.html" class="plot-card ready">
+        <div class="plot-card-head">
+          <span class="eyebrow">Bar chart</span>
+        </div>
+        <h2 class="h2">Twee productlijnen vragen om een besluit voor 2026.</h2>
+        <p class="body-p" style="font-size: 14px;">
+          Marge-bijdrage 2025 versus 2024 per productlijn. Toont waar de
+          marge-daling vandaan komt en welke twee een besluit verdienen.
+        </p>
+      </a>
+
+      <a href="mt-kalibratie.html" class="plot-card ready">
+        <div class="plot-card-head">
+          <span class="eyebrow">Bar chart</span>
+        </div>
+        <h2 class="h2">Vier productlijnen vragen om hogere engineering-calculatie.</h2>
+        <p class="body-p" style="font-size: 14px;">
+          Engineering-uitloop per machinetype met tolerantielijn op tien
+          procent. Geeft per type de calculatie-opslag die zou aansluiten.
+        </p>
+      </a>
+
+      <a href="mt-klant.html" class="plot-card ready">
+        <div class="plot-card-head">
+          <span class="eyebrow">Pareto</span>
+        </div>
+        <h2 class="h2">Top-drie levert 40% van de omzet. Wat als de mix verschuift?</h2>
+        <p class="body-p" style="font-size: 14px;">
+          Cumulatief aandeel in omzet per klant. Niet de top-3 verkleinen
+          maar de basis daaronder verbreden.
         </p>
       </a>
 
@@ -131,51 +165,18 @@
   </section>
 
   <section class="section" style="max-width: 720px;">
-    <div class="eyebrow">Wanneer pak je deze atlas erbij?</div>
-    <p class="body-p" style="margin-bottom: 16px;">
-      Scatterplots zijn geen vervanging voor je dashboard, maar wat je daarna
-      opent. Een paar herkenbare aanleidingen vanuit een standaard maand- of
-      kwartaalrapport:
-    </p>
-    <ul class="uitleg-lijst">
-      <li><strong>&ldquo;Marge daalt dit kwartaal.&rdquo;</strong> &nbsp;<a href="klanten.html">Plot 1</a> voor de project-mix, of <a href="migratie.html">Plot 4</a> voor klant-migratie.</li>
-      <li><strong>&ldquo;Gemiddelde doorlooptijd stijgt.&rdquo;</strong> &nbsp;<a href="doorlooptijd.html">Plot 2</a> laat zien of het een paar uitschieters zijn of een breed patroon.</li>
-      <li><strong>&ldquo;Engineering-uren overschrijden structureel het budget.&rdquo;</strong> &nbsp;<a href="fases.html">Plot 3</a> voor het project-niveau, <a href="producten.html">Plot 5</a> voor het patroon per machinetype.</li>
-      <li><strong>&ldquo;Eén klant is plotseling onze grootste.&rdquo;</strong> &nbsp;<a href="migratie.html">Plot 4</a> laat zien of die groei mét of zónder marge-behoud kwam.</li>
-      <li><strong>&ldquo;Drie marge-arme projecten staan in de top-10.&rdquo;</strong> &nbsp;<a href="producten.html">Plot 5</a> en <a href="leercurve.html">Plot 7</a>: toeval, of productlijn-patroon dat zich herhaalt?</li>
-      <li><strong>&ldquo;We hangen veel omzet aan weinig klanten.&rdquo;</strong> &nbsp;<a href="spreiding.html">Plot 6</a> maakt de klant-machine-portefeuille in één blik zichtbaar.</li>
-    </ul>
-  </section>
-
-  <section class="section" style="max-width: 720px;">
-    <div class="eyebrow">Waarom deze atlas</div>
+    <div class="eyebrow">Hoe verder</div>
     <p class="body-p">
-      Scatterplots staan zelden in operationele dashboards. Niet omdat ze
-      ingewikkeld zijn, maar omdat ze ander werk vragen: tabellen beantwoorden
-      vragen die je al hebt, scatterplots stellen vragen die je nog niet had.
-      Dat past slechter bij een dagelijkse stuur-cyclus, maar beter bij een
-      MT- of staf-overleg.
+      Of dezelfde patronen ook in jouw projectadministratie zichtbaar zijn
+      hangt af van wat je administratie vasthoudt: uren per fase, marge
+      per project, materiaalkosten per opdracht, klant-product-koppelingen
+      over meerdere jaren. Niet elke plot heeft alles nodig.
     </p>
     <p class="body-p">
-      Deze appjes maken niet meer of mooiere dashboards. Ze maken tastbaar wat
-      er nog meer met dezelfde data kan, voor wie bereid is om er een uur per
-      maand stil bij te staan.
-    </p>
-  </section>
-
-  <section class="section" style="max-width: 720px;">
-    <div class="eyebrow">Hoe dan verder?</div>
-    <p class="body-p">
-      Wat hier staat is een visueel essay over fictieve data van een fictief
-      bedrijf. De interessantere vraag is of dezelfde patronen ook in jouw
-      projectadministratie, urenboeking en klantdata zichtbaar zouden zijn —
-      en of de patronen die jou bezighouden überhaupt zichtbaar te maken zijn.
-    </p>
-    <p class="body-p">
-      Eén manier om dat uit te zoeken: een
-      <a href="https://datawijs.nl/#gratis-intake">gratis intake bij Datawijs met Thijs</a>.
-      Geen verkoop-gesprek, wel een uur om te kijken wat jouw data wel en niet
-      ondersteunt, en wat er aan ontbreekt voor de plots die jou interesseren.
+      Wat in jouw data wel en niet aansluit, en welke patronen voor jou
+      relevant zijn, is een eerlijk gesprek waard. Daar is een
+      <a href="https://datawijs.nl/#gratis-intake">gratis intake bij Datawijs met Thijs</a>
+      voor.
     </p>
   </section>
 

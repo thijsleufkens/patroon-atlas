@@ -17,17 +17,23 @@
     <a href="index.html" class="brand">Patroon-atlas</a>
     <div class="meta">
       <div class="label">Demo</div>
-      <div class="value">Korver Machinebouw</div>
+      <div class="value">Korver Machinebouw, Helmond</div>
     </div>
   </div>
-  <nav class="nav">
-    <a href="klanten.html">Klanten</a>
-    <a href="doorlooptijd.html">Doorlooptijd</a>
-    <a href="fases.html">Projectfases</a>
-    <a href="migratie.html" class="active">Migratie</a>
-    <a href="producten.html">Producten</a>
-    <a href="spreiding.html">Spreiding</a>
-    <a href="leercurve.html">Leercurve</a>
+  <nav class="nav-multi">
+    <div class="nav-row">
+      <span class="nav-label">Verkennen</span>
+      <a href="uitloop.html">Uitloop</a>
+      <a href="erosie.html">Erosie</a>
+      <a href="spreiding.html">Spreiding</a>
+      <a href="migratie.html" class="active">Migratie</a>
+    </div>
+    <div class="nav-row">
+      <span class="nav-label">Presenteren</span>
+      <a href="mt-productlijn.html">Productlijn-besluit</a>
+      <a href="mt-kalibratie.html">Uren-kalibratie</a>
+      <a href="mt-klant.html">Klant-concentratie</a>
+    </div>
   </nav>
 </header>
 
@@ -57,24 +63,38 @@
         projecten).
       </p>
       <p class="plot-bridge">
-        <strong>Met je eigen data:</strong> projectdata over twee (of meer)
-        jaar, gegroepeerd op klantnummer. Elke klant die in beide jaren
-        voorkomt wordt een pijl, elke nieuwe of weggevallen klant een losse
-        marker. Het MT-gesprek &ldquo;wie is er anders dan vorig jaar?&rdquo;
-        op basis van beelden in plaats van twee jaaroverzichten met absolute
-        verschillen.
+        <strong>Met je eigen data:</strong> projectdata over twee of meer
+        jaar uit je projectadministratie (Exact, AFAS, Ridder, Isah,
+        Plan-de-CAMpagne), gegroepeerd op klantnummer. Elke klant die in
+        beide jaren voorkomt wordt een pijl, elke nieuwe of weggevallen
+        klant een losse marker. Het MT-gesprek "wie is er anders dan
+        vorig jaar?" wordt een beeld in plaats van twee jaaroverzichten
+        met absolute verschillen.
       </p>
     </div>
     <div id="tabel"></div>
   </section>
 
+  <section class="bridge-section">
+    <div class="bridge-label">Naar het MT met</div>
+    <p>
+      <a href="mt-klant.html">Top-drie levert 40% van de omzet</a>:
+      migratie laat zien dat zelfs binnen een stabiele top-3 de mix
+      verschuift (Vink Diepvries zakte van 13% naar 7% marge bij een
+      andere productlijn).
+      En <a href="mt-productlijn.html">Twee productlijnen vragen om een besluit voor 2026</a>:
+      welke klanten zich naar welke productlijn bewegen verklaart een
+      deel van de marge-verschuiving.
+    </p>
+  </section>
+
   <section class="card" style="max-width: 720px;">
     <div class="eyebrow">Hoe lees je deze plot</div>
     <ul class="uitleg-lijst">
-      <li><strong>Korte pijl</strong> — stabiele klant. Dezelfde omzet, dezelfde marge, dezelfde plek in het kwadrant. Geen verhaal te vertellen, en dat is op zich een uitkomst.</li>
-      <li><strong>Horizontaal naar rechts</strong> — klant groeit in omzet zonder marge-verlies. Vaak een herhaalopdracht of vervolgmachine; verdient een gesprek over waarom dit lukt.</li>
-      <li><strong>Schuin naar beneden</strong> — omzet stijgt, marge zakt. Meestal een groter project waarin de prijsstelling niet meeschaalt met de complexiteit. Dit zie je niet in een jaarrapport waar omzet vooraan staat.</li>
-      <li><strong>Recht naar beneden</strong> — vergelijkbare opdracht maar magerder. Hier zit meestal de echte vraag: is dit één keer of structureel?</li>
+      <li><strong>Korte pijl:</strong> stabiele klant. Dezelfde omzet, dezelfde marge, dezelfde plek in het kwadrant. Geen verhaal te vertellen, en dat is op zich een uitkomst.</li>
+      <li><strong>Horizontaal naar rechts:</strong> klant groeit in omzet zonder marge-verlies. Vaak een herhaalopdracht of vervolgmachine, verdient een gesprek over waarom dit lukt.</li>
+      <li><strong>Schuin naar beneden:</strong> omzet stijgt, marge zakt. Meestal een groter project waarin de prijsstelling niet meeschaalt met de complexiteit. Dit zie je niet in een jaarrapport waar omzet vooraan staat.</li>
+      <li><strong>Recht naar beneden:</strong> vergelijkbare opdracht maar magerder. Hier zit meestal de echte vraag: is dit één keer of structureel?</li>
     </ul>
     <p class="body-p" style="margin-top: 16px; font-size: 13px; color: var(--fg-2);">
       Kwadrant-migratie over twee jaren is moeilijk in standaard dashboards

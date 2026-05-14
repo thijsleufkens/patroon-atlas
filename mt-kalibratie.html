@@ -17,21 +17,23 @@
     <a href="index.html" class="brand">Patroon-atlas</a>
     <div class="meta">
       <div class="label">Demo</div>
-      <div class="value">Korver Machinebouw</div>
+      <div class="value">Korver Machinebouw, Helmond</div>
     </div>
   </div>
-  <nav class="nav">
-    <a href="klanten.html">Klanten</a>
-    <a href="doorlooptijd.html">Doorlooptijd</a>
-    <a href="fases.html">Projectfases</a>
-    <a href="migratie.html">Migratie</a>
-    <a href="producten.html">Producten</a>
-    <a href="spreiding.html">Spreiding</a>
-    <a href="leercurve.html">Leercurve</a>
-    <a href="erosie.html">Erosie</a>
-    <a href="uitloop.html">Uitloop</a>
-    <a href="mt-productlijn.html">MT: Productlijn</a>
-    <a href="mt-kalibratie.html" class="active">MT: Kalibratie</a>
+  <nav class="nav-multi">
+    <div class="nav-row">
+      <span class="nav-label">Verkennen</span>
+      <a href="uitloop.html">Uitloop</a>
+      <a href="erosie.html">Erosie</a>
+      <a href="spreiding.html">Spreiding</a>
+      <a href="migratie.html">Migratie</a>
+    </div>
+    <div class="nav-row">
+      <span class="nav-label">Presenteren</span>
+      <a href="mt-productlijn.html">Productlijn-besluit</a>
+      <a href="mt-kalibratie.html" class="active">Uren-kalibratie</a>
+      <a href="mt-klant.html">Klant-concentratie</a>
+    </div>
   </nav>
 </header>
 
@@ -60,6 +62,18 @@
       </p>
     </div>
     <div id="tabel"></div>
+  </section>
+
+  <section class="bridge-section">
+    <div class="bridge-label">Komt voort uit</div>
+    <p>
+      <a href="uitloop.html">Welke combinaties van productlijn en fase lopen uit</a>:
+      de engineering-kolom uit die heatmap, hier omgerekend naar een
+      concrete calculatie-opslag per machinetype.
+      En <a href="erosie.html">Bij welke productlijnen lekt de marge</a>:
+      de uren-variantie in die plot is grotendeels engineering-uren die
+      uitlopen.
+    </p>
   </section>
 
   <section class="card" style="max-width: 720px;">

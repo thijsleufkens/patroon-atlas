@@ -17,17 +17,23 @@
     <a href="index.html" class="brand">Patroon-atlas</a>
     <div class="meta">
       <div class="label">Demo</div>
-      <div class="value">Korver Machinebouw</div>
+      <div class="value">Korver Machinebouw, Helmond</div>
     </div>
   </div>
-  <nav class="nav">
-    <a href="klanten.html">Klanten</a>
-    <a href="doorlooptijd.html">Doorlooptijd</a>
-    <a href="fases.html">Projectfases</a>
-    <a href="migratie.html">Migratie</a>
-    <a href="producten.html">Producten</a>
-    <a href="spreiding.html" class="active">Spreiding</a>
-    <a href="leercurve.html">Leercurve</a>
+  <nav class="nav-multi">
+    <div class="nav-row">
+      <span class="nav-label">Verkennen</span>
+      <a href="uitloop.html">Uitloop</a>
+      <a href="erosie.html">Erosie</a>
+      <a href="spreiding.html" class="active">Spreiding</a>
+      <a href="migratie.html">Migratie</a>
+    </div>
+    <div class="nav-row">
+      <span class="nav-label">Presenteren</span>
+      <a href="mt-productlijn.html">Productlijn-besluit</a>
+      <a href="mt-kalibratie.html">Uren-kalibratie</a>
+      <a href="mt-klant.html">Klant-concentratie</a>
+    </div>
   </nav>
 </header>
 
@@ -56,28 +62,39 @@
       </p>
       <p class="plot-bridge">
         <strong>Met je eigen data:</strong> de klant-product-koppelingen die
-        je sowieso al in je administratie hebt. Elke combinatie wordt een
-        bubble. Het concentratie-risico (productlijnen aan één klant, klanten
-        die op één product leunen) springt in één blik uit — en de lege
-        cellen vertellen waar je niet zit, soms bewust, soms een gemiste kans.
+        je sowieso al in je administratie hebt (Exact, AFAS, Ridder, Isah,
+        Plan-de-CAMpagne). Elke combinatie wordt een bubble. Het
+        concentratie-risico, productlijnen aan één klant of klanten die op
+        één productlijn leunen, springt in één blik uit. De lege cellen
+        vertellen waar je niet zit, soms bewust, soms een gemiste kans.
       </p>
     </div>
     <div id="tabel"></div>
   </section>
 
+  <section class="bridge-section">
+    <div class="bridge-label">Naar het MT met</div>
+    <p>
+      <a href="mt-klant.html">Top-drie levert 40% van de omzet</a>:
+      deze matrix laat per klant zien op welke productlijnen de
+      afhankelijkheid hangt. De Pareto telt het verhaal, deze matrix laat
+      zien waar het breekbaar wordt.
+    </p>
+  </section>
+
   <section class="card" style="max-width: 720px;">
     <div class="eyebrow">Hoe lees je deze plot</div>
     <ul class="uitleg-lijst">
-      <li><strong>Eén kolom met één bubble</strong> — productlijn aan één klant gehangen. Concentratie-risico, vooral als die ene bubble klein of rood is. Stretchwikkelaar W8 / Verlinden is daar het scherpste voorbeeld: één productlijn, één klant, rood in beide jaren.</li>
-      <li><strong>Verticale stapel in dezelfde cel</strong> — open + gevuld bovenop elkaar betekent herhaalopdracht. Dezelfde klant, dezelfde machine, twee jaren. Zegt iets over relatie-diepte.</li>
-      <li><strong>Eén rij met meerdere bubbles</strong> — klant koopt meer dan één machinetype. Vaak een teken van diepere relatie of dat de klant de hele lijn van je afneemt.</li>
-      <li><strong>Eén kolom met veel bubbles</strong> — workhorse-productlijn die je aan veel klanten verkoopt. Trayloader T15 spreidt over 4 klanten en is daarmee minder afhankelijk van één individuele relatie.</li>
+      <li><strong>Eén kolom met één bubble:</strong> productlijn aan één klant gehangen. Concentratie-risico, vooral als die ene bubble klein of rood is. Stretchwikkelaar W8 bij Verlinden is daar het scherpste voorbeeld: één productlijn, één klant, rood in beide jaren.</li>
+      <li><strong>Verticale stapel in dezelfde cel:</strong> open en gevuld bovenop elkaar betekent herhaalopdracht. Dezelfde klant, dezelfde machine, twee jaren. Zegt iets over relatie-diepte.</li>
+      <li><strong>Eén rij met meerdere bubbles:</strong> klant koopt meer dan één machinetype. Vaak een teken van diepere relatie, of dat de klant de hele lijn van je afneemt.</li>
+      <li><strong>Eén kolom met veel bubbles:</strong> workhorse-productlijn die je aan veel klanten verkoopt. Trayloader T15 spreidt over vier klanten en is daarmee minder afhankelijk van één individuele relatie.</li>
     </ul>
     <p class="body-p" style="margin-top: 16px; font-size: 13px; color: var(--fg-2);">
-      De kruistabel is bewust dun — 22 bubbles op 112 cellen. Die leegte is
-      juist de informatie: het toont waar je niet zit, niet alleen waar je
-      wél zit. Sterk MT-gespreksonderwerp: welke lege cellen zijn een gemiste
-      kans en welke zijn een bewuste positionering?
+      De kruistabel is bewust dun, 22 bubbles op 112 cellen. Die leegte
+      is juist de informatie: het toont waar je niet zit, niet alleen
+      waar je wél zit. Sterk MT-gespreksonderwerp: welke lege cellen zijn
+      een gemiste kans en welke zijn een bewuste positionering?
     </p>
   </section>
 
