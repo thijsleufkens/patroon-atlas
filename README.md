@@ -1,57 +1,44 @@
 # Patroon-atlas
 
-Een statische atlas in twee delen voor maakbedrijven die hun operationele
-dashboards op orde hebben en merken dat dezelfde grafieken niet meer nieuwe
-inzichten opleveren, maar dat het knaagt dat er over projecten heen iets
-moet zitten.
+Een statische galerij van vier scatterplots over een fictieve machinebouwer.
+Bedoeld als demo voor maakbedrijven met operationele dashboards op orde,
+die merken dat dezelfde grafieken niet meer nieuwe inzichten opleveren
+maar het knaagt dat er over projecten heen een patroon moet zitten.
 
 Onderdeel van [datawijs-met-thijs](../../README.md).
 
 ## Wat het laat zien
 
-Vier verkennings-plots die patronen over projecten heen tonen, plus drie
-MT-charts die uit die patronen volgen. Bedoeld om te laten zien hoe de
-volgende stap in analyse-capaciteit eruit kan zien als operationele
-rapportage al staat.
+Operationele dashboards beantwoorden vragen die je al hebt: omzet deze
+maand, voorraad nu, doorlooptijd vorige week. Scatterplots doen iets
+anders: ze stellen vragen die je nog niet had door twee dimensies tegen
+elkaar uit te zetten en groepen zichtbaar te maken die in een tabel
+verstopt blijven.
 
-### Deel 1, Verkennen
+Vier plots op vier aggregatieniveaus, in vier verschillende vormen:
 
-Vier plots, elk in een andere vorm, elk een vraag die in een standaard
-dashboard niet staat.
+1. **Klanten** (kwadrant op klant-niveau): omzet × marge per klant,
+   geaggregeerd over alle projecten, kleur per sub-sector.
+2. **Producten** (kwadrant op productlijn-niveau): marge × engineering-
+   uitloop per machinetype, bubble = totale omzet van het type.
+3. **Spreiding** (bubble-matrix klant × machinetype): klant-product-
+   portefeuille met sub-sector groepering, één bubble per project.
+4. **Migratie** (arrow per klant): pijl tussen 2024 en 2025 in
+   omzet × marge ruimte.
 
-1. **Uitloop** (heatmap) — welke combinaties van productlijn en fase lopen
-   structureel uit?
-2. **Erosie** (decompositie-bar) — bij welke productlijnen lekt de marge,
-   en zit dat in materiaal of in uren?
-3. **Spreiding** (bubble-matrix) — hoe is de klant-machine-portefeuille
-   opgebouwd, en waar zit afhankelijkheid?
-4. **Migratie** (arrow-plot) — welke klanten zijn anders dan vorig jaar?
-
-### Deel 2, Presenteren
-
-Drie MT-charts die een aanbeveling onderbouwen, voortgekomen uit de
-verkenning. Basis-vormen, één boodschap per chart.
-
-1. **Productlijn-besluit** (bar) — twee productlijnen vragen om een
-   go/no-go voor 2026.
-2. **Uren-kalibratie** (bar met tolerantielijn) — vier productlijnen
-   vragen hogere engineering-calculatie.
-3. **Klant-concentratie** (Pareto) — top-3 levert 40% van de omzet, wat
-   als de mix verschuift?
-
-Elke verkennings-plot heeft een **"Naar het MT met"**-sectie die naar
-één of twee MT-charts linkt. Elke MT-chart heeft een **"Komt voort uit"**
-die terugverwijst.
+Elke detailpagina sluit af met een sectie **"Hoe je dit in het MT brengt"**
+die een concrete aanbeveling formuleert die uit het patroon zou kunnen
+volgen.
 
 ## Stack
 
-Bewust statisch: acht HTML-bestanden, één gedeelde `assets/`-map, geen
+Bewust statisch: vijf HTML-bestanden, één gedeelde `assets/`-map, geen
 build-step. Volgt de pattern van
 [bvbv-canvas](https://github.com/thijsleufkens/bvbv-canvas).
 
 | Onderdeel | Keuze |
 |---|---|
-| Markup | 8 statische HTML-bestanden (index + 4 verkennen + 3 presenteren) |
+| Markup | 5 statische HTML-bestanden (index + 4 plots) |
 | Styling | Vanilla CSS met DMT design-tokens uit bvbv-canvas |
 | Charting | Vanilla JS dat inline SVG genereert, geen library |
 | Data | Statisch JS-object in `assets/data.js` |
@@ -79,10 +66,11 @@ statische host (Netlify drop, Cloudflare Pages, eigen webserver).
 ## Demo-data
 
 Korver Machinebouw, een fictieve special-machinebouwer in Helmond. Drie
-generaties, 85 medewerkers, bouwt verpakkingsmachines voor de
-Nederlandse voedingsmiddelenindustrie: sauzen, vlees, zuivel, conserven.
-Twee jaar projectdata: dertien klanten, acht productlijnen, vijfentwintig
-projecten. Alle namen, projectcodes en getallen zijn verzonnen.
+generaties, 85 medewerkers, bouwt verpakkingsmachines voor de Nederlandse
+voedingsmiddelenindustrie: sauzen, vlees, zuivel, conserven, bakery.
+Twee jaar projectdata: veertien klanten in vijf sub-sectoren, acht
+productlijnen, zevenentwintig projecten. Alle namen, projectcodes en
+getallen zijn verzonnen.
 
 ## Inspiratiebronnen
 

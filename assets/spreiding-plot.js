@@ -46,8 +46,8 @@ window.PA = window.PA || {};
     var tabel = opts.tabel;
     var projecten = opts.projecten;
 
-    var W = 760, H = 520;
-    var margin = { top: 24, right: 28, bottom: 96, left: 180 };
+    var W = 760, H = 560;
+    var margin = { top: 24, right: 28, bottom: 136, left: 180 };
     var iw = W - margin.left - margin.right;
     var ih = H - margin.top - margin.bottom;
 
@@ -60,8 +60,23 @@ window.PA = window.PA || {};
     var POSITIVE = "#3F7D4E";
     var NEGATIVE = "#A2382B";
 
-    // Klanten gesorteerd op totale omzet (grootste boven).
-    var klanten = uniqueOrderedBy(projecten, "klant", function (p) { return p.omzet; });
+    // Klanten gegroepeerd op sub-sector, binnen sub-sector op omzet.
+    var subsectorMap = window.PA.klantSubsector || {};
+    var subsectorVolgorde = window.PA.subsectorVolgorde || [];
+    var subsectorKleur = window.PA.subsectorKleur || {};
+    var klantenOpOmzet = uniqueOrderedBy(projecten, "klant", function (p) { return p.omzet; });
+    var klanten = klantenOpOmzet.slice().sort(function (a, b) {
+      var sa = subsectorMap[a] || "Overig";
+      var sb = subsectorMap[b] || "Overig";
+      if (sa !== sb) {
+        var ia = subsectorVolgorde.indexOf(sa);
+        var ib = subsectorVolgorde.indexOf(sb);
+        if (ia === -1) ia = 99;
+        if (ib === -1) ib = 99;
+        return ia - ib;
+      }
+      return klantenOpOmzet.indexOf(a) - klantenOpOmzet.indexOf(b);
+    });
     // Machines gesorteerd op totale omzet (grootste links).
     var machines = uniqueOrderedBy(projecten, "machine", function (p) { return p.omzet; });
 
@@ -113,15 +128,57 @@ window.PA = window.PA || {};
     g.appendChild(el("line", { x1: 0, y1: ih, x2: iw, y2: ih, stroke: INK_300 }));
     g.appendChild(el("line", { x1: 0, y1: 0, x2: 0, y2: ih, stroke: INK_300 }));
 
-    // Klant-labels (y-as) — horizontaal links
+    // Klant-labels (y-as) met sub-sector-kleurmarker links
     klanten.forEach(function (k) {
+      var sub = subsectorMap[k] || "Overig";
+      var kleur = subsectorKleur[sub] || INK;
       g.appendChild(el("text", {
-        x: -10, y: yc(k) + 4,
+        x: -22, y: yc(k) + 4,
         "text-anchor": "end",
         fill: INK,
         "font-size": 12,
         "font-family": "Roboto, sans-serif",
       }, k));
+      g.appendChild(el("rect", {
+        x: -14, y: yc(k) - 4,
+        width: 8, height: 8,
+        fill: kleur,
+        rx: 1, ry: 1,
+      }));
+    });
+
+    // Horizontale separator-lijntjes tussen sub-sectoren over de plot
+    var prevSub = null;
+    klanten.forEach(function (k, i) {
+      var sub = subsectorMap[k] || "Overig";
+      if (prevSub !== null && sub !== prevSub) {
+        g.appendChild(el("line", {
+          x1: 0, y1: i * cellH, x2: iw, y2: i * cellH,
+          stroke: INK_300, "stroke-width": 1, "stroke-opacity": 0.6,
+        }));
+      }
+      prevSub = sub;
+    });
+
+    // Sub-sector legenda onderaan
+    var legendY = ih + 56;
+    var legendX = 0;
+    subsectorVolgorde.forEach(function (sub) {
+      var kleur = subsectorKleur[sub] || INK;
+      g.appendChild(el("rect", {
+        x: legendX, y: legendY,
+        width: 8, height: 8,
+        fill: kleur, rx: 1, ry: 1,
+      }));
+      var label = el("text", {
+        x: legendX + 14, y: legendY + 7,
+        "text-anchor": "start",
+        fill: SLATE,
+        "font-size": 10,
+        "font-family": "Roboto, sans-serif",
+      }, sub);
+      g.appendChild(label);
+      legendX += 14 + sub.length * 6 + 16;
     });
 
     // Machine-labels (x-as) — geroteerd onder

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Klanten — Patroon-atlas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="brand">Patroon-atlas</a>
+    <div class="meta">
+      <div class="label">Demo</div>
+      <div class="value">Korver Machinebouw, Helmond</div>
+    </div>
+  </div>
+  <nav class="nav">
+    <a href="klanten.html" class="active">Klanten</a>
+    <a href="producten.html">Producten</a>
+    <a href="spreiding.html">Spreiding</a>
+    <a href="migratie.html">Migratie</a>
+  </nav>
+</header>
+
+<main class="main">
+
+  <section style="margin-bottom: 24px;">
+    <div class="eyebrow">Plot 1 — Klanten</div>
+    <h1 class="h1">Welke klanten verdienen, en welke kosten je geld?</h1>
+    <p class="body-p">
+      Een omzet-rapport per klant laat zien wie er groot is. Een
+      marge-rapport per klant laat zien wie er rendeert. Door beide
+      tegelijk in beeld te brengen, en sub-sector mee te kleuren, valt
+      zichtbaar dat de marge-druk vaak niet bij &eacute;&eacute;n klant
+      hoort maar bij een hele groep klanten in dezelfde food-categorie.
+    </p>
+  </section>
+
+  <section class="plot-page split" style="margin-bottom: 24px;">
+    <div class="card">
+      <div id="plot"></div>
+      <p class="plot-caption">
+        Eén punt is één klant, geaggregeerd over alle projecten in 2024
+        en 2025. Kleur volgt sub-sector (vijf categorieën in de
+        voedingsmiddelenindustrie). Bubble-grootte = aantal projecten.
+        Stippellijnen zijn de mediaan over de klanten als leeshulp, geen
+        wet.
+      </p>
+      <p class="plot-bridge">
+        <strong>Met je eigen data:</strong> klanten uit je CRM gekoppeld
+        aan projecten uit je projectadministratie (Exact, AFAS, Ridder,
+        Isah, Plan-de-CAMpagne). Per klant geaggregeerde omzet en
+        omzet-gewogen marge. Sub-sector als attribuut bij de klantkaart,
+        of als groepering op SBI-code. Klanten worden een handvol punten,
+        sub-sector een kleur, en het kwadrant maakt direct duidelijk
+        welke segmenten je structureel onder de mediaan zitten.
+      </p>
+    </div>
+    <div id="tabel"></div>
+  </section>
+
+  <section class="card" style="max-width: 720px;">
+    <div class="eyebrow">Hoe lees je deze plot</div>
+    <ul class="uitleg-lijst">
+      <li><strong>Rechtsboven:</strong> grote klanten met goede marge. Begrijpen waarom dit werkt is meer waard dan optimaliseren. Brouwer Sauzen en Akkermans Suikerwerk zitten hier.</li>
+      <li><strong>Rechtsonder:</strong> grote klanten met krappe marge. Hier zit het risico dat het MT structureel onderschat omdat de omzet de marge-druk verhult. Vink Diepvries (Dairy) staat hier nu.</li>
+      <li><strong>Linksboven:</strong> kleine klanten met goede marge. Vaak overgeslagen, soms onterecht. Klaver Kruiden (Specialty) is hier het mooiste voorbeeld.</li>
+      <li><strong>Linksonder:</strong> klein én marge-arm. Kandidaat voor "waarom doen we dit eigenlijk nog?". Verlinden Vis zit hier.</li>
+      <li><strong>Per kleur leesbaar:</strong> beide Protein-klanten (De Vegter, Verlinden) zitten onder de marge-mediaan. Dat is een sub-sector-patroon, niet een individuele klant-vraag.</li>
+    </ul>
+    <p class="body-p" style="margin-top: 16px; font-size: 13px; color: var(--fg-2);">
+      Klanten als punt is een aggregaat over projecten. De winst en het
+      verlies bij &eacute;&eacute;n klant kunnen elkaar opheffen, en dan
+      eindigt de klant op een gemiddelde plek terwijl er onder de motorkap
+      vier projecten met vier verschillende verhalen liggen. De tabel
+      ernaast laat zien hoeveel projecten een klant heeft.
+    </p>
+  </section>
+
+  <section class="card" style="max-width: 720px;">
+    <div class="eyebrow">Hoe je dit in het MT brengt</div>
+    <p class="body-p">
+      Een MT-gesprek over klant-rendement is meestal &eacute;&eacute;n klant
+      per keer. Wat deze plot toevoegt is dat sub-sector een patroon kan
+      zijn. Beide Protein-klanten zitten onder de mediaan, en dat is geen
+      toeval als de Sleevemachine en Stretchwikkelaar beide problematische
+      productlijnen zijn (die kopen Protein-klanten). Het echte gesprek
+      gaat dan niet over De Vegter of Verlinden los, maar over of
+      Korver de Protein-segment-machines in de huidige opzet moet blijven
+      voeren.
+    </p>
+    <p class="body-p" style="margin-top: 8px; font-size: 13px; color: var(--fg-2);">
+      Vink Diepvries (Dairy) verdient in dit gesprek aandacht omdat het
+      een top-3-klant is die in 2025 naar laag-marge-territorium zakte.
+      Wel of geen klant-actie is hier dezelfde sub-vraag als bij
+      <a href="migratie.html">Migratie</a>: wat is het pad terug naar de
+      hogere marge die Vink in 2024 nog had.
+    </p>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    Demo met fictieve data. Onderdeel van
+    <a href="https://github.com/thijsleufkens/datawijs-met-thijs">Datawijs met Thijs</a>.
+  </div>
+</footer>
+
+<script src="assets/data.js"></script>
+<script src="assets/format.js"></script>
+<script src="assets/klanten-plot.js"></script>
+<script>
+  (function () {
+    window.PA.klantenPlot({
+      container: document.getElementById("plot"),
+      tabel: document.getElementById("tabel"),
+      projecten: window.PA.projecten,
+    });
+  })();
+</script>
+
+</body>
+</html>

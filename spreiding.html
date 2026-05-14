@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Plot 6: Spreiding — Patroon-atlas</title>
+<title>Spreiding — Patroon-atlas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
@@ -31,7 +31,7 @@
 <main class="main">
 
   <section style="margin-bottom: 24px;">
-    <div class="eyebrow">Plot 6 — Spreiding</div>
+    <div class="eyebrow">Plot 3 — Spreiding</div>
     <h1 class="h1">Welke productlijnen hangen aan één klant, en welke klanten kopen meer dan één machine?</h1>
     <p class="body-p">
       Een klant-omzet-tabel zegt wat een klant doet. Een product-omzet-tabel
@@ -45,10 +45,12 @@
     <div class="card">
       <div id="plot"></div>
       <p class="plot-caption">
-        Eén bubble per project. Verticaal de klanten (gesorteerd op totale
-        omzet), horizontaal de machinetypen (idem). Bubble-grootte = omzet
-        van het project. Open cirkel = 2024, gevulde cirkel = 2025. Kleur =
-        marge-band: rood &lt; 10%, ink 10–20%, groen ≥ 20%. Lege cellen zijn
+        Eén bubble per project. Verticaal de klanten, gegroepeerd per
+        sub-sector (Bakery, Specialty, Protein, Dairy, Sauces), binnen
+        een sub-sector op omzet aflopend. Horizontaal de machinetypen,
+        ook op omzet aflopend. Bubble-grootte = omzet van het project.
+        Open cirkel = 2024, gevulde cirkel = 2025. Kleur = marge-band:
+        rood &lt; 10%, ink 10–20%, groen ≥ 20%. Lege cellen zijn
         klant-machine-combinaties die niet voorkomen.
       </p>
       <p class="plot-bridge">
@@ -76,6 +78,33 @@
       is juist de informatie: het toont waar je niet zit, niet alleen
       waar je wél zit. Sterk MT-gespreksonderwerp: welke lege cellen zijn
       een gemiste kans en welke zijn een bewuste positionering?
+    </p>
+  </section>
+
+  <section class="card" style="max-width: 720px;">
+    <div class="eyebrow">Hoe je dit in het MT brengt</div>
+    <p class="body-p">
+      Een portfolio-gesprek vraagt om twee dingen: een beeld van waar je
+      hangt en een beeld van waar je beweegt. Deze matrix doet het eerste.
+      De directe vraag voor het MT: welke klanten zijn afhankelijk van
+      één productlijn, en welke productlijnen hangen aan één klant?
+      Verlinden Vis op Stretchwikkelaar is daar het scherpste voorbeeld,
+      twee jaar achter elkaar rood en alleen daar.
+    </p>
+    <p class="body-p" style="margin-top: 8px;">
+      De sub-sector groepering maakt een tweede laag zichtbaar: alle vijf
+      de Bakery-klanten leunen op Trayloader, Inpakrobot of Etiketteer.
+      Dat is een coherent segment dat met enkele productlijnen bediend
+      kan worden. Dairy hangt aan Verpakkingslijn (groot maar dun).
+      Protein zit volledig op Sleeve en Stretchwikkelaar, dezelfde twee
+      types die qua marge het zwaarst onder druk staan, een patroon dat
+      in een klant-rapport per regel verloren gaat.
+    </p>
+    <p class="body-p" style="margin-top: 8px; font-size: 13px; color: var(--fg-2);">
+      Aanbeveling die uit deze plot kan rollen: niet "verbreden naar meer
+      klanten" als algemene koers, maar gericht kijken welke sub-sectoren
+      onderbediend zijn (kruiden, conserven) en of er klanten zijn buiten
+      de huidige top die in een lege cel met goede marge passen.
     </p>
   </section>
 

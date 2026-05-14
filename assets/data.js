@@ -5,11 +5,44 @@
 
 window.PA = window.PA || {};
 
-// Intern uurtarief om uren-uitloop in € te waarderen voor de erosie-plot.
+// Intern uurtarief om uren-uitloop in € te waarderen.
 // Geen loonkosten, maar de marge-impact per extra besteed uur (loaded rate
 // inclusief overhead-allocatie). Voor een NL maakbedrijf 50–200 fte een
 // plausibele waarde.
 window.PA.UURTARIEF_INTERN = 60;
+
+// Sub-sector per klant. Vijf categorieën over de voedingsmiddelenindustrie
+// die deze fictieve klanten bedienen. Gebruikt voor kleur en groepering
+// in de klanten- en spreidings-plot.
+window.PA.klantSubsector = {
+  "Akkermans Suikerwerk":  "Bakery",
+  "Bos Snacks":            "Bakery",
+  "Bremer Frisdrank":      "Sauces",
+  "Brouwer Sauzen":        "Sauces",
+  "De Vegter Vleeswaren":  "Protein",
+  "Den Hartog Conserven":  "Specialty",
+  "Hoogland Zuivel":       "Dairy",
+  "Klaver Kruiden":        "Specialty",
+  "Ravenstein Banket":     "Bakery",
+  "Smaakhuis Groothandel": "Specialty",
+  "Veldhuis Banket":       "Bakery",
+  "Verlinden Vis":         "Protein",
+  "Vink Diepvries":        "Dairy",
+  "Westland Bakkerijen":   "Bakery",
+};
+
+// Volgorde van subsectoren in legenda's en groeperingen (op klantaantal).
+window.PA.subsectorVolgorde = ["Bakery", "Specialty", "Protein", "Dairy", "Sauces"];
+
+// Kleur per subsector. Gekozen voor maximale onderlinge onderscheidbaarheid
+// binnen het palet, niet voor good/bad-signalering.
+window.PA.subsectorKleur = {
+  "Bakery":    "#C98634",   // amber-500
+  "Specialty": "#F2B969",   // amber-300
+  "Protein":   "#1D0C0C",   // ink
+  "Dairy":     "#6E8AA8",   // staalblauw
+  "Sauces":    "#3F7D4E",   // groen
+};
 
 window.PA.projecten = [
   { id: "K2025-101", klant: "Brouwer Sauzen",        machine: "Vulstation M40",        jaar: 2025, omzet: 1995000, margePercent: 22,  totaalUren: 16800, geplandeDoorlooptijdWeken: 18, werkelijkeDoorlooptijdWeken: 19,

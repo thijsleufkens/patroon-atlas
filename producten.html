@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Plot 5: Producten — Patroon-atlas</title>
+<title>Producten — Patroon-atlas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
@@ -31,7 +31,7 @@
 <main class="main">
 
   <section style="margin-bottom: 24px;">
-    <div class="eyebrow">Plot 5 — Producten</div>
+    <div class="eyebrow">Plot 2 — Producten</div>
     <h1 class="h1">Welke productlijnen renderen, en welke kosten je structureel geld?</h1>
     <p class="body-p">
       Marge per project is voor de meeste maakbedrijven op orde, maar het
@@ -46,19 +46,20 @@
     <div class="card">
       <div id="plot"></div>
       <p class="plot-caption">
-        Eén punt per machinetype, geaggregeerd over alle projecten van dat
-        type in 2024 en 2025. Bubble-grootte = totale omzet van het type.
-        Stippellijnen zijn medianen over de 8 machinetypen — geen wet,
-        alleen een leeshulp. De rode tint linksboven markeert het kwadrant
-        waar je geen productlijn wilt hebben.
+        Eén punt per machinetype, geaggregeerd over alle projecten van
+        dat type in 2024 en 2025. Bubble-grootte = totale omzet van het
+        type. Stippellijnen zijn medianen over de 8 machinetypen, geen
+        wet, alleen een leeshulp. De rode tint linksboven markeert het
+        kwadrant waar je geen productlijn wilt hebben.
       </p>
       <p class="plot-bridge">
-        <strong>Met je eigen data:</strong> projectdata gegroepeerd op
-        productlijn — machinetype, dienstcategorie, of de groep waar je
-        intern op stuurt. Voor elke productlijn worden marge en uitloop
-        omzet-gewogen geaggregeerd over alle projecten van dat type. Het
-        verschil tussen &ldquo;dit project ging fout&rdquo; en &ldquo;dit
-        type gaat structureel fout&rdquo; is hier het hele onderwerp.
+        <strong>Met je eigen data:</strong> projectdata uit je
+        projectadministratie (Exact, AFAS, Ridder, Isah, Plan-de-CAMpagne)
+        gegroepeerd op productlijn: machinetype, dienstcategorie, of de
+        groep waar je intern op stuurt. Voor elke productlijn worden
+        marge en uitloop omzet-gewogen geaggregeerd over alle projecten
+        van dat type. Het verschil tussen "dit project ging fout" en
+        "dit type gaat structureel fout" is hier het hele onderwerp.
       </p>
     </div>
     <div id="tabel"></div>
@@ -67,17 +68,45 @@
   <section class="card" style="max-width: 720px;">
     <div class="eyebrow">Hoe lees je deze plot</div>
     <ul class="uitleg-lijst">
-      <li><strong>Rechtsonder</strong> — hoge marge, lage engineering-uitloop. Productlijnen die je beheerst. Trayloader-achtige workhorses.</li>
-      <li><strong>Rechtsboven</strong> — gezonde marge maar engineering-uitloop. Verdient kalibratie van de offerte-uren, niet noodzakelijk een prijsdiscussie.</li>
-      <li><strong>Linksonder</strong> — lage marge maar engineering wel onder controle. De marge zit dan in materiaalprijs of prijsstelling, niet in uren-uitloop.</li>
-      <li><strong>Linksboven</strong> — lage marge én structurele engineering-uitloop. Hier ligt de vraag: doorgaan met agressievere prijsstelling, terugtreden uit de productlijn, of investeren in een betere calculatie voor dit type?</li>
+      <li><strong>Rechtsonder:</strong> hoge marge, lage engineering-uitloop. Productlijnen die je beheerst. Trayloader-achtige workhorses.</li>
+      <li><strong>Rechtsboven:</strong> gezonde marge maar engineering-uitloop. Verdient kalibratie van de offerte-uren, niet noodzakelijk een prijsdiscussie.</li>
+      <li><strong>Linksonder:</strong> lage marge maar engineering wel onder controle. De marge zit dan in materiaalprijs of prijsstelling, niet in uren-uitloop.</li>
+      <li><strong>Linksboven:</strong> lage marge én structurele engineering-uitloop. Hier ligt de vraag: doorgaan met agressievere prijsstelling, terugtreden uit de productlijn, of investeren in een betere calculatie voor dit type?</li>
     </ul>
     <p class="body-p" style="margin-top: 16px; font-size: 13px; color: var(--fg-2);">
-      Plot 1 toonde dezelfde rode projecten op individueel niveau. Plot 5
-      toont dat die rode projecten geen losse incidenten zijn maar
-      clusters op machinetype. Dat opent een hele andere conversatie: niet
-      &ldquo;hoe red ik dit project?&rdquo; maar &ldquo;wat doe ik met deze
-      productlijn?&rdquo;.
+      Op <a href="klanten.html">klant-niveau</a> verklaart deze plot het
+      sub-sector-patroon: de Protein-klanten hangen op Sleeve en
+      Stretchwikkelaar, en dat zijn de twee productlijnen linksboven.
+      De klanten zijn rood omdat hun productlijn rood is. Dat is een
+      andere conversatie dan "hoe red ik dit project": het is "wat doe
+      ik met deze productlijn".
+    </p>
+  </section>
+
+  <section class="card" style="max-width: 720px;">
+    <div class="eyebrow">Hoe je dit in het MT brengt</div>
+    <p class="body-p">
+      Een marge-vraag op productlijn-niveau is een andere vraag dan op
+      project-niveau. Project-niveau eindigt meestal in "we doen het
+      anders volgende keer". Productlijn-niveau eindigt in een keuze:
+      doorgaan onder bestaande voorwaarden, calculatie omhoog, prijs
+      omhoog, of stoppen.
+    </p>
+    <p class="body-p" style="margin-top: 8px;">
+      Concreet voor deze data: Sleevemachine S22 en Stretchwikkelaar W8
+      staan linksboven. Drie projecten Sleeve over twee jaar met dalende
+      marge, twee projecten Stretchwikkelaar met negatieve marge in 2025.
+      Aanbeveling die uit deze plot kan rollen is niet "Sleeve verbeteren"
+      maar "Sleeve voor 2026 alleen offreren onder een type-specifieke
+      uren-opslag van X procent, en Stretchwikkelaar pauzeren tot we de
+      engineering-onderschatting bij die productlijn doorhebben".
+    </p>
+    <p class="body-p" style="margin-top: 8px; font-size: 13px; color: var(--fg-2);">
+      Rechtsboven en rechtsonder zijn de productlijnen waar je niets aan
+      hoeft te veranderen. Een MT-besluit op de slechte productlijnen
+      gaat ten koste van engineering-capaciteit voor de goede, dus de
+      vraag of de calculatie-aanpassing genoeg is hangt af van hoeveel
+      offerte-volume je verwacht op de slechte types in 2026.
     </p>
   </section>
 
