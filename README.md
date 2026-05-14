@@ -1,39 +1,59 @@
 # Patroon-atlas
 
-Een galerij van zeven scatterplots over een fictieve machinebouwer. Bedoeld als demo voor maakbedrijven die hun operationele dashboards op orde hebben, maar de stap naar patroon-herkenning nog niet zelf maken.
+Een statische atlas in twee delen voor maakbedrijven die hun operationele
+dashboards op orde hebben en merken dat dezelfde grafieken niet meer nieuwe
+inzichten opleveren, maar dat het knaagt dat er over projecten heen iets
+moet zitten.
 
 Onderdeel van [datawijs-met-thijs](../../README.md).
 
 ## Wat het laat zien
 
-Operationele dashboards beantwoorden vragen die je al hebt. Scatterplots stellen vragen die je nog niet had — door twee dimensies tegen elkaar uit te zetten en groepen zichtbaar te maken die in een tabel verstopt blijven.
+Vier verkennings-plots die patronen over projecten heen tonen, plus drie
+MT-charts die uit die patronen volgen. Bedoeld om te laten zien hoe de
+volgende stap in analyse-capaciteit eruit kan zien als operationele
+rapportage al staat.
 
-Zeven plots, op drie niveaus:
+### Deel 1, Verkennen
 
-**Op project- en klant-niveau:**
+Vier plots, elk in een andere vorm, elk een vraag die in een standaard
+dashboard niet staat.
 
-1. **Klanten** — welke projecten verdienen, en welke kosten je geld?
-2. **Doorlooptijd** — welke projecten lopen structureel uit?
-3. **Projectfases** — waar lekken de uren binnen een project?
-4. **Migratie** — welke klanten zijn anders dan vorig jaar?
+1. **Uitloop** (heatmap) — welke combinaties van productlijn en fase lopen
+   structureel uit?
+2. **Erosie** (decompositie-bar) — bij welke productlijnen lekt de marge,
+   en zit dat in materiaal of in uren?
+3. **Spreiding** (bubble-matrix) — hoe is de klant-machine-portefeuille
+   opgebouwd, en waar zit afhankelijkheid?
+4. **Migratie** (arrow-plot) — welke klanten zijn anders dan vorig jaar?
 
-**Op productlijn-niveau** — patronen die alleen zichtbaar worden als je over meerdere projecten heen aggregeert:
+### Deel 2, Presenteren
 
-5. **Producten** — welke productlijnen renderen, en welke kosten je structureel geld?
-6. **Spreiding** — hoe zit de klant-machine-portefeuille in elkaar?
-7. **Leercurve** — leren we van onze fouten per productlijn?
+Drie MT-charts die een aanbeveling onderbouwen, voortgekomen uit de
+verkenning. Basis-vormen, één boodschap per chart.
 
-Alle plots volgen hetzelfde patroon: vanilla SVG, hover-koppeling met de tabel, kleuren uit het DMT-palet. Plot 1, 4, 5 en 7 gebruiken mediaan-kwadranten als leeshulp; Plot 2 en 3 een diagonaal y = x; Plot 6 is een categorische bubble-matrix.
+1. **Productlijn-besluit** (bar) — twee productlijnen vragen om een
+   go/no-go voor 2026.
+2. **Uren-kalibratie** (bar met tolerantielijn) — vier productlijnen
+   vragen hogere engineering-calculatie.
+3. **Klant-concentratie** (Pareto) — top-3 levert 40% van de omzet, wat
+   als de mix verschuift?
+
+Elke verkennings-plot heeft een **"Naar het MT met"**-sectie die naar
+één of twee MT-charts linkt. Elke MT-chart heeft een **"Komt voort uit"**
+die terugverwijst.
 
 ## Stack
 
-Bewust statisch: acht HTML-bestanden, één gedeelde `assets/`-map, geen build-step. Volgt de pattern van [bvbv-canvas](https://github.com/thijsleufkens/bvbv-canvas).
+Bewust statisch: acht HTML-bestanden, één gedeelde `assets/`-map, geen
+build-step. Volgt de pattern van
+[bvbv-canvas](https://github.com/thijsleufkens/bvbv-canvas).
 
 | Onderdeel | Keuze |
 |---|---|
-| Markup | 8 statische HTML-bestanden (index + 7 plots) |
+| Markup | 8 statische HTML-bestanden (index + 4 verkennen + 3 presenteren) |
 | Styling | Vanilla CSS met DMT design-tokens uit bvbv-canvas |
-| Charting | Vanilla JS dat inline SVG genereert — geen library |
+| Charting | Vanilla JS dat inline SVG genereert, geen library |
 | Data | Statisch JS-object in `assets/data.js` |
 | Hosting | GitHub Pages, of `python3 -m http.server` lokaal |
 
@@ -41,7 +61,8 @@ Geen Next.js, geen React, geen TypeScript, geen Docker, geen package.json.
 
 ## Lokaal draaien
 
-Open `index.html` direct in de browser (werkt op `file://`), of serveer de map:
+Open `index.html` direct in de browser (werkt op `file://`), of serveer
+de map:
 
 ```bash
 cd apps/patroon-atlas
@@ -52,11 +73,16 @@ Open <http://localhost:8000/>.
 
 ## Hosten
 
-GitHub Pages, vanaf de hoofdmap van deze sub-directory. Of elke andere statische host (Netlify drop, Cloudflare Pages, eigen webserver).
+GitHub Pages, vanaf de hoofdmap van deze sub-directory. Of elke andere
+statische host (Netlify drop, Cloudflare Pages, eigen webserver).
 
 ## Demo-data
 
-Korver Machinebouw, een fictief familiebedrijf in Helmond dat special machines bouwt voor de voedingsmiddelenindustrie. ~120 FTE, project-organisatie. Alle klantnamen, projectcodes en getallen zijn verzonnen.
+Korver Machinebouw, een fictieve special-machinebouwer in Helmond. Drie
+generaties, 85 medewerkers, bouwt verpakkingsmachines voor de
+Nederlandse voedingsmiddelenindustrie: sauzen, vlees, zuivel, conserven.
+Twee jaar projectdata: dertien klanten, acht productlijnen, vijfentwintig
+projecten. Alle namen, projectcodes en getallen zijn verzonnen.
 
 ## Inspiratiebronnen
 
