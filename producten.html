@@ -49,12 +49,12 @@
       <div id="plot"></div>
       <p class="plot-caption">
         Eén pijl per machinetype, van de 2024-positie naar de 2025-positie
-        in marge × engineering-uitloop ruimte. Open marker = 2024, gevulde
-        marker = 2025. Bubble-grootte = totale omzet over beide jaren.
-        Kleur volgt de richting: groen als de productlijn gunstig beweegt,
-        rood als ongunstig, grijs als stabiel of gemengd. Verpakkingslijn
-        L100 is nieuw in 2025 en heeft geen pijl, alleen een marker met
-        amber-rand. Stippellijnen zijn medianen over de 2025-eindpunten.
+        in omzet × marge ruimte. Open marker = 2024, gevulde marker =
+        2025. Kleur van bubble en pijl volgt de engineering-uitloop in
+        2025: groen onder 15%, amber tussen 15 en 50%, rood boven 50%.
+        Verpakkingslijn L100 is nieuw in 2025 en heeft geen pijl, alleen
+        een marker met amber-rand. Stippellijnen zijn medianen over de
+        2025-eindpunten.
       </p>
       <p class="plot-bridge">
         <strong>Met je eigen data:</strong> projectdata uit je
@@ -62,8 +62,9 @@
         gegroepeerd op productlijn (machinetype, dienstcategorie, of de
         groep waar je intern op stuurt) en op jaar. Per jaar omzet-gewogen
         marge en gewogen engineering-uitloop. De pijl tussen twee jaren
-        maakt richting zichtbaar, een vraag die marge-per-jaar-rapporten
-        impliciet laten.
+        toont waar elke productlijn naartoe beweegt; de kleur waarschuwt
+        op de engineering-kant. Beide zitten in marge-per-jaar-rapporten
+        impliciet.
       </p>
     </div>
     <div id="tabel"></div>
@@ -72,11 +73,11 @@
   <section class="card" style="max-width: 720px;">
     <div class="eyebrow">Hoe lees je deze plot</div>
     <ul class="uitleg-lijst">
-      <li><strong>Korte pijl rechtsonder:</strong> workhorse. Productlijn met goede marge en lage uitloop, en stabiel jaar op jaar. Trayloader T15 zit hier.</li>
-      <li><strong>Pijl naar rechtsonder:</strong> productlijn beweegt naar gezond-territorium. Marge omhoog, uitloop omlaag, of beide.</li>
-      <li><strong>Pijl naar linksboven:</strong> productlijn beweegt naar probleem-territorium. Marge omlaag, uitloop omhoog, of beide. Sleeve en Stretchwikkelaar zitten hier.</li>
-      <li><strong>Pijl met grijze tint:</strong> richting is gemengd. Marge verschoof maar uitloop ook in een richting die het effect dempt of versterkt. Vraagt om de tabel ernaast om te zien wat dominant is.</li>
-      <li><strong>Marker met amber-rand zonder pijl:</strong> productlijn nieuw in 2025. Verpakkingslijn L100 is daar het voorbeeld, te vroeg voor een richting maar wel relevant voor de positie waar het begint.</li>
+      <li><strong>Pijl naar rechtsboven:</strong> productlijn groeit in omzet en wint op marge. Etiketteermachine E12 doet dat: omzet bijna verdubbeld, marge stabiel.</li>
+      <li><strong>Pijl naar linksonder:</strong> krimp én margedaling. Sleevemachine S22 is hier het scherpste voorbeeld, met daarbovenop een rode kleur omdat de engineering-uitloop ver boven de helft staat.</li>
+      <li><strong>Korte pijl rechtsboven of rechtsonder:</strong> workhorse. Trayloader T15 stabiel rechtsboven, groen omdat uitloop minimaal is.</li>
+      <li><strong>Rode bubble linksonder met korte pijl:</strong> kleine, marge-arme productlijn met extreme engineering-uitloop. Stretchwikkelaar W8 valt door deze kant nul richting negatief. Zelfs zonder grote pijl is dat het MT-onderwerp.</li>
+      <li><strong>Marker met amber-rand zonder pijl:</strong> productlijn nieuw in 2025. Verpakkingslijn L100 staat groot en met gezonde marge, maar de amber-rand zegt dat er nog geen vergelijkingspunt is en de bubble-kleur (amber) zegt dat de engineering-uitloop er nu al verhoogd is.</li>
     </ul>
     <p class="body-p" style="margin-top: 16px; font-size: 13px; color: var(--fg-2);">
       Op <a href="klanten.html">klant-niveau</a> verklaart deze plot het

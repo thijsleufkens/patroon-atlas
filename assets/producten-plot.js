@@ -1,7 +1,8 @@
 // Producten-pijl-plot — vanilla JS, inline SVG.
 // Per machinetype een pijl van 2024-positie naar 2025-positie in
-// marge × engineering-uitloop ruimte. Productlijnen die alleen in 2025
-// bestaan krijgen een losse marker.
+// omzet × marge ruimte. Bubble-kleur volgt engineering-uitloop in 2025
+// (groen onder 15%, amber tussen 15 en 50%, rood boven 50%).
+// Productlijnen die alleen in 2025 bestaan krijgen een losse marker.
 
 window.PA = window.PA || {};
 
@@ -13,14 +14,6 @@ window.PA = window.PA || {};
     var r0 = range[0], r1 = range[1];
     return function (v) {
       var t = (v - d0) / (d1 - d0);
-      return r0 + t * (r1 - r0);
-    };
-  }
-  function scaleSqrt(domain, range) {
-    var d1 = Math.sqrt(domain[1]);
-    var r0 = range[0], r1 = range[1];
-    return function (v) {
-      var t = Math.sqrt(Math.max(0, v)) / d1;
       return r0 + t * (r1 - r0);
     };
   }
@@ -51,15 +44,24 @@ window.PA = window.PA || {};
     return n;
   }
 
+  function formatEuroTick(v) {
+    if (v === 0) return "€ 0";
+    if (v >= 1000000) {
+      var m = v / 1000000;
+      var s = m % 1 === 0 ? m.toFixed(0) : m.toFixed(1).replace(".", ",");
+      return "€ " + s + "M";
+    }
+    return "€ " + Math.round(v / 1000) + "k";
+  }
+
   // Aggregeer per machinetype per jaar.
   function aggregeerPerMachineJaar(projecten) {
     var bins = {};
     projecten.forEach(function (p) {
       if (!bins[p.machine]) {
-        bins[p.machine] = { machine: p.machine, totaalOmzet: 0, jaren: {} };
+        bins[p.machine] = { machine: p.machine, jaren: {} };
       }
       var b = bins[p.machine];
-      b.totaalOmzet += p.omzet;
       if (!b.jaren[p.jaar]) {
         b.jaren[p.jaar] = {
           jaar: p.jaar, omzet: 0, margeOmzet: 0,
@@ -88,12 +90,28 @@ window.PA = window.PA || {};
       });
       out.push({
         machine: b.machine,
-        totaalOmzet: b.totaalOmzet,
         y2024: b.jaren[2024] || null,
         y2025: b.jaren[2025] || null,
       });
     });
     return out;
+  }
+
+  // Kleur op basis van engineering-uitloop in 2025 (of in 2024 als er
+  // geen 2025 is).
+  function kleurVoorUitloop(uitloop) {
+    var POSITIVE = "#3F7D4E";
+    var AMBER_500 = "#C98634";
+    var NEGATIVE = "#A2382B";
+    if (uitloop < 15) return POSITIVE;
+    if (uitloop < 50) return AMBER_500;
+    return NEGATIVE;
+  }
+
+  function uitloopBucketLabel(uitloop) {
+    if (uitloop < 15) return "binnen tolerantie";
+    if (uitloop < 50) return "verhoogd";
+    return "extreem";
   }
 
   function render(opts) {
@@ -102,13 +120,14 @@ window.PA = window.PA || {};
     var projecten = opts.projecten;
 
     var W = 720, H = 480;
-    var margin = { top: 24, right: 32, bottom: 56, left: 72 };
+    var margin = { top: 28, right: 32, bottom: 56, left: 80 };
     var iw = W - margin.left - margin.right;
     var ih = H - margin.top - margin.bottom;
 
     var INK = "#1D0C0C";
     var SLATE = "#727272";
     var INK_300 = "#B8B0AC";
+    var CREAM = "#FDF8F0";
     var AMBER = "#F2B969";
     var AMBER_500 = "#C98634";
     var POSITIVE = "#3F7D4E";
@@ -117,76 +136,71 @@ window.PA = window.PA || {};
     var machines = aggregeerPerMachineJaar(projecten);
     var idVan = function (m) { return "machine:" + m; };
 
-    // Verzamel alle (marge, uitloop) waarden om de schalen te bepalen.
+    // Schalen domein op alle (omzet, marge) waarden over beide jaren.
+    var alleOmzet = [];
     var alleMarge = [];
-    var alleUitloop = [];
     machines.forEach(function (m) {
       [m.y2024, m.y2025].forEach(function (j) {
         if (j) {
+          alleOmzet.push(j.omzet);
           alleMarge.push(j.margePercent);
-          alleUitloop.push(j.engUitloop);
         }
       });
     });
 
-    var xStep = 5;
-    var yStep = 25;
-    var xMin = niceMin(Math.min.apply(null, alleMarge) - 2, xStep);
-    var xMax = niceMax(Math.max.apply(null, alleMarge) + 2, xStep);
-    var yMin = 0;
-    var yMax = niceMax(Math.max.apply(null, alleUitloop) + 10, yStep);
+    var xStep = 1000000;
+    var yStep = 5;
+    var xMax = niceMax(Math.max.apply(null, alleOmzet) * 1.05, xStep);
+    var yMin = niceMin(Math.min(0, Math.min.apply(null, alleMarge) - 2), yStep);
+    var yMax = niceMax(Math.max.apply(null, alleMarge) + 2, yStep);
 
-    var x = scaleLinear([xMin, xMax], [0, iw]);
+    var x = scaleLinear([0, xMax], [0, iw]);
     var y = scaleLinear([yMin, yMax], [ih, 0]);
-    var r = scaleSqrt([0, Math.max.apply(null, machines.map(function (m) { return m.totaalOmzet; }))], [8, 24]);
 
-    // Medianen over de 2025-eindpunten (voor types die in 2025 bestaan).
-    // Geeft het beeld van waar de productlijnen nu staan.
-    var eindMarge = machines.filter(function (m) { return m.y2025; }).map(function (m) { return m.y2025.margePercent; });
-    var eindUitloop = machines.filter(function (m) { return m.y2025; }).map(function (m) { return m.y2025.engUitloop; });
-    var xMed = median(eindMarge);
-    var yMed = median(eindUitloop);
+    // Medianen over 2025-eindpunten (huidige stand).
+    var eind2025 = machines.filter(function (m) { return m.y2025; });
+    var xMed = median(eind2025.map(function (m) { return m.y2025.omzet; }));
+    var yMed = median(eind2025.map(function (m) { return m.y2025.margePercent; }));
 
     container.innerHTML = "";
     var svg = el("svg", {
       class: "plot",
       viewBox: "0 0 " + W + " " + H,
       role: "img",
-      "aria-label": "Pijl-plot: marge versus engineering-uitloop per machinetype, 2024 naar 2025",
+      "aria-label": "Pijl-plot: omzet versus marge per machinetype, 2024 naar 2025, kleur = engineering-uitloop in 2025",
     });
     container.appendChild(svg);
 
-    // Pijl-definitie in defs (één per kleur)
+    // Pijl-markers per kleur
     var defs = el("defs", {});
     svg.appendChild(defs);
     function arrowMarker(id, color) {
       var marker = el("marker", {
         id: id, viewBox: "0 0 10 10", refX: 8, refY: 5,
-        markerWidth: 7, markerHeight: 7, orient: "auto-start-reverse",
+        markerWidth: 6, markerHeight: 6, orient: "auto-start-reverse",
       });
       marker.appendChild(el("path", {
-        d: "M 0 0 L 10 5 L 0 10 z",
-        fill: color,
+        d: "M 0 0 L 10 5 L 0 10 z", fill: color,
       }));
       defs.appendChild(marker);
     }
     arrowMarker("arrow-pos", POSITIVE);
+    arrowMarker("arrow-amb", AMBER_500);
     arrowMarker("arrow-neg", NEGATIVE);
-    arrowMarker("arrow-neu", SLATE);
-    arrowMarker("arrow-act", AMBER_500);
+    arrowMarker("arrow-act", AMBER);
 
     var g = el("g", { transform: "translate(" + margin.left + "," + margin.top + ")" });
     svg.appendChild(g);
 
-    // Kwadrant-tints (op de 2025-medianen)
+    // Lichte kwadrant-tints op de 2025-medianen
     g.appendChild(el("rect", {
-      x: x(xMed), y: y(yMed),
-      width: iw - x(xMed), height: ih - y(yMed),
+      x: x(xMed), y: 0,
+      width: iw - x(xMed), height: y(yMed),
       fill: POSITIVE, "fill-opacity": 0.04,
     }));
     g.appendChild(el("rect", {
-      x: 0, y: 0,
-      width: x(xMed), height: y(yMed),
+      x: 0, y: y(yMed),
+      width: x(xMed), height: ih - y(yMed),
       fill: NEGATIVE, "fill-opacity": 0.04,
     }));
 
@@ -210,34 +224,31 @@ window.PA = window.PA || {};
         "font-family": "Roboto, sans-serif",
       }, text));
     }
-    label("probleem-productlijn",  8,      14,     "start");
-    label("gezonde productlijn",   iw - 8, ih - 8, "end");
+    label("groot & gezond",     iw - 8, 14, "end");
+    label("klein & gezond",     8,      14, "start");
+    label("groot & marge-arm",  iw - 8, ih - 8, "end");
+    label("klein & marge-arm",  8,      ih - 8, "start");
 
-    // X-as (marge)
+    // X-as (omzet)
     g.appendChild(el("line", { x1: 0, y1: ih, x2: iw, y2: ih, stroke: INK_300 }));
-    ticks(xMin, xMax, xStep).forEach(function (v) {
+    ticks(0, xMax, xStep).forEach(function (v) {
       var px = x(v);
       g.appendChild(el("line", {
         x1: px, y1: ih, x2: px, y2: ih + 5, stroke: INK_300,
       }));
       g.appendChild(el("text", {
         x: px, y: ih + 18,
-        "text-anchor": "middle",
-        fill: SLATE,
-        "font-size": 11,
-        "font-family": "Roboto, sans-serif",
-      }, Math.round(v) + "%"));
+        "text-anchor": "middle", fill: SLATE,
+        "font-size": 11, "font-family": "Roboto, sans-serif",
+      }, formatEuroTick(v)));
     });
     g.appendChild(el("text", {
       x: iw / 2, y: ih + 44,
-      "text-anchor": "middle",
-      fill: INK,
-      "font-size": 12,
-      "font-weight": 500,
-      "font-family": "Roboto, sans-serif",
-    }, "Marge (omzet-gewogen, per jaar)"));
+      "text-anchor": "middle", fill: INK,
+      "font-size": 12, "font-weight": 500, "font-family": "Roboto, sans-serif",
+    }, "Omzet per jaar (per machinetype)"));
 
-    // Y-as (engineering-uitloop)
+    // Y-as (marge)
     g.appendChild(el("line", { x1: 0, y1: 0, x2: 0, y2: ih, stroke: INK_300 }));
     ticks(yMin, yMax, yStep).forEach(function (v) {
       var py = y(v);
@@ -246,65 +257,51 @@ window.PA = window.PA || {};
       }));
       g.appendChild(el("text", {
         x: -10, y: py + 3,
-        "text-anchor": "end",
-        fill: SLATE,
-        "font-size": 11,
-        "font-family": "Roboto, sans-serif",
-      }, "+" + Math.round(v) + "%"));
+        "text-anchor": "end", fill: SLATE,
+        "font-size": 11, "font-family": "Roboto, sans-serif",
+      }, v + "%"));
     });
     g.appendChild(el("text", {
-      x: -ih / 2, y: -52,
+      x: -ih / 2, y: -56,
       transform: "rotate(-90)",
-      "text-anchor": "middle",
-      fill: INK,
-      "font-size": 12,
-      "font-weight": 500,
-      "font-family": "Roboto, sans-serif",
-    }, "Engineering-uitloop t.o.v. schatting"));
+      "text-anchor": "middle", fill: INK,
+      "font-size": 12, "font-weight": 500, "font-family": "Roboto, sans-serif",
+    }, "Omzet-gewogen marge"));
 
-    // Kleur bepalen voor pijl: groen als richting naar "rechtsonder" (beter),
-    // rood als naar "linksboven" (slechter), grijs als gemengd of klein.
-    function pijlKleur(start, eind) {
-      var dM = eind.margePercent - start.margePercent;
-      var dU = eind.engUitloop - start.engUitloop;
-      // Score: marge omhoog goed (+), uitloop omhoog slecht (-)
-      var score = dM - dU * 0.5;
-      if (score > 2) return POSITIVE;
-      if (score < -2) return NEGATIVE;
-      return SLATE;
-    }
+    // Constante bubble-grootte voor 2025-eindpunten (omzet zit al op de as)
+    var R_EIND = 9;
+    var R_START = 6;
 
-    // Pijlen + eindpunten per machinetype
     var arrowsByMachine = {};
     machines.forEach(function (m) {
       var id = idVan(m.machine);
       var has24 = !!m.y2024;
       var has25 = !!m.y2025;
-      var radius = r(m.totaalOmzet);
+
+      // Kleur volgt uitloop in 2025 (of 2024 als geen 2025).
+      var uitloopVoorKleur = has25 ? m.y2025.engUitloop : (has24 ? m.y2024.engUitloop : 0);
+      var kleur = kleurVoorUitloop(uitloopVoorKleur);
+      var markerId =
+        kleur === POSITIVE ? "arrow-pos" :
+        kleur === AMBER_500 ? "arrow-amb" : "arrow-neg";
 
       var groep = el("g", { class: "machine-group" });
       g.appendChild(groep);
 
-      var startEl = null, eindEl = null, lijnEl = null, labelEl = null, kleur = SLATE;
+      var startEl = null, eindEl = null, lijnEl = null, labelEl = null;
 
       if (has24 && has25) {
-        // Pijl tussen jaren
-        var sx = x(m.y2024.margePercent);
-        var sy = y(m.y2024.engUitloop);
-        var ex = x(m.y2025.margePercent);
-        var ey = y(m.y2025.engUitloop);
-        kleur = pijlKleur(m.y2024, m.y2025);
-        var markerId =
-          kleur === POSITIVE ? "arrow-pos" :
-          kleur === NEGATIVE ? "arrow-neg" : "arrow-neu";
+        var sx = x(m.y2024.omzet);
+        var sy = y(m.y2024.margePercent);
+        var ex = x(m.y2025.omzet);
+        var ey = y(m.y2025.margePercent);
 
-        // Lijn iets ingekort zodat pijlpunt netjes op de bubble landt
         var dx = ex - sx, dy = ey - sy;
         var lengte = Math.sqrt(dx * dx + dy * dy);
         var ux = lengte > 0 ? dx / lengte : 0;
         var uy = lengte > 0 ? dy / lengte : 0;
-        var trimEind = Math.min(radius + 2, lengte * 0.5);
-        var trimStart = Math.min(radius * 0.6 + 2, lengte * 0.5);
+        var trimEind = Math.min(R_EIND + 2, lengte * 0.5);
+        var trimStart = Math.min(R_START + 2, lengte * 0.5);
 
         lijnEl = el("line", {
           x1: sx + ux * trimStart, y1: sy + uy * trimStart,
@@ -318,8 +315,8 @@ window.PA = window.PA || {};
         // 2024 marker (open)
         startEl = el("circle", {
           class: "point",
-          cx: sx, cy: sy, r: radius * 0.7,
-          fill: "#FDF8F0", stroke: kleur, "stroke-width": 1.5,
+          cx: sx, cy: sy, r: R_START,
+          fill: CREAM, stroke: kleur, "stroke-width": 1.5,
           "stroke-dasharray": "3 2",
           "stroke-opacity": 0.7,
         });
@@ -328,17 +325,16 @@ window.PA = window.PA || {};
         // 2025 marker (gevuld)
         eindEl = el("circle", {
           class: "point",
-          cx: ex, cy: ey, r: radius,
-          fill: kleur, "fill-opacity": 0.5,
+          cx: ex, cy: ey, r: R_EIND,
+          fill: kleur, "fill-opacity": 0.55,
           stroke: kleur, "stroke-width": 1.5,
-          "stroke-opacity": 0.9,
+          "stroke-opacity": 0.95,
         });
         groep.appendChild(eindEl);
 
-        // Label: machinetype-naam bij het 2025-eindpunt
-        var labelOffset = 8 + radius;
+        // Label naast het 2025-eindpunt
         labelEl = el("text", {
-          x: ex + labelOffset, y: ey + 4,
+          x: ex + R_EIND + 6, y: ey + 4,
           "text-anchor": "start",
           fill: INK,
           "font-size": 11,
@@ -348,20 +344,19 @@ window.PA = window.PA || {};
         }, m.machine);
         groep.appendChild(labelEl);
       } else if (has25 && !has24) {
-        // Nieuw in 2025: alleen 2025-marker met amber-rand
-        var ex2 = x(m.y2025.margePercent);
-        var ey2 = y(m.y2025.engUitloop);
-        kleur = INK;
+        // Nieuw in 2025
+        var ex2 = x(m.y2025.omzet);
+        var ey2 = y(m.y2025.margePercent);
         eindEl = el("circle", {
           class: "point",
-          cx: ex2, cy: ey2, r: radius,
-          fill: INK, "fill-opacity": 0.4,
-          stroke: AMBER_500, "stroke-width": 2,
+          cx: ex2, cy: ey2, r: R_EIND,
+          fill: kleur, "fill-opacity": 0.45,
+          stroke: AMBER, "stroke-width": 2.5,
           "stroke-opacity": 0.95,
         });
         groep.appendChild(eindEl);
         labelEl = el("text", {
-          x: ex2 + 8 + radius, y: ey2 + 4,
+          x: ex2 + R_EIND + 6, y: ey2 + 4,
           "text-anchor": "start",
           fill: INK,
           "font-size": 11,
@@ -371,21 +366,18 @@ window.PA = window.PA || {};
         }, m.machine + " (nieuw)");
         groep.appendChild(labelEl);
       } else if (has24 && !has25) {
-        // Alleen 2024 (komt nu niet voor in data, maar voor compleetheid)
-        var sx3 = x(m.y2024.margePercent);
-        var sy3 = y(m.y2024.engUitloop);
-        kleur = INK;
+        var sx3 = x(m.y2024.omzet);
+        var sy3 = y(m.y2024.margePercent);
         startEl = el("circle", {
           class: "point",
-          cx: sx3, cy: sy3, r: radius,
-          fill: "#FDF8F0",
-          stroke: INK, "stroke-width": 1.5,
+          cx: sx3, cy: sy3, r: R_START,
+          fill: CREAM, stroke: kleur, "stroke-width": 1.5,
           "stroke-dasharray": "3 2",
           "stroke-opacity": 0.7,
         });
         groep.appendChild(startEl);
         labelEl = el("text", {
-          x: sx3 + 8 + radius, y: sy3 + 4,
+          x: sx3 + R_START + 6, y: sy3 + 4,
           "text-anchor": "start",
           fill: INK,
           "font-size": 11,
@@ -402,22 +394,23 @@ window.PA = window.PA || {};
       };
     });
 
-    // Legenda rechtsboven
-    var legend = el("g", { transform: "translate(" + (iw - 8) + "," + 32 + ")" });
+    // Legenda rechtsboven — uitloop-buckets
+    var legend = el("g", { transform: "translate(" + (iw - 8) + "," + 28 + ")" });
     g.appendChild(legend);
     var legendItems = [
-      { label: "Marge omhoog", color: POSITIVE },
-      { label: "Stabiel of gemengd", color: SLATE },
-      { label: "Marge omlaag", color: NEGATIVE },
+      { label: "uitloop < 15%", color: POSITIVE },
+      { label: "uitloop 15-50%", color: AMBER_500 },
+      { label: "uitloop > 50%", color: NEGATIVE },
     ];
     legendItems.forEach(function (item, i) {
       var ly = i * 18;
-      legend.appendChild(el("line", {
-        x1: -42, y1: ly, x2: -22, y2: ly,
-        stroke: item.color, "stroke-width": 2,
+      legend.appendChild(el("circle", {
+        cx: -8, cy: ly, r: 5,
+        fill: item.color, "fill-opacity": 0.55,
+        stroke: item.color, "stroke-width": 1.5,
       }));
       legend.appendChild(el("text", {
-        x: -50, y: ly + 4,
+        x: -18, y: ly + 4,
         "text-anchor": "end",
         fill: INK,
         "font-size": 11,
@@ -441,9 +434,10 @@ window.PA = window.PA || {};
     table.innerHTML =
       "<thead><tr>" +
       "<th>Machine</th>" +
+      "<th class=\"num\">Omzet '24</th>" +
+      "<th class=\"num\">Omzet '25</th>" +
       "<th class=\"num\">Marge '24</th>" +
       "<th class=\"num\">Marge '25</th>" +
-      "<th class=\"num\">Uitloop '24</th>" +
       "<th class=\"num\">Uitloop '25</th>" +
       "</tr></thead>" +
       "<tbody></tbody>";
@@ -452,10 +446,22 @@ window.PA = window.PA || {};
     var tbody = table.querySelector("tbody");
     var F = window.PA.format;
 
-    function cellPct(v, isMarge) {
+    function cellEuro(v) {
       if (v == null) return "<td class=\"num muted\">—</td>";
-      var neg = isMarge ? v < 10 : v > 20;
+      return "<td class=\"num\">" + F.euro(v) + "</td>";
+    }
+    function cellMarge(v) {
+      if (v == null) return "<td class=\"num muted\">—</td>";
+      var neg = v < 10;
       return "<td class=\"num" + (neg ? " negative" : "") + "\">" + F.percent(v) + "</td>";
+    }
+    function cellUitloop(v) {
+      if (v == null) return "<td class=\"num muted\">—</td>";
+      var rood = v >= 50;
+      var amber = v >= 15 && v < 50;
+      var cls = rood ? " negative" : (amber ? "" : " muted");
+      var prefix = v >= 0 ? "+" : "";
+      return "<td class=\"num" + cls + "\">" + prefix + Math.round(v) + "%</td>";
     }
 
     sorted.forEach(function (m) {
@@ -464,10 +470,11 @@ window.PA = window.PA || {};
       tr.setAttribute("data-id", id);
       tr.innerHTML =
         "<td><strong>" + m.machine + "</strong></td>" +
-        cellPct(m.y2024 ? m.y2024.margePercent : null, true) +
-        cellPct(m.y2025 ? m.y2025.margePercent : null, true) +
-        cellPct(m.y2024 ? m.y2024.engUitloop : null, false) +
-        cellPct(m.y2025 ? m.y2025.engUitloop : null, false);
+        cellEuro(m.y2024 ? m.y2024.omzet : null) +
+        cellEuro(m.y2025 ? m.y2025.omzet : null) +
+        cellMarge(m.y2024 ? m.y2024.margePercent : null) +
+        cellMarge(m.y2025 ? m.y2025.margePercent : null) +
+        cellUitloop(m.y2025 ? m.y2025.engUitloop : null);
       tbody.appendChild(tr);
       rowsById[id] = tr;
     });
@@ -487,8 +494,8 @@ window.PA = window.PA || {};
           a.eind.setAttribute("fill", isActive ? AMBER : a.kleur);
           a.eind.setAttribute("stroke", isActive ? AMBER_500 : a.kleur);
           a.eind.setAttribute("stroke-width", isActive ? 2 : 1.5);
-          a.eind.setAttribute("fill-opacity", isFaded ? 0.12 : (isActive ? 0.7 : 0.5));
-          a.eind.setAttribute("stroke-opacity", isFaded ? 0.2 : 0.9);
+          a.eind.setAttribute("fill-opacity", isFaded ? 0.12 : (isActive ? 0.75 : 0.55));
+          a.eind.setAttribute("stroke-opacity", isFaded ? 0.2 : 0.95);
         }
         if (a.start) {
           a.start.setAttribute("stroke", isActive ? AMBER_500 : a.kleur);
@@ -496,8 +503,6 @@ window.PA = window.PA || {};
         }
         if (a.lijn) {
           a.lijn.setAttribute("stroke", isActive ? AMBER_500 : a.kleur);
-          a.lijn.setAttribute("marker-end",
-            isActive ? "url(#arrow-act)" : a.lijn.getAttribute("marker-end"));
           a.lijn.setAttribute("stroke-opacity", isFaded ? 0.15 : 0.85);
         }
         if (a.label) {
