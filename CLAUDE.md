@@ -19,11 +19,11 @@ Voor de doelgroep (BI-aanwezig, geavanceerdere analyse afwezig) is dit precies h
 | Nr | Pad | Vorm | Niveau | Vraag |
 |---|---|---|---|---|
 | 1 | `klanten.html` | kwadrant | klant | Welke klanten verdienen, en welke kosten je geld? (kleur = sub-sector) |
-| 2 | `producten.html` | kwadrant | productlijn | Welke productlijnen renderen, en welke kosten je structureel geld? (marge × engineering-uitloop) |
+| 2 | `producten.html` | arrow-kwadrant | productlijn | Welke productlijnen renderen, en welke bewegen de verkeerde kant op? (pijl 2024 → 2025 in marge × engineering-uitloop) |
 | 3 | `spreiding.html` | bubble-matrix | klant × productlijn | Hoe ligt de klant-machine-portefeuille? (gegroepeerd per sub-sector) |
 | 4 | `migratie.html` | arrow | klant | Welke klanten zijn anders dan vorig jaar? (2024 → 2025 met pijltjes) |
 
-Vier verschillende aggregatieniveaus, vier verschillende grammars binnen de scatter-familie. Plot 1 en 2 zijn beide kwadranten maar op verschillende niveaus (klant- versus productlijn-aggregaat).
+Vier verschillende aggregatieniveaus binnen de scatter-familie. Plot 1 is een klant-kwadrant met sub-sector kleur. Plot 2 is een productlijn-kwadrant met pijl 2024 → 2025 om richting zichtbaar te maken. Plot 3 is een bubble-matrix klant × productlijn met sub-sector groepering. Plot 4 is een klant-arrow tussen twee jaren in omzet × marge ruimte.
 
 ## Sub-sector groepering
 

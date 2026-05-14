@@ -19,8 +19,9 @@ Vier plots op vier aggregatieniveaus, in vier verschillende vormen:
 
 1. **Klanten** (kwadrant op klant-niveau): omzet × marge per klant,
    geaggregeerd over alle projecten, kleur per sub-sector.
-2. **Producten** (kwadrant op productlijn-niveau): marge × engineering-
-   uitloop per machinetype, bubble = totale omzet van het type.
+2. **Producten** (arrow-kwadrant op productlijn-niveau): pijl per
+   machinetype van 2024 naar 2025 in marge × engineering-uitloop ruimte,
+   kleur volgt richting, bubble = totale omzet.
 3. **Spreiding** (bubble-matrix klant × machinetype): klant-product-
    portefeuille met sub-sector groepering, één bubble per project.
 4. **Migratie** (arrow per klant): pijl tussen 2024 en 2025 in

@@ -32,13 +32,15 @@
 
   <section style="margin-bottom: 24px;">
     <div class="eyebrow">Plot 2 — Producten</div>
-    <h1 class="h1">Welke productlijnen renderen, en welke kosten je structureel geld?</h1>
+    <h1 class="h1">Welke productlijnen renderen, en welke bewegen de verkeerde kant op?</h1>
     <p class="body-p">
       Marge per project is voor de meeste maakbedrijven op orde, maar het
-      patroon over een hele productlijn ontstaat pas als je over meerdere
-      projecten heen aggregeert. Eén marge-arm Sleevemachine-project is een
-      incident. Drie marge-arme Sleevemachines op rij is een
-      productlijn-vraag.
+      patroon over een productlijn ontstaat pas als je over meerdere
+      projecten heen aggregeert. Eén marge-arm Sleevemachine-project is
+      een incident. Drie marge-arme Sleevemachines met een pijl naar
+      beneden over twee jaar is iets anders. Het verschil tussen "S22
+      staat linksboven" en "S22 beweegt verder naar linksboven" verandert
+      welke beslissing een MT neemt.
     </p>
   </section>
 
@@ -46,20 +48,22 @@
     <div class="card">
       <div id="plot"></div>
       <p class="plot-caption">
-        Eén punt per machinetype, geaggregeerd over alle projecten van
-        dat type in 2024 en 2025. Bubble-grootte = totale omzet van het
-        type. Stippellijnen zijn medianen over de 8 machinetypen, geen
-        wet, alleen een leeshulp. De rode tint linksboven markeert het
-        kwadrant waar je geen productlijn wilt hebben.
+        Eén pijl per machinetype, van de 2024-positie naar de 2025-positie
+        in marge × engineering-uitloop ruimte. Open marker = 2024, gevulde
+        marker = 2025. Bubble-grootte = totale omzet over beide jaren.
+        Kleur volgt de richting: groen als de productlijn gunstig beweegt,
+        rood als ongunstig, grijs als stabiel of gemengd. Verpakkingslijn
+        L100 is nieuw in 2025 en heeft geen pijl, alleen een marker met
+        amber-rand. Stippellijnen zijn medianen over de 2025-eindpunten.
       </p>
       <p class="plot-bridge">
         <strong>Met je eigen data:</strong> projectdata uit je
         projectadministratie (Exact, AFAS, Ridder, Isah, Plan-de-CAMpagne)
-        gegroepeerd op productlijn: machinetype, dienstcategorie, of de
-        groep waar je intern op stuurt. Voor elke productlijn worden
-        marge en uitloop omzet-gewogen geaggregeerd over alle projecten
-        van dat type. Het verschil tussen "dit project ging fout" en
-        "dit type gaat structureel fout" is hier het hele onderwerp.
+        gegroepeerd op productlijn (machinetype, dienstcategorie, of de
+        groep waar je intern op stuurt) en op jaar. Per jaar omzet-gewogen
+        marge en gewogen engineering-uitloop. De pijl tussen twee jaren
+        maakt richting zichtbaar, een vraag die marge-per-jaar-rapporten
+        impliciet laten.
       </p>
     </div>
     <div id="tabel"></div>
@@ -68,18 +72,18 @@
   <section class="card" style="max-width: 720px;">
     <div class="eyebrow">Hoe lees je deze plot</div>
     <ul class="uitleg-lijst">
-      <li><strong>Rechtsonder:</strong> hoge marge, lage engineering-uitloop. Productlijnen die je beheerst. Trayloader-achtige workhorses.</li>
-      <li><strong>Rechtsboven:</strong> gezonde marge maar engineering-uitloop. Verdient kalibratie van de offerte-uren, niet noodzakelijk een prijsdiscussie.</li>
-      <li><strong>Linksonder:</strong> lage marge maar engineering wel onder controle. De marge zit dan in materiaalprijs of prijsstelling, niet in uren-uitloop.</li>
-      <li><strong>Linksboven:</strong> lage marge én structurele engineering-uitloop. Hier ligt de vraag: doorgaan met agressievere prijsstelling, terugtreden uit de productlijn, of investeren in een betere calculatie voor dit type?</li>
+      <li><strong>Korte pijl rechtsonder:</strong> workhorse. Productlijn met goede marge en lage uitloop, en stabiel jaar op jaar. Trayloader T15 zit hier.</li>
+      <li><strong>Pijl naar rechtsonder:</strong> productlijn beweegt naar gezond-territorium. Marge omhoog, uitloop omlaag, of beide.</li>
+      <li><strong>Pijl naar linksboven:</strong> productlijn beweegt naar probleem-territorium. Marge omlaag, uitloop omhoog, of beide. Sleeve en Stretchwikkelaar zitten hier.</li>
+      <li><strong>Pijl met grijze tint:</strong> richting is gemengd. Marge verschoof maar uitloop ook in een richting die het effect dempt of versterkt. Vraagt om de tabel ernaast om te zien wat dominant is.</li>
+      <li><strong>Marker met amber-rand zonder pijl:</strong> productlijn nieuw in 2025. Verpakkingslijn L100 is daar het voorbeeld, te vroeg voor een richting maar wel relevant voor de positie waar het begint.</li>
     </ul>
     <p class="body-p" style="margin-top: 16px; font-size: 13px; color: var(--fg-2);">
       Op <a href="klanten.html">klant-niveau</a> verklaart deze plot het
       sub-sector-patroon: de Protein-klanten hangen op Sleeve en
-      Stretchwikkelaar, en dat zijn de twee productlijnen linksboven.
-      De klanten zijn rood omdat hun productlijn rood is. Dat is een
-      andere conversatie dan "hoe red ik dit project": het is "wat doe
-      ik met deze productlijn".
+      Stretchwikkelaar, en dat zijn de twee productlijnen die naar
+      linksboven bewegen. De klanten zijn rood omdat hun productlijn rood
+      is en rooder wordt.
     </p>
   </section>
 
@@ -90,23 +94,35 @@
       project-niveau. Project-niveau eindigt meestal in "we doen het
       anders volgende keer". Productlijn-niveau eindigt in een keuze:
       doorgaan onder bestaande voorwaarden, calculatie omhoog, prijs
-      omhoog, of stoppen.
+      omhoog, of stoppen. De pijl voegt daar nog een dimensie aan toe,
+      richting, en die maakt het verschil tussen "we monitoren" en "we
+      besluiten".
     </p>
     <p class="body-p" style="margin-top: 8px;">
       Concreet voor deze data: Sleevemachine S22 en Stretchwikkelaar W8
-      staan linksboven. Drie projecten Sleeve over twee jaar met dalende
-      marge, twee projecten Stretchwikkelaar met negatieve marge in 2025.
-      Aanbeveling die uit deze plot kan rollen is niet "Sleeve verbeteren"
+      staan linksboven én hun pijl wijst verder naar linksboven. Drie
+      projecten Sleeve met dalende marge en stijgende uitloop, twee
+      Stretchwikkelaar van laag-marge naar negatief. Aanbeveling die uit
+      deze plot kan rollen is niet "Sleeve volgende keer beter doen"
       maar "Sleeve voor 2026 alleen offreren onder een type-specifieke
-      uren-opslag van X procent, en Stretchwikkelaar pauzeren tot we de
-      engineering-onderschatting bij die productlijn doorhebben".
+      uren-opslag, en Stretchwikkelaar pauzeren tot we de engineering-
+      onderschatting bij die productlijn doorhebben". De keuze is
+      onderbouwd door twee jaren patroon, niet door één jaar uitkomst.
+    </p>
+    <p class="body-p" style="margin-top: 8px;">
+      Verpakkingslijn L100 is interessant op een andere manier: nieuw in
+      2025 maar al groot in omzet, met een gezonde 15% marge gewogen
+      over twee opdrachten. Dat is positief, maar bij één opdracht (Vink
+      Diepvries) was de marge slechts 7%. Aanbeveling: voor de derde en
+      vierde L100-offerte de calculatie scherper zetten dan bij Vink,
+      anders verschuift de gewogen marge in 2026 naar beneden en kantelt
+      deze productlijn dezelfde kant op.
     </p>
     <p class="body-p" style="margin-top: 8px; font-size: 13px; color: var(--fg-2);">
-      Rechtsboven en rechtsonder zijn de productlijnen waar je niets aan
-      hoeft te veranderen. Een MT-besluit op de slechte productlijnen
-      gaat ten koste van engineering-capaciteit voor de goede, dus de
-      vraag of de calculatie-aanpassing genoeg is hangt af van hoeveel
-      offerte-volume je verwacht op de slechte types in 2026.
+      Workhorses (Trayloader, Vulstation) hebben korte pijlen en blijven
+      in het gezonde gebied. Daar hoef je niets aan te veranderen, en
+      een MT-besluit op de slechte productlijnen mag niet ten koste gaan
+      van de engineering-capaciteit voor deze types.
     </p>
   </section>
 

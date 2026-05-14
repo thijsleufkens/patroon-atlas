@@ -1,6 +1,7 @@
-// Producten-scatterplot — vanilla JS, inline SVG.
-// Toont per machinetype: omzet-gewogen marge × omzet-gewogen engineering-
-// uitloop. Aggregeert over alle projecten van dat type (beide jaren).
+// Producten-pijl-plot — vanilla JS, inline SVG.
+// Per machinetype een pijl van 2024-positie naar 2025-positie in
+// marge × engineering-uitloop ruimte. Productlijnen die alleen in 2025
+// bestaan krijgen een losse marker.
 
 window.PA = window.PA || {};
 
@@ -50,41 +51,46 @@ window.PA = window.PA || {};
     return n;
   }
 
-  // Aggregeer per machinetype over alle jaren.
-  function aggregeerPerMachine(projecten) {
+  // Aggregeer per machinetype per jaar.
+  function aggregeerPerMachineJaar(projecten) {
     var bins = {};
     projecten.forEach(function (p) {
-      var key = p.machine;
-      if (!bins[key]) {
-        bins[key] = {
-          machine: p.machine,
-          omzet: 0, margeOmzet: 0,
-          engGeschat: 0, engWerkelijk: 0,
-          projecten: [], klanten: {},
+      if (!bins[p.machine]) {
+        bins[p.machine] = { machine: p.machine, totaalOmzet: 0, jaren: {} };
+      }
+      var b = bins[p.machine];
+      b.totaalOmzet += p.omzet;
+      if (!b.jaren[p.jaar]) {
+        b.jaren[p.jaar] = {
+          jaar: p.jaar, omzet: 0, margeOmzet: 0,
+          engGeschat: 0, engWerkelijk: 0, projecten: [],
         };
       }
-      bins[key].omzet += p.omzet;
-      bins[key].margeOmzet += p.omzet * p.margePercent;
-      bins[key].projecten.push(p.id);
-      bins[key].klanten[p.klant] = true;
+      var j = b.jaren[p.jaar];
+      j.omzet += p.omzet;
+      j.margeOmzet += p.omzet * p.margePercent;
+      j.projecten.push(p.id);
       var eng = (p.fases || []).filter(function (f) { return f.fase === "engineering"; })[0];
       if (eng) {
-        bins[key].engGeschat += eng.geschat;
-        bins[key].engWerkelijk += eng.werkelijk;
+        j.engGeschat += eng.geschat;
+        j.engWerkelijk += eng.werkelijk;
       }
     });
     var out = [];
     Object.keys(bins).forEach(function (k) {
       var b = bins[k];
+      Object.keys(b.jaren).forEach(function (jr) {
+        var j = b.jaren[jr];
+        j.margePercent = j.omzet > 0 ? j.margeOmzet / j.omzet : 0;
+        j.engUitloop = j.engGeschat > 0
+          ? ((j.engWerkelijk - j.engGeschat) / j.engGeschat) * 100
+          : 0;
+      });
       out.push({
         machine: b.machine,
-        omzet: b.omzet,
-        margePercent: b.omzet > 0 ? b.margeOmzet / b.omzet : 0,
-        engUitloop: b.engGeschat > 0
-          ? ((b.engWerkelijk - b.engGeschat) / b.engGeschat) * 100
-          : 0,
-        projectCount: b.projecten.length,
-        klantCount: Object.keys(b.klanten).length,
+        totaalOmzet: b.totaalOmzet,
+        y2024: b.jaren[2024] || null,
+        y2025: b.jaren[2025] || null,
       });
     });
     return out;
@@ -108,41 +114,71 @@ window.PA = window.PA || {};
     var POSITIVE = "#3F7D4E";
     var NEGATIVE = "#A2382B";
 
-    var machines = aggregeerPerMachine(projecten);
+    var machines = aggregeerPerMachineJaar(projecten);
     var idVan = function (m) { return "machine:" + m; };
 
-    var margeVals = machines.map(function (m) { return m.margePercent; });
-    var uitloopVals = machines.map(function (m) { return m.engUitloop; });
-    var omzetVals = machines.map(function (m) { return m.omzet; });
+    // Verzamel alle (marge, uitloop) waarden om de schalen te bepalen.
+    var alleMarge = [];
+    var alleUitloop = [];
+    machines.forEach(function (m) {
+      [m.y2024, m.y2025].forEach(function (j) {
+        if (j) {
+          alleMarge.push(j.margePercent);
+          alleUitloop.push(j.engUitloop);
+        }
+      });
+    });
 
     var xStep = 5;
     var yStep = 25;
-    var xMin = niceMin(Math.min.apply(null, margeVals) - 2, xStep);
-    var xMax = niceMax(Math.max.apply(null, margeVals) + 2, xStep);
+    var xMin = niceMin(Math.min.apply(null, alleMarge) - 2, xStep);
+    var xMax = niceMax(Math.max.apply(null, alleMarge) + 2, xStep);
     var yMin = 0;
-    var yMax = niceMax(Math.max.apply(null, uitloopVals) + 10, yStep);
+    var yMax = niceMax(Math.max.apply(null, alleUitloop) + 10, yStep);
 
     var x = scaleLinear([xMin, xMax], [0, iw]);
     var y = scaleLinear([yMin, yMax], [ih, 0]);
-    var r = scaleSqrt([0, Math.max.apply(null, omzetVals)], [8, 28]);
+    var r = scaleSqrt([0, Math.max.apply(null, machines.map(function (m) { return m.totaalOmzet; }))], [8, 24]);
 
-    var xMed = median(margeVals);
-    var yMed = median(uitloopVals);
+    // Medianen over de 2025-eindpunten (voor types die in 2025 bestaan).
+    // Geeft het beeld van waar de productlijnen nu staan.
+    var eindMarge = machines.filter(function (m) { return m.y2025; }).map(function (m) { return m.y2025.margePercent; });
+    var eindUitloop = machines.filter(function (m) { return m.y2025; }).map(function (m) { return m.y2025.engUitloop; });
+    var xMed = median(eindMarge);
+    var yMed = median(eindUitloop);
 
     container.innerHTML = "";
     var svg = el("svg", {
       class: "plot",
       viewBox: "0 0 " + W + " " + H,
       role: "img",
-      "aria-label": "Scatterplot: marge versus engineering-uitloop per machinetype",
+      "aria-label": "Pijl-plot: marge versus engineering-uitloop per machinetype, 2024 naar 2025",
     });
     container.appendChild(svg);
+
+    // Pijl-definitie in defs (één per kleur)
+    var defs = el("defs", {});
+    svg.appendChild(defs);
+    function arrowMarker(id, color) {
+      var marker = el("marker", {
+        id: id, viewBox: "0 0 10 10", refX: 8, refY: 5,
+        markerWidth: 7, markerHeight: 7, orient: "auto-start-reverse",
+      });
+      marker.appendChild(el("path", {
+        d: "M 0 0 L 10 5 L 0 10 z",
+        fill: color,
+      }));
+      defs.appendChild(marker);
+    }
+    arrowMarker("arrow-pos", POSITIVE);
+    arrowMarker("arrow-neg", NEGATIVE);
+    arrowMarker("arrow-neu", SLATE);
+    arrowMarker("arrow-act", AMBER_500);
 
     var g = el("g", { transform: "translate(" + margin.left + "," + margin.top + ")" });
     svg.appendChild(g);
 
-    // Kwadrant-tints — goed = rechtsonder (hoge marge, lage uitloop),
-    // probleem = linksboven (lage marge, hoge uitloop).
+    // Kwadrant-tints (op de 2025-medianen)
     g.appendChild(el("rect", {
       x: x(xMed), y: y(yMed),
       width: iw - x(xMed), height: ih - y(yMed),
@@ -199,7 +235,7 @@ window.PA = window.PA || {};
       "font-size": 12,
       "font-weight": 500,
       "font-family": "Roboto, sans-serif",
-    }, "Marge (omzet-gewogen)"));
+    }, "Marge (omzet-gewogen, per jaar)"));
 
     // Y-as (engineering-uitloop)
     g.appendChild(el("line", { x1: 0, y1: 0, x2: 0, y2: ih, stroke: INK_300 }));
@@ -226,32 +262,175 @@ window.PA = window.PA || {};
       "font-family": "Roboto, sans-serif",
     }, "Engineering-uitloop t.o.v. schatting"));
 
-    // Punten
-    var circlesById = {};
+    // Kleur bepalen voor pijl: groen als richting naar "rechtsonder" (beter),
+    // rood als naar "linksboven" (slechter), grijs als gemengd of klein.
+    function pijlKleur(start, eind) {
+      var dM = eind.margePercent - start.margePercent;
+      var dU = eind.engUitloop - start.engUitloop;
+      // Score: marge omhoog goed (+), uitloop omhoog slecht (-)
+      var score = dM - dU * 0.5;
+      if (score > 2) return POSITIVE;
+      if (score < -2) return NEGATIVE;
+      return SLATE;
+    }
+
+    // Pijlen + eindpunten per machinetype
+    var arrowsByMachine = {};
     machines.forEach(function (m) {
       var id = idVan(m.machine);
-      var isNeg = m.margePercent < xMed && m.engUitloop > yMed;
-      var fill = isNeg ? NEGATIVE : INK;
-      var c = el("circle", {
-        class: "point",
-        "data-id": id,
-        cx: x(m.margePercent),
-        cy: y(m.engUitloop),
-        r: r(m.omzet),
-        fill: fill,
-        "fill-opacity": 0.5,
-        stroke: fill,
-        "stroke-width": 1,
-        "stroke-opacity": 0.8,
-      });
-      g.appendChild(c);
-      circlesById[id] = { el: c, baseFill: fill };
+      var has24 = !!m.y2024;
+      var has25 = !!m.y2025;
+      var radius = r(m.totaalOmzet);
+
+      var groep = el("g", { class: "machine-group" });
+      g.appendChild(groep);
+
+      var startEl = null, eindEl = null, lijnEl = null, labelEl = null, kleur = SLATE;
+
+      if (has24 && has25) {
+        // Pijl tussen jaren
+        var sx = x(m.y2024.margePercent);
+        var sy = y(m.y2024.engUitloop);
+        var ex = x(m.y2025.margePercent);
+        var ey = y(m.y2025.engUitloop);
+        kleur = pijlKleur(m.y2024, m.y2025);
+        var markerId =
+          kleur === POSITIVE ? "arrow-pos" :
+          kleur === NEGATIVE ? "arrow-neg" : "arrow-neu";
+
+        // Lijn iets ingekort zodat pijlpunt netjes op de bubble landt
+        var dx = ex - sx, dy = ey - sy;
+        var lengte = Math.sqrt(dx * dx + dy * dy);
+        var ux = lengte > 0 ? dx / lengte : 0;
+        var uy = lengte > 0 ? dy / lengte : 0;
+        var trimEind = Math.min(radius + 2, lengte * 0.5);
+        var trimStart = Math.min(radius * 0.6 + 2, lengte * 0.5);
+
+        lijnEl = el("line", {
+          x1: sx + ux * trimStart, y1: sy + uy * trimStart,
+          x2: ex - ux * trimEind, y2: ey - uy * trimEind,
+          stroke: kleur, "stroke-width": 2,
+          "marker-end": "url(#" + markerId + ")",
+          "stroke-opacity": 0.85,
+        });
+        groep.appendChild(lijnEl);
+
+        // 2024 marker (open)
+        startEl = el("circle", {
+          class: "point",
+          cx: sx, cy: sy, r: radius * 0.7,
+          fill: "#FDF8F0", stroke: kleur, "stroke-width": 1.5,
+          "stroke-dasharray": "3 2",
+          "stroke-opacity": 0.7,
+        });
+        groep.appendChild(startEl);
+
+        // 2025 marker (gevuld)
+        eindEl = el("circle", {
+          class: "point",
+          cx: ex, cy: ey, r: radius,
+          fill: kleur, "fill-opacity": 0.5,
+          stroke: kleur, "stroke-width": 1.5,
+          "stroke-opacity": 0.9,
+        });
+        groep.appendChild(eindEl);
+
+        // Label: machinetype-naam bij het 2025-eindpunt
+        var labelOffset = 8 + radius;
+        labelEl = el("text", {
+          x: ex + labelOffset, y: ey + 4,
+          "text-anchor": "start",
+          fill: INK,
+          "font-size": 11,
+          "font-weight": 500,
+          "font-family": "Roboto, sans-serif",
+          "pointer-events": "none",
+        }, m.machine);
+        groep.appendChild(labelEl);
+      } else if (has25 && !has24) {
+        // Nieuw in 2025: alleen 2025-marker met amber-rand
+        var ex2 = x(m.y2025.margePercent);
+        var ey2 = y(m.y2025.engUitloop);
+        kleur = INK;
+        eindEl = el("circle", {
+          class: "point",
+          cx: ex2, cy: ey2, r: radius,
+          fill: INK, "fill-opacity": 0.4,
+          stroke: AMBER_500, "stroke-width": 2,
+          "stroke-opacity": 0.95,
+        });
+        groep.appendChild(eindEl);
+        labelEl = el("text", {
+          x: ex2 + 8 + radius, y: ey2 + 4,
+          "text-anchor": "start",
+          fill: INK,
+          "font-size": 11,
+          "font-weight": 500,
+          "font-family": "Roboto, sans-serif",
+          "pointer-events": "none",
+        }, m.machine + " (nieuw)");
+        groep.appendChild(labelEl);
+      } else if (has24 && !has25) {
+        // Alleen 2024 (komt nu niet voor in data, maar voor compleetheid)
+        var sx3 = x(m.y2024.margePercent);
+        var sy3 = y(m.y2024.engUitloop);
+        kleur = INK;
+        startEl = el("circle", {
+          class: "point",
+          cx: sx3, cy: sy3, r: radius,
+          fill: "#FDF8F0",
+          stroke: INK, "stroke-width": 1.5,
+          "stroke-dasharray": "3 2",
+          "stroke-opacity": 0.7,
+        });
+        groep.appendChild(startEl);
+        labelEl = el("text", {
+          x: sx3 + 8 + radius, y: sy3 + 4,
+          "text-anchor": "start",
+          fill: INK,
+          "font-size": 11,
+          "font-weight": 500,
+          "font-family": "Roboto, sans-serif",
+          "pointer-events": "none",
+        }, m.machine + " (gestopt)");
+        groep.appendChild(labelEl);
+      }
+
+      arrowsByMachine[id] = {
+        groep: groep, start: startEl, eind: eindEl, lijn: lijnEl,
+        label: labelEl, kleur: kleur,
+      };
+    });
+
+    // Legenda rechtsboven
+    var legend = el("g", { transform: "translate(" + (iw - 8) + "," + 32 + ")" });
+    g.appendChild(legend);
+    var legendItems = [
+      { label: "Marge omhoog", color: POSITIVE },
+      { label: "Stabiel of gemengd", color: SLATE },
+      { label: "Marge omlaag", color: NEGATIVE },
+    ];
+    legendItems.forEach(function (item, i) {
+      var ly = i * 18;
+      legend.appendChild(el("line", {
+        x1: -42, y1: ly, x2: -22, y2: ly,
+        stroke: item.color, "stroke-width": 2,
+      }));
+      legend.appendChild(el("text", {
+        x: -50, y: ly + 4,
+        "text-anchor": "end",
+        fill: INK,
+        "font-size": 11,
+        "font-family": "Roboto, sans-serif",
+      }, item.label));
     });
 
     // ----- Tabel -----
     var rowsById = {};
     var sorted = machines.slice().sort(function (a, b) {
-      return a.margePercent - b.margePercent;
+      var aM = a.y2025 ? a.y2025.margePercent : (a.y2024 ? a.y2024.margePercent : 0);
+      var bM = b.y2025 ? b.y2025.margePercent : (b.y2024 ? b.y2024.margePercent : 0);
+      return aM - bM;
     });
 
     tabel.innerHTML = "";
@@ -262,11 +441,10 @@ window.PA = window.PA || {};
     table.innerHTML =
       "<thead><tr>" +
       "<th>Machine</th>" +
-      "<th class=\"num\">Omzet</th>" +
-      "<th class=\"num\">Marge</th>" +
-      "<th class=\"num\">Eng-uitloop</th>" +
-      "<th class=\"num\">Proj.</th>" +
-      "<th class=\"num\">Kl.</th>" +
+      "<th class=\"num\">Marge '24</th>" +
+      "<th class=\"num\">Marge '25</th>" +
+      "<th class=\"num\">Uitloop '24</th>" +
+      "<th class=\"num\">Uitloop '25</th>" +
       "</tr></thead>" +
       "<tbody></tbody>";
     wrap.appendChild(table);
@@ -274,29 +452,22 @@ window.PA = window.PA || {};
     var tbody = table.querySelector("tbody");
     var F = window.PA.format;
 
-    function fmtOmzet(v) {
-      if (v >= 1000000) {
-        var m = v / 1000000;
-        var s = m % 1 === 0 ? m.toFixed(0) : m.toFixed(1).replace(".", ",");
-        return "€ " + s + "M";
-      }
-      return "€ " + Math.round(v / 1000) + "k";
+    function cellPct(v, isMarge) {
+      if (v == null) return "<td class=\"num muted\">—</td>";
+      var neg = isMarge ? v < 10 : v > 20;
+      return "<td class=\"num" + (neg ? " negative" : "") + "\">" + F.percent(v) + "</td>";
     }
 
     sorted.forEach(function (m) {
       var id = idVan(m.machine);
       var tr = document.createElement("tr");
       tr.setAttribute("data-id", id);
-      var isProbleem = m.margePercent < xMed && m.engUitloop > yMed;
       tr.innerHTML =
         "<td><strong>" + m.machine + "</strong></td>" +
-        "<td class=\"num\">" + fmtOmzet(m.omzet) + "</td>" +
-        "<td class=\"num" + (m.margePercent < 10 ? " negative" : "") + "\">" +
-        F.percent(m.margePercent) + "</td>" +
-        "<td class=\"num" + (isProbleem ? " negative" : "") + "\">+" +
-        Math.round(m.engUitloop) + "%</td>" +
-        "<td class=\"num muted\">" + m.projectCount + "</td>" +
-        "<td class=\"num muted\">" + m.klantCount + "</td>";
+        cellPct(m.y2024 ? m.y2024.margePercent : null, true) +
+        cellPct(m.y2025 ? m.y2025.margePercent : null, true) +
+        cellPct(m.y2024 ? m.y2024.engUitloop : null, false) +
+        cellPct(m.y2025 ? m.y2025.engUitloop : null, false);
       tbody.appendChild(tr);
       rowsById[id] = tr;
     });
@@ -304,20 +475,35 @@ window.PA = window.PA || {};
     // ----- Koppeling -----
     var hoveredId = null;
     var selectedId = null;
-
     function activeId() { return hoveredId || selectedId; }
 
     function applyState() {
       var active = activeId();
-      Object.keys(circlesById).forEach(function (id) {
-        var c = circlesById[id];
+      Object.keys(arrowsByMachine).forEach(function (id) {
+        var a = arrowsByMachine[id];
         var isActive = active === id;
         var isFaded = active != null && !isActive;
-        c.el.setAttribute("fill", isActive ? AMBER : c.baseFill);
-        c.el.setAttribute("stroke", isActive ? AMBER_500 : c.baseFill);
-        c.el.setAttribute("stroke-width", isActive ? 2 : 1);
-        c.el.setAttribute("fill-opacity", isFaded ? 0.12 : 0.5);
-        c.el.setAttribute("stroke-opacity", isFaded ? 0.2 : 0.8);
+        if (a.eind) {
+          a.eind.setAttribute("fill", isActive ? AMBER : a.kleur);
+          a.eind.setAttribute("stroke", isActive ? AMBER_500 : a.kleur);
+          a.eind.setAttribute("stroke-width", isActive ? 2 : 1.5);
+          a.eind.setAttribute("fill-opacity", isFaded ? 0.12 : (isActive ? 0.7 : 0.5));
+          a.eind.setAttribute("stroke-opacity", isFaded ? 0.2 : 0.9);
+        }
+        if (a.start) {
+          a.start.setAttribute("stroke", isActive ? AMBER_500 : a.kleur);
+          a.start.setAttribute("stroke-opacity", isFaded ? 0.2 : 0.7);
+        }
+        if (a.lijn) {
+          a.lijn.setAttribute("stroke", isActive ? AMBER_500 : a.kleur);
+          a.lijn.setAttribute("marker-end",
+            isActive ? "url(#arrow-act)" : a.lijn.getAttribute("marker-end"));
+          a.lijn.setAttribute("stroke-opacity", isFaded ? 0.15 : 0.85);
+        }
+        if (a.label) {
+          a.label.setAttribute("fill-opacity", isFaded ? 0.25 : 1);
+          a.label.setAttribute("font-weight", isActive ? 700 : 500);
+        }
       });
       Object.keys(rowsById).forEach(function (id) {
         var tr = rowsById[id];
@@ -337,13 +523,14 @@ window.PA = window.PA || {};
       applyState();
     }
 
-    Object.keys(circlesById).forEach(function (id) {
-      var c = circlesById[id].el;
-      c.addEventListener("mouseenter", function () { setHover(id); });
-      c.addEventListener("mouseleave", function () { setHover(null); });
-      c.addEventListener("click", function (e) {
-        e.stopPropagation();
-        setSelect(id);
+    Object.keys(arrowsByMachine).forEach(function (id) {
+      var a = arrowsByMachine[id];
+      [a.eind, a.start, a.lijn].forEach(function (e) {
+        if (!e) return;
+        e.style.cursor = "pointer";
+        e.addEventListener("mouseenter", function () { setHover(id); });
+        e.addEventListener("mouseleave", function () { setHover(null); });
+        e.addEventListener("click", function (ev) { ev.stopPropagation(); setSelect(id); });
       });
     });
     svg.addEventListener("click", function () {
