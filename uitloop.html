@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Uitloop — Patroon-atlas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="brand">Patroon-atlas</a>
+    <div class="meta">
+      <div class="label">Demo</div>
+      <div class="value">Korver Machinebouw</div>
+    </div>
+  </div>
+  <nav class="nav">
+    <a href="klanten.html">Klanten</a>
+    <a href="doorlooptijd.html">Doorlooptijd</a>
+    <a href="fases.html">Projectfases</a>
+    <a href="migratie.html">Migratie</a>
+    <a href="producten.html">Producten</a>
+    <a href="spreiding.html">Spreiding</a>
+    <a href="leercurve.html">Leercurve</a>
+    <a href="erosie.html">Erosie</a>
+    <a href="uitloop.html" class="active">Uitloop</a>
+  </nav>
+</header>
+
+<main class="main">
+
+  <section style="margin-bottom: 24px;">
+    <div class="eyebrow">Verkennen — Uitloop</div>
+    <h1 class="h1">Welke combinaties van productlijn en fase lopen structureel uit?</h1>
+    <p class="body-p">
+      Uren-uitloop per project staat in elk dashboard. Het patroon over
+      projecten heen, opgesplitst per fase &eacute;n per machinetype, staat
+      er bijna nooit. Een rij die over alle drie de fases donker kleurt is
+      een andere conclusie dan eentje die alleen op inbedrijfstelling
+      donker kleurt, en dat verschil bepaalt waar het gesprek begint.
+    </p>
+  </section>
+
+  <section class="plot-page split" style="margin-bottom: 24px;">
+    <div class="card">
+      <div id="plot"></div>
+      <p class="plot-caption">
+        Per machinetype een rij, per fase een cel. Kleur is de gewogen
+        uitloop als percentage van de geschatte uren (sommatie over alle
+        projecten van dat type in 2024 en 2025). Donker = forse uitloop,
+        licht = op of onder budget. Rijen aflopend gesorteerd op gemiddelde
+        uitloop over de drie fases.
+      </p>
+      <p class="plot-bridge">
+        <strong>Met je eigen data:</strong> uit je urenadministratie
+        (Exact, AFAS, Ridder, Isah, Plan-de-CAMpagne) groepeer je per
+        machinetype en per fase de geschatte en geboekte uren. Per cel een
+        gewogen gemiddelde uitloop. Het &eacute;n &eacute;n &eacute;n-patroon,
+        meerdere projecten van hetzelfde type die dezelfde fase
+        overschrijden, valt in een uren-rapport per project bijna nooit
+        op. Hier valt het meteen op.
+      </p>
+    </div>
+    <div id="tabel"></div>
+  </section>
+
+  <section class="card" style="max-width: 720px;">
+    <div class="eyebrow">Hoe lees je deze plot</div>
+    <ul class="uitleg-lijst">
+      <li><strong>Een rij die over alle fases donker kleurt:</strong> de hele productlijn is een calculatie- en uitvoeringsprobleem. Sleevemachine S22 en Stretchwikkelaar W8 zitten daar; engineering en inbedrijfstelling lopen meer dan honderd procent uit. Dat is geen pech, dat is een type dat structureel verkeerd in offerte staat of waar de kennis op de werkvloer onvoldoende is.</li>
+      <li><strong>Eén donkere cel naast lichte cellen:</strong> één fase wijkt structureel af terwijl de rest klopt. Dat is een gerichte calculatie- of uitvoering-vraag op die fase, niet op de productlijn als geheel.</li>
+      <li><strong>Een kolom die over veel rijen donker kleurt:</strong> die fase wordt over de hele linie onderschat. In deze data is inbedrijfstelling daar de duidelijkste kandidaat. Engineering is bij sommige types ook fors, bij andere niet, dus dat is een type-specifieke vraag.</li>
+      <li><strong>Een rij die overal licht kleurt:</strong> workhorse. Trayloader T15 en Etiketteermachine E12 zitten daar. Calculatie klopt, uitvoering volgt.</li>
+      <li><strong>Een (zeldzame) groene cel:</strong> meevaller, fase kwam onder budget af. Inpakrobot R5 in assemblage, omdat een project minder uren nodig had dan ingeschat. Geen patroon, wel een goede check op de calculatie van die fase.</li>
+    </ul>
+    <p class="body-p" style="margin-top: 16px; font-size: 13px; color: var(--fg-2);">
+      Op assemblage zit weinig spreiding tussen types: dat is de fase met
+      een ingeregelde productie. Op engineering en inbedrijfstelling zit
+      de variatie, omdat dat de fases zijn waar elke machine weer net iets
+      anders is. Dat is op zichzelf een patroon: de eerste en de laatste
+      fase zijn de fases waar je de calculatie strakker moet zetten, niet
+      de fase die er qua uren tussen ligt.
+    </p>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    Demo met fictieve data. Onderdeel van
+    <a href="https://github.com/thijsleufkens/datawijs-met-thijs">Datawijs met Thijs</a>.
+  </div>
+</footer>
+
+<script src="assets/data.js"></script>
+<script src="assets/format.js"></script>
+<script src="assets/uitloop-plot.js"></script>
+<script>
+  (function () {
+    window.PA.uitloopPlot({
+      container: document.getElementById("plot"),
+      tabel: document.getElementById("tabel"),
+      projecten: window.PA.projecten,
+    });
+  })();
+</script>
+
+</body>
+</html>
