@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plot 5: Producten — Patroon-atlas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="brand">Patroon-atlas</a>
+    <div class="meta">
+      <div class="label">Demo</div>
+      <div class="value">Korver Machinebouw, Helmond</div>
+    </div>
+  </div>
+  <nav class="nav">
+    <a href="klanten.html">Klanten</a>
+    <a href="producten.html" class="active">Producten</a>
+    <a href="spreiding.html">Spreiding</a>
+    <a href="migratie.html">Migratie</a>
+  </nav>
+</header>
+
+<main class="main">
+
+  <section style="margin-bottom: 24px;">
+    <div class="eyebrow">Plot 5 — Producten</div>
+    <h1 class="h1">Welke productlijnen renderen, en welke kosten je structureel geld?</h1>
+    <p class="body-p">
+      Marge per project is voor de meeste maakbedrijven op orde, maar het
+      patroon over een hele productlijn ontstaat pas als je over meerdere
+      projecten heen aggregeert. Eén marge-arm Sleevemachine-project is een
+      incident. Drie marge-arme Sleevemachines op rij is een
+      productlijn-vraag.
+    </p>
+  </section>
+
+  <section class="plot-page split" style="margin-bottom: 24px;">
+    <div class="card">
+      <div id="plot"></div>
+      <p class="plot-caption">
+        Eén punt per machinetype, geaggregeerd over alle projecten van dat
+        type in 2024 en 2025. Bubble-grootte = totale omzet van het type.
+        Stippellijnen zijn medianen over de 8 machinetypen — geen wet,
+        alleen een leeshulp. De rode tint linksboven markeert het kwadrant
+        waar je geen productlijn wilt hebben.
+      </p>
+      <p class="plot-bridge">
+        <strong>Met je eigen data:</strong> projectdata gegroepeerd op
+        productlijn — machinetype, dienstcategorie, of de groep waar je
+        intern op stuurt. Voor elke productlijn worden marge en uitloop
+        omzet-gewogen geaggregeerd over alle projecten van dat type. Het
+        verschil tussen &ldquo;dit project ging fout&rdquo; en &ldquo;dit
+        type gaat structureel fout&rdquo; is hier het hele onderwerp.
+      </p>
+    </div>
+    <div id="tabel"></div>
+  </section>
+
+  <section class="card" style="max-width: 720px;">
+    <div class="eyebrow">Hoe lees je deze plot</div>
+    <ul class="uitleg-lijst">
+      <li><strong>Rechtsonder</strong> — hoge marge, lage engineering-uitloop. Productlijnen die je beheerst. Trayloader-achtige workhorses.</li>
+      <li><strong>Rechtsboven</strong> — gezonde marge maar engineering-uitloop. Verdient kalibratie van de offerte-uren, niet noodzakelijk een prijsdiscussie.</li>
+      <li><strong>Linksonder</strong> — lage marge maar engineering wel onder controle. De marge zit dan in materiaalprijs of prijsstelling, niet in uren-uitloop.</li>
+      <li><strong>Linksboven</strong> — lage marge én structurele engineering-uitloop. Hier ligt de vraag: doorgaan met agressievere prijsstelling, terugtreden uit de productlijn, of investeren in een betere calculatie voor dit type?</li>
+    </ul>
+    <p class="body-p" style="margin-top: 16px; font-size: 13px; color: var(--fg-2);">
+      Plot 1 toonde dezelfde rode projecten op individueel niveau. Plot 5
+      toont dat die rode projecten geen losse incidenten zijn maar
+      clusters op machinetype. Dat opent een hele andere conversatie: niet
+      &ldquo;hoe red ik dit project?&rdquo; maar &ldquo;wat doe ik met deze
+      productlijn?&rdquo;.
+    </p>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    Demo met fictieve data. Onderdeel van
+    <a href="https://github.com/thijsleufkens/datawijs-met-thijs">Datawijs met Thijs</a>.
+  </div>
+</footer>
+
+<script src="assets/data.js"></script>
+<script src="assets/format.js"></script>
+<script src="assets/producten-plot.js"></script>
+<script>
+  (function () {
+    window.PA.productenPlot({
+      container: document.getElementById("plot"),
+      tabel: document.getElementById("tabel"),
+      projecten: window.PA.projecten,
+    });
+  })();
+</script>
+
+</body>
+</html>

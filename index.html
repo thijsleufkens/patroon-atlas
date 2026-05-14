@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Patroon-atlas — Datawijs met Thijs</title>
-<meta name="description" content="Vier plots die patronen over projecten heen tonen, en drie MT-charts die uit die patronen volgen. Voor maakbedrijven die hun operationele dashboards op orde hebben.">
+<meta name="description" content="Vier scatterplots over een fictieve machinebouwer in Helmond. Een demo voor maakbedrijven die hun operationele dashboards op orde hebben en de stap naar patronen over projecten heen willen verkennen.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
@@ -21,20 +21,11 @@
       <div class="value">Korver Machinebouw, Helmond</div>
     </div>
   </div>
-  <nav class="nav-multi">
-    <div class="nav-row">
-      <span class="nav-label">Verkennen</span>
-      <a href="uitloop.html">Uitloop</a>
-      <a href="erosie.html">Erosie</a>
-      <a href="spreiding.html">Spreiding</a>
-      <a href="migratie.html">Migratie</a>
-    </div>
-    <div class="nav-row">
-      <span class="nav-label">Presenteren</span>
-      <a href="mt-productlijn.html">Productlijn-besluit</a>
-      <a href="mt-kalibratie.html">Uren-kalibratie</a>
-      <a href="mt-klant.html">Klant-concentratie</a>
-    </div>
+  <nav class="nav">
+    <a href="klanten.html">Klanten</a>
+    <a href="producten.html">Producten</a>
+    <a href="spreiding.html">Spreiding</a>
+    <a href="migratie.html">Migratie</a>
   </nav>
 </header>
 
@@ -44,11 +35,12 @@
     <div class="eyebrow">Patroon-atlas</div>
     <h1 class="h1 lead">Wat een dashboard niet vertelt, en hoe je het wel ziet.</h1>
     <p class="lead-p">
-      Vier plots die patronen over projecten heen laten zien, en drie
-      MT-charts die uit die patronen volgen. Bedoeld voor maakbedrijven
-      met operationele dashboards op orde, die merken dat dezelfde
-      grafieken niet meer nieuwe inzichten opleveren maar het knaagt dat
-      er over projecten heen iets moet zitten.
+      Vier scatterplots over een fictieve machinebouwer in Helmond. Elke
+      plot stelt een vraag die in standaard operationele rapportage zelden
+      voorkomt. Bedoeld voor maakbedrijven met hun operationele dashboards
+      op orde, die merken dat dezelfde grafieken niet meer nieuwe inzichten
+      opleveren maar het knaagt dat er over projecten heen een patroon moet
+      zitten.
     </p>
   </section>
 
@@ -58,106 +50,57 @@
       Korver Machinebouw is een fictieve special-machinebouwer in Helmond,
       drie generaties, 85 medewerkers. Bouwt verpakkingsmachines voor de
       Nederlandse voedingsmiddelenindustrie: sauzen, vlees, zuivel,
-      conserven. De atlas gebruikt twee jaar aan verzonnen projectdata:
-      dertien klanten, acht productlijnen, vijfentwintig projecten.
+      conserven, bakery. De atlas gebruikt twee jaar aan verzonnen
+      projectdata: dertien klanten in vijf sub-sectoren, acht productlijnen,
+      zevenentwintig projecten.
     </p>
   </section>
 
   <section class="section">
-    <div class="eyebrow" style="margin-bottom: 12px;">Deel 1 — Verkennen</div>
-    <p class="body-p" style="max-width: 720px; margin-bottom: 20px;">
-      Vier plots, elk in een andere vorm, elk een vraag die in een standaard
-      dashboard niet staat. Bedoeld om patronen te ontdekken voor je een
-      aanbeveling formuleert.
-    </p>
     <div class="plot-grid">
 
-      <a href="uitloop.html" class="plot-card ready">
+      <a href="klanten.html" class="plot-card ready">
         <div class="plot-card-head">
-          <span class="eyebrow">Heatmap</span>
+          <span class="eyebrow">Plot 1</span>
         </div>
-        <h2 class="h2">Welke combinaties van productlijn en fase lopen structureel uit?</h2>
+        <h2 class="h2">Welke klanten verdienen, en welke kosten je geld?</h2>
         <p class="body-p" style="font-size: 14px;">
-          Per machinetype een rij, per fase een cel. Maakt zichtbaar of
-          uren-uitloop zit in offerte-calculatie of in uitvoering.
+          Omzet en marge per klant, geaggregeerd over alle projecten.
+          Kleur per sub-sector zodat segment-patronen zichtbaar worden.
         </p>
       </a>
 
-      <a href="erosie.html" class="plot-card ready">
+      <a href="producten.html" class="plot-card ready">
         <div class="plot-card-head">
-          <span class="eyebrow">Decompositie</span>
+          <span class="eyebrow">Plot 2</span>
         </div>
-        <h2 class="h2">Bij welke productlijnen lekt de marge, en zit dat in materiaal of in uren?</h2>
+        <h2 class="h2">Welke productlijnen renderen, en welke kosten je structureel geld?</h2>
         <p class="body-p" style="font-size: 14px;">
-          Per machinetype een balk over twee jaar samen, opgesplitst in
-          materiaal-variantie en uren-variantie.
+          Marge tegen engineering-uitloop per machinetype. Een marge-arm
+          project is een incident, drie van hetzelfde type is een
+          productlijn-vraag.
         </p>
       </a>
 
       <a href="spreiding.html" class="plot-card ready">
         <div class="plot-card-head">
-          <span class="eyebrow">Bubble-matrix</span>
+          <span class="eyebrow">Plot 3</span>
         </div>
-        <h2 class="h2">Hoe is de klant-machine-portefeuille opgebouwd, en waar zit afhankelijkheid?</h2>
+        <h2 class="h2">Hoe ligt de klant-machine-portefeuille?</h2>
         <p class="body-p" style="font-size: 14px;">
-          Klanten op de verticale as, machinetypen op de horizontale. Toont
-          concentratie en de lege cellen die je niet bedient.
+          Klant maal machinetype als bubble-matrix, met sub-sector
+          groepering. Concentratie en lege cellen in één blik.
         </p>
       </a>
 
       <a href="migratie.html" class="plot-card ready">
         <div class="plot-card-head">
-          <span class="eyebrow">Arrow-plot</span>
+          <span class="eyebrow">Plot 4</span>
         </div>
-        <h2 class="h2">Welke klanten zijn anders dan vorig jaar, en wat zegt de richting?</h2>
+        <h2 class="h2">Welke klanten zijn anders dan vorig jaar?</h2>
         <p class="body-p" style="font-size: 14px;">
           Pijl per klant tussen 2024 en 2025. Toont verschuiving in omzet
           en marge tegelijk, niet als twee aparte rapporten.
-        </p>
-      </a>
-
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="eyebrow" style="margin-bottom: 12px;">Deel 2 — Presenteren</div>
-    <p class="body-p" style="max-width: 720px; margin-bottom: 20px;">
-      Drie MT-charts die een aanbeveling onderbouwen, voortgekomen uit de
-      verkenning. Basis-vormen, één boodschap per chart, geschikt voor een
-      staf- of MT-overleg waar een besluit moet vallen.
-    </p>
-    <div class="plot-grid">
-
-      <a href="mt-productlijn.html" class="plot-card ready">
-        <div class="plot-card-head">
-          <span class="eyebrow">Bar chart</span>
-        </div>
-        <h2 class="h2">Twee productlijnen vragen om een besluit voor 2026.</h2>
-        <p class="body-p" style="font-size: 14px;">
-          Marge-bijdrage 2025 versus 2024 per productlijn. Toont waar de
-          marge-daling vandaan komt en welke twee een besluit verdienen.
-        </p>
-      </a>
-
-      <a href="mt-kalibratie.html" class="plot-card ready">
-        <div class="plot-card-head">
-          <span class="eyebrow">Bar chart</span>
-        </div>
-        <h2 class="h2">Vier productlijnen vragen om hogere engineering-calculatie.</h2>
-        <p class="body-p" style="font-size: 14px;">
-          Engineering-uitloop per machinetype met tolerantielijn op tien
-          procent. Geeft per type de calculatie-opslag die zou aansluiten.
-        </p>
-      </a>
-
-      <a href="mt-klant.html" class="plot-card ready">
-        <div class="plot-card-head">
-          <span class="eyebrow">Pareto</span>
-        </div>
-        <h2 class="h2">Top-drie levert 40% van de omzet. Wat als de mix verschuift?</h2>
-        <p class="body-p" style="font-size: 14px;">
-          Cumulatief aandeel in omzet per klant. Niet de top-3 verkleinen
-          maar de basis daaronder verbreden.
         </p>
       </a>
 
@@ -169,8 +112,8 @@
     <p class="body-p">
       Of dezelfde patronen ook in jouw projectadministratie zichtbaar zijn
       hangt af van wat je administratie vasthoudt: uren per fase, marge
-      per project, materiaalkosten per opdracht, klant-product-koppelingen
-      over meerdere jaren. Niet elke plot heeft alles nodig.
+      per project, klant-product-koppelingen over meerdere jaren. Niet
+      elke plot heeft alles nodig.
     </p>
     <p class="body-p">
       Wat in jouw data wel en niet aansluit, en welke patronen voor jou
