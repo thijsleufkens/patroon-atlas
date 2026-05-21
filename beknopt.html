@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beknopt — Patroon-atlas</title>
+<meta name="description" content="Beknopte versie van de patroon-atlas voor in een call. Vier scatterplots over een fictieve machinebouwer, met minimale tekst.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+  /* Beknopte versie — plot-only layout, tabel onzichtbaar */
+  .kort-frame {
+    max-width: 760px;
+  }
+  .kort-frame .lead-p strong {
+    color: var(--fg-1);
+    font-weight: 500;
+  }
+  .kort-sectie {
+    margin-bottom: 64px;
+  }
+  .kort-sectie:last-of-type {
+    margin-bottom: 56px;
+  }
+  .kort-sectie-kop {
+    max-width: 760px;
+    margin-bottom: 24px;
+  }
+  .kort-sectie-kop h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--fg-1);
+    margin: 0 0 6px;
+    letter-spacing: -0.005em;
+  }
+  .kort-sectie-kop p {
+    color: var(--fg-2);
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  .kort-plot {
+    margin-bottom: 32px;
+  }
+  .kort-plot:last-child {
+    margin-bottom: 0;
+  }
+  .kort-plot .card {
+    padding: 24px;
+  }
+  .kort-plot-kop {
+    margin-bottom: 12px;
+  }
+  .kort-plot-kop h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--fg-1);
+    margin: 0;
+    line-height: 1.3;
+    letter-spacing: -0.005em;
+  }
+  .kort-take {
+    font-size: 14px;
+    color: var(--fg-1);
+    margin: 16px 0 0;
+    padding-top: 14px;
+    border-top: 1px solid var(--border-subtle);
+    line-height: 1.55;
+  }
+  .kort-take strong {
+    font-weight: 500;
+    color: var(--dmt-amber-500);
+  }
+  .kort-hidden {
+    display: none;
+  }
+  .kort-cta {
+    max-width: 760px;
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="brand">Patroon-atlas</a>
+    <div class="meta">
+      <div class="label">Beknopt</div>
+      <div class="value">Korver Machinebouw, Helmond</div>
+    </div>
+  </div>
+  <nav class="nav">
+    <a href="index.html">Volledige atlas</a>
+    <a href="beknopt.html" class="active">Beknopt</a>
+  </nav>
+</header>
+
+<main class="main">
+
+  <section class="section kort-frame">
+    <div class="eyebrow">Voor in een call</div>
+    <h1 class="h1 lead">Een dashboard toont waar je staat. Een patroon toont waar je naartoe beweegt.</h1>
+    <p class="lead-p">
+      Operationele dashboards beantwoorden vragen die je al hebt: omzet
+      deze maand, voorraad nu, doorlooptijd vorige week. Patronen
+      beantwoorden de vraag die daarachter ligt: <strong>waar kom je
+      vandaan, en waar ga je naartoe?</strong> Vier scatterplots over
+      een fictieve machinebouwer.
+    </p>
+  </section>
+
+  <section class="kort-sectie">
+    <div class="kort-sectie-kop">
+      <div class="eyebrow">Twee dimensies tegelijk</div>
+      <h2>Wat een omzetrapport niet laat zien.</h2>
+      <p>Omzet × marge, klant × productlijn. Cross-dimensionaal worden groepen zichtbaar die in een tabel per regel verloren gaan.</p>
+    </div>
+
+    <div class="kort-plot">
+      <div class="card">
+        <div class="kort-plot-kop">
+          <div class="eyebrow">Plot 1 — Klanten</div>
+          <h3>Welke klanten verdienen, en welke kosten je geld?</h3>
+        </div>
+        <div id="plot-klanten"></div>
+        <div id="tabel-klanten" class="kort-hidden"></div>
+        <p class="kort-take">
+          <strong>Het patroon:</strong> één klant onder de marge-mediaan
+          is een klant-gesprek. Een hele sub-sector eronder, zoals beide
+          Protein-klanten hier, is iets anders.
+        </p>
+      </div>
+    </div>
+
+    <div class="kort-plot">
+      <div class="card">
+        <div class="kort-plot-kop">
+          <div class="eyebrow">Plot 3 — Spreiding</div>
+          <h3>Welke productlijnen hangen aan één klant, en welke klanten kopen meer dan één machine?</h3>
+        </div>
+        <div id="plot-spreiding"></div>
+        <div id="tabel-spreiding" class="kort-hidden"></div>
+        <p class="kort-take">
+          <strong>Het patroon:</strong> concentratie-risico in één blik.
+          Productlijnen die aan één klant hangen, sub-sectoren die op
+          dezelfde paar machinetypen leunen, en de lege cellen die
+          vertellen waar je niet zit.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="kort-sectie">
+    <div class="kort-sectie-kop">
+      <div class="eyebrow">Twee jaren tegelijk</div>
+      <h2>Niet een status, een richting.</h2>
+      <p>2024 en 2025 in dezelfde plot, met een pijl ertussen. Het verschil tussen "we staan hier" en "we bewegen hierheen" verandert welke beslissing een MT neemt.</p>
+    </div>
+
+    <div class="kort-plot">
+      <div class="card">
+        <div class="kort-plot-kop">
+          <div class="eyebrow">Plot 2 — Producten</div>
+          <h3>Welke productlijnen renderen, en welke bewegen de verkeerde kant op?</h3>
+        </div>
+        <div id="plot-producten"></div>
+        <div id="tabel-producten" class="kort-hidden"></div>
+        <p class="kort-take">
+          <strong>Het patroon:</strong> één marge-arm Sleeve-project is
+          een incident. Drie Sleeve-projecten met een pijl naar
+          linksonder over twee jaar is een productlijn-vraag, geen
+          project-vraag.
+        </p>
+      </div>
+    </div>
+
+    <div class="kort-plot">
+      <div class="card">
+        <div class="kort-plot-kop">
+          <div class="eyebrow">Plot 4 — Migratie</div>
+          <h3>Welke klanten zijn anders dan vorig jaar?</h3>
+        </div>
+        <div id="plot-migratie"></div>
+        <div id="tabel-migratie" class="kort-hidden"></div>
+        <p class="kort-take">
+          <strong>Het patroon:</strong> niet wie groot is, niet wie
+          groeit. Wie schuift, en welke kant op. Groei zonder
+          marge-verlies is een ander gesprek dan groei met marge-verlies.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section kort-cta">
+    <div class="eyebrow">Hoe verder</div>
+    <p class="body-p">
+      Wat ik kan blootleggen zijn dit soort patronen in jouw eigen
+      projectadministratie. Wat in jouw data wel en niet aansluit is
+      een eerlijk gesprek waard. Daar is een
+      <a href="https://datawijs.nl/#gratis-intake">gratis intake bij Datawijs met Thijs</a>
+      voor. Wil je eerst de uitgebreide versie zien, met leeswijzers en
+      MT-aanbevelingen per plot: dat is de
+      <a href="index.html">volledige atlas</a>.
+    </p>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    Demo met fictieve data. Onderdeel van
+    <a href="https://github.com/thijsleufkens/datawijs-met-thijs">Datawijs met Thijs</a>.
+  </div>
+</footer>
+
+<script src="assets/data.js"></script>
+<script src="assets/format.js"></script>
+<script src="assets/klanten-plot.js"></script>
+<script src="assets/producten-plot.js"></script>
+<script src="assets/spreiding-plot.js"></script>
+<script src="assets/migratie-plot.js"></script>
+<script>
+  (function () {
+    window.PA.klantenPlot({
+      container: document.getElementById("plot-klanten"),
+      tabel: document.getElementById("tabel-klanten"),
+      projecten: window.PA.projecten,
+    });
+    window.PA.spreidingPlot({
+      container: document.getElementById("plot-spreiding"),
+      tabel: document.getElementById("tabel-spreiding"),
+      projecten: window.PA.projecten,
+    });
+    window.PA.productenPlot({
+      container: document.getElementById("plot-producten"),
+      tabel: document.getElementById("tabel-producten"),
+      projecten: window.PA.projecten,
+    });
+    window.PA.migratiePlot({
+      container: document.getElementById("plot-migratie"),
+      tabel: document.getElementById("tabel-migratie"),
+      projecten: window.PA.projecten,
+    });
+  })();
+</script>
+
+</body>
+</html>
