@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Beknopt — Patroon-atlas</title>
-<meta name="description" content="Beknopte versie van de patroon-atlas voor in een call. Vier scatterplots over een fictieve machinebouwer, met minimale tekst.">
+<title>At a glance — Pattern Atlas</title>
+<meta name="description" content="Condensed version of the pattern atlas for use in a call. Four scatterplots about a fictional machine builder, with minimal text.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/tokens.css">
-<link rel="stylesheet" href="assets/styles.css">
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/styles.css">
 <style>
-  /* Beknopte versie — plot-only layout, tabel onzichtbaar */
+  /* Condensed version — plot-only layout, table hidden */
   .kort-frame {
     max-width: 760px;
   }
@@ -86,19 +86,19 @@
 
 <header class="header">
   <div class="header-inner">
-    <a href="index.html" class="brand">Patroon-atlas</a>
+    <a href="index.html" class="brand">Pattern Atlas</a>
     <div class="meta">
-      <div class="label">Beknopt</div>
+      <div class="label">At a glance</div>
       <div class="value">Korver Machinebouw, Helmond</div>
     </div>
   </div>
   <nav class="nav">
-    <a href="index.html">Volledige atlas</a>
-    <a href="beknopt.html" class="active">Beknopt</a>
+    <a href="index.html">Full atlas</a>
+    <a href="beknopt.html" class="active">At a glance</a>
     <div class="lang-switch">
-      <span class="active">NL</span>
+      <a href="../beknopt.html">NL</a>
       <span class="sep">|</span>
-      <a href="en/beknopt.html">EN</a>
+      <span class="active">EN</span>
     </div>
   </nav>
 </header>
@@ -106,36 +106,36 @@
 <main class="main">
 
   <section class="section kort-frame">
-    <div class="eyebrow">Voor in een call</div>
-    <h1 class="h1 lead">Een dashboard toont waar je staat. Een patroon toont waar je naartoe beweegt.</h1>
+    <div class="eyebrow">For use in a call</div>
+    <h1 class="h1 lead">A dashboard shows where you stand. A pattern shows where you are heading.</h1>
     <p class="lead-p">
-      Operationele dashboards beantwoorden vragen die je al hebt: omzet
-      deze maand, voorraad nu, doorlooptijd vorige week. Patronen
-      beantwoorden de vraag die daarachter ligt: <strong>waar kom je
-      vandaan, en waar ga je naartoe?</strong> Vier scatterplots over
-      een fictieve machinebouwer.
+      Operational dashboards answer questions you already have: revenue
+      this month, inventory now, lead time last week. Patterns answer the
+      question behind those: <strong>where are you coming from, and where
+      are you heading?</strong> Four scatterplots about a fictional machine
+      builder.
     </p>
   </section>
 
   <section class="kort-sectie">
     <div class="kort-sectie-kop">
-      <div class="eyebrow">Twee dimensies tegelijk</div>
-      <h2>Wat een omzetrapport niet laat zien.</h2>
-      <p>Omzet × marge, klant × productlijn. Cross-dimensionaal worden groepen zichtbaar die in een tabel per regel verloren gaan.</p>
+      <div class="eyebrow">Two dimensions at once</div>
+      <h2>What a revenue report doesn't show.</h2>
+      <p>Revenue × margin, customer × product line. Cross-dimensionally, groups become visible that get lost line by line in a table.</p>
     </div>
 
     <div class="kort-plot">
       <div class="card">
         <div class="kort-plot-kop">
-          <div class="eyebrow">Plot 1 — Klanten</div>
-          <h3>Welke klanten verdienen, en welke kosten je geld?</h3>
+          <div class="eyebrow">Plot 1 — Customers</div>
+          <h3>Which customers earn, and which cost you money?</h3>
         </div>
         <div id="plot-klanten"></div>
         <div id="tabel-klanten" class="kort-hidden"></div>
         <p class="kort-take">
-          <strong>Het patroon:</strong> één klant onder de marge-mediaan
-          is een klant-gesprek. Een hele sub-sector eronder, zoals beide
-          Protein-klanten hier, is iets anders.
+          <strong>The pattern:</strong> one customer below the margin
+          median is a customer conversation. A whole sub-sector below it,
+          like both Protein customers here, is something else.
         </p>
       </div>
     </div>
@@ -143,16 +143,16 @@
     <div class="kort-plot">
       <div class="card">
         <div class="kort-plot-kop">
-          <div class="eyebrow">Plot 3 — Spreiding</div>
-          <h3>Welke productlijnen hangen aan één klant, en welke klanten kopen meer dan één machine?</h3>
+          <div class="eyebrow">Plot 3 — Spread</div>
+          <h3>Which product lines hang on a single customer, and which customers buy more than one machine?</h3>
         </div>
         <div id="plot-spreiding"></div>
         <div id="tabel-spreiding" class="kort-hidden"></div>
         <p class="kort-take">
-          <strong>Het patroon:</strong> concentratie-risico in één blik.
-          Productlijnen die aan één klant hangen, sub-sectoren die op
-          dezelfde paar machinetypen leunen, en de lege cellen die
-          vertellen waar je niet zit.
+          <strong>The pattern:</strong> concentration risk at a glance.
+          Product lines that hang on one customer, sub-sectors that lean on
+          the same few machine types, and the empty cells that tell you
+          where you are not.
         </p>
       </div>
     </div>
@@ -160,24 +160,24 @@
 
   <section class="kort-sectie">
     <div class="kort-sectie-kop">
-      <div class="eyebrow">Twee jaren tegelijk</div>
-      <h2>Niet een status, een richting.</h2>
-      <p>2024 en 2025 in dezelfde plot, met een pijl ertussen. Het verschil tussen "we staan hier" en "we bewegen hierheen" verandert welke beslissing een MT neemt.</p>
+      <div class="eyebrow">Two years at once</div>
+      <h2>Not a status, a direction.</h2>
+      <p>2024 and 2025 in the same plot, with an arrow between them. The difference between "we are here" and "we are moving here" changes which decision a leadership team makes.</p>
     </div>
 
     <div class="kort-plot">
       <div class="card">
         <div class="kort-plot-kop">
-          <div class="eyebrow">Plot 2 — Producten</div>
-          <h3>Welke productlijnen renderen, en welke bewegen de verkeerde kant op?</h3>
+          <div class="eyebrow">Plot 2 — Product lines</div>
+          <h3>Which product lines pay off, and which are moving the wrong way?</h3>
         </div>
         <div id="plot-producten"></div>
         <div id="tabel-producten" class="kort-hidden"></div>
         <p class="kort-take">
-          <strong>Het patroon:</strong> één marge-arm Sleeve-project is
-          een incident. Drie Sleeve-projecten met een pijl naar
-          linksonder over twee jaar is een productlijn-vraag, geen
-          project-vraag.
+          <strong>The pattern:</strong> one thin-margin Sleeve project is
+          an incident. Three Sleeve projects with an arrow toward the
+          bottom left over two years is a product-line question, not a
+          project question.
         </p>
       </div>
     </div>
@@ -185,30 +185,30 @@
     <div class="kort-plot">
       <div class="card">
         <div class="kort-plot-kop">
-          <div class="eyebrow">Plot 4 — Migratie</div>
-          <h3>Welke klanten zijn anders dan vorig jaar?</h3>
+          <div class="eyebrow">Plot 4 — Migration</div>
+          <h3>Which customers are different from last year?</h3>
         </div>
         <div id="plot-migratie"></div>
         <div id="tabel-migratie" class="kort-hidden"></div>
         <p class="kort-take">
-          <strong>Het patroon:</strong> niet wie groot is, niet wie
-          groeit. Wie schuift, en welke kant op. Groei zonder
-          marge-verlies is een ander gesprek dan groei met marge-verlies.
+          <strong>The pattern:</strong> not who is big, not who grows. Who
+          shifts, and which way. Growth without margin loss is a different
+          conversation than growth with margin loss.
         </p>
       </div>
     </div>
   </section>
 
   <section class="section kort-cta">
-    <div class="eyebrow">Hoe verder</div>
+    <div class="eyebrow">What's next</div>
     <p class="body-p">
-      Wat ik kan blootleggen zijn dit soort patronen in jouw eigen
-      projectadministratie. Wat in jouw data wel en niet aansluit is
-      een eerlijk gesprek waard. Daar is een
-      <a href="https://datawijs.nl/#gratis-intake">gratis intake bij Datawijs met Thijs</a>
-      voor. Wil je eerst de uitgebreide versie zien, met leeswijzers en
-      MT-aanbevelingen per plot: dat is de
-      <a href="index.html">volledige atlas</a>.
+      What I can surface is this kind of pattern in your own project
+      records. What does and does not line up in your data is worth an
+      honest conversation. There is a
+      <a href="https://datawijs.nl/#gratis-intake">free intake at Datawijs met Thijs</a>
+      for that. If you would like to see the extended version first, with
+      reading guides and leadership recommendations per plot: that is the
+      <a href="index.html">full atlas</a>.
     </p>
   </section>
 
@@ -216,7 +216,7 @@
 
 <footer class="footer">
   <div class="footer-inner">
-    Demo met fictieve data. Onderdeel van
+    Demo with fictional data. Part of
     <a href="https://github.com/thijsleufkens/datawijs-met-thijs">Datawijs met Thijs</a>.
   </div>
 </footer>
