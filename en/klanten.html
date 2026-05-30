@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Customers — Pattern Atlas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="brand">Pattern Atlas</a>
+    <div class="meta">
+      <div class="label">Demo</div>
+      <div class="value">Korver Machinebouw, Helmond</div>
+    </div>
+  </div>
+  <nav class="nav">
+    <a href="klanten.html" class="active">Customers</a>
+    <a href="producten.html">Product lines</a>
+    <a href="spreiding.html">Spread</a>
+    <a href="migratie.html">Migration</a>
+    <div class="lang-switch">
+      <a href="../klanten.html">NL</a>
+      <span class="sep">|</span>
+      <span class="active">EN</span>
+    </div>
+  </nav>
+</header>
+
+<main class="main">
+
+  <section style="margin-bottom: 24px;">
+    <div class="eyebrow">Plot 1 — Customers</div>
+    <h1 class="h1">Which customers earn, and which cost you money?</h1>
+    <p class="body-p">
+      A revenue report per customer shows who is big. A margin report per
+      customer shows who is profitable. By bringing both into view at once,
+      and coloring by sub-sector, it becomes visible that margin pressure
+      often does not belong to one customer but to a whole group of
+      customers in the same food category.
+    </p>
+  </section>
+
+  <section class="plot-page split" style="margin-bottom: 24px;">
+    <div class="card">
+      <div id="plot"></div>
+      <p class="plot-caption">
+        One point is one customer, aggregated across all projects in 2024
+        and 2025. Color follows sub-sector (five categories in the food
+        industry). Bubble size = number of projects. Dashed lines are the
+        median across customers as a reading aid, not a rule.
+      </p>
+      <p class="plot-bridge">
+        <strong>With your own data:</strong> customers from your CRM linked
+        to projects from your project records (Exact, AFAS, Ridder, Isah,
+        Plan-de-CAMpagne). Aggregated revenue and revenue-weighted margin
+        per customer. Sub-sector as an attribute on the customer record, or
+        as a grouping on industry code. Customers become a handful of
+        points, sub-sector a color, and the quadrant makes it immediately
+        clear which segments sit structurally below the median.
+      </p>
+    </div>
+    <div id="tabel"></div>
+  </section>
+
+  <section class="card" style="max-width: 720px;">
+    <div class="eyebrow">How to read this</div>
+    <ul class="uitleg-lijst">
+      <li><strong>Top right:</strong> large customers with good margin. Understanding why this works is worth more than optimizing it. Brouwer Sauzen and Akkermans Suikerwerk sit here.</li>
+      <li><strong>Bottom right:</strong> large customers with thin margin. This is where the risk sits that leadership structurally underestimates, because the revenue masks the margin pressure. Vink Diepvries (Dairy) is here now.</li>
+      <li><strong>Top left:</strong> small customers with good margin. Often skipped, sometimes unfairly. Klaver Kruiden (Specialty) is the clearest example here.</li>
+      <li><strong>Bottom left:</strong> small and thin on margin. Candidate for "why are we still doing this?". Verlinden Vis sits here.</li>
+      <li><strong>Readable by color:</strong> both Protein customers (De Vegter, Verlinden) sit below the margin median. That is a sub-sector pattern, not an individual customer question.</li>
+    </ul>
+    <p class="body-p" style="margin-top: 16px; font-size: 13px; color: var(--fg-2);">
+      A customer as a point is an aggregate across projects. The profit and
+      loss at one customer can cancel each other out, and then the customer
+      ends up in an average spot while under the hood there are four
+      projects with four different stories. The table beside it shows how
+      many projects a customer has.
+    </p>
+  </section>
+
+  <section class="card" style="max-width: 720px;">
+    <div class="eyebrow">How to bring this to leadership</div>
+    <p class="body-p">
+      A leadership conversation about customer profitability is usually one
+      customer at a time. What this plot adds is that sub-sector can be a
+      pattern. Both Protein customers sit below the median, and that is no
+      coincidence if the Sleeve machine and Stretch wrapper are both
+      troubled product lines (which Protein customers buy). The real
+      conversation is then not about De Vegter or Verlinden separately, but
+      about whether Korver should keep running the Protein-segment machines
+      in their current setup.
+    </p>
+    <p class="body-p" style="margin-top: 8px; font-size: 13px; color: var(--fg-2);">
+      Vink Diepvries (Dairy) deserves attention in this conversation
+      because it is a top-3 customer that slid into low-margin territory in
+      2025. Whether or not to take customer action is the same sub-question
+      as in <a href="migratie.html">Migration</a>: what is the path back to
+      the higher margin Vink still had in 2024.
+    </p>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    Demo with fictional data. Part of
+    <a href="https://github.com/thijsleufkens/datawijs-met-thijs">Datawijs met Thijs</a>.
+  </div>
+</footer>
+
+<script src="assets/data.js"></script>
+<script src="assets/format.js"></script>
+<script src="assets/klanten-plot.js"></script>
+<script>
+  (function () {
+    window.PA.klantenPlot({
+      container: document.getElementById("plot"),
+      tabel: document.getElementById("tabel"),
+      projecten: window.PA.projecten,
+    });
+  })();
+</script>
+
+</body>
+</html>

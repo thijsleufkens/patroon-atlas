@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spread — Pattern Atlas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="brand">Pattern Atlas</a>
+    <div class="meta">
+      <div class="label">Demo</div>
+      <div class="value">Korver Machinebouw, Helmond</div>
+    </div>
+  </div>
+  <nav class="nav">
+    <a href="klanten.html">Customers</a>
+    <a href="producten.html">Product lines</a>
+    <a href="spreiding.html" class="active">Spread</a>
+    <a href="migratie.html">Migration</a>
+    <div class="lang-switch">
+      <a href="../spreiding.html">NL</a>
+      <span class="sep">|</span>
+      <span class="active">EN</span>
+    </div>
+  </nav>
+</header>
+
+<main class="main">
+
+  <section style="margin-bottom: 24px;">
+    <div class="eyebrow">Plot 3 — Spread</div>
+    <h1 class="h1">Which product lines hang on a single customer, and which customers buy more than one machine?</h1>
+    <p class="body-p">
+      A customer-revenue table tells you what a customer does. A
+      product-revenue table tells you what a product line does. The
+      question &ldquo;how dependent are we on a customer-product-line
+      combination?&rdquo; falls between the two tables. Here it comes
+      together at a glance.
+    </p>
+  </section>
+
+  <section class="plot-page split" style="margin-bottom: 24px;">
+    <div class="card">
+      <div id="plot"></div>
+      <p class="plot-caption">
+        One bubble per project. Customers vertically, grouped by sub-sector
+        (Bakery, Specialty, Protein, Dairy, Sauces), and within a
+        sub-sector by revenue descending. Machine types horizontally, also
+        by revenue descending. Bubble size = revenue of the project. Open
+        circle = 2024, filled circle = 2025. Color = margin band: red
+        &lt; 10%, ink 10–20%, green ≥ 20%. Empty cells are
+        customer-machine combinations that do not occur.
+      </p>
+      <p class="plot-bridge">
+        <strong>With your own data:</strong> the customer-product links you
+        already have in your records anyway (Exact, AFAS, Ridder, Isah,
+        Plan-de-CAMpagne). Every combination becomes a bubble. The
+        concentration risk, product lines tied to one customer or customers
+        leaning on one product line, jumps out at a glance. The empty cells
+        tell you where you are not, sometimes deliberately, sometimes a
+        missed opportunity.
+      </p>
+    </div>
+    <div id="tabel"></div>
+  </section>
+
+  <section class="card" style="max-width: 720px;">
+    <div class="eyebrow">How to read this</div>
+    <ul class="uitleg-lijst">
+      <li><strong>One column with one bubble:</strong> product line hung on a single customer. Concentration risk, especially if that one bubble is small or red. Stretch wrapper W8 at Verlinden is the sharpest example: one product line, one customer, red in both years.</li>
+      <li><strong>Vertical stack in the same cell:</strong> open and filled on top of each other means a repeat order. Same customer, same machine, two years. Says something about the depth of the relationship.</li>
+      <li><strong>One row with multiple bubbles:</strong> customer buys more than one machine type. Often a sign of a deeper relationship, or that the customer takes the whole line from you.</li>
+      <li><strong>One column with many bubbles:</strong> workhorse product line that you sell to many customers. Tray loader T15 spreads across four customers and is therefore less dependent on any single relationship.</li>
+    </ul>
+    <p class="body-p" style="margin-top: 16px; font-size: 13px; color: var(--fg-2);">
+      The cross table is deliberately thin, 22 bubbles across 112 cells.
+      That emptiness is exactly the information: it shows where you are not,
+      not just where you are. Strong leadership topic: which empty cells are
+      a missed opportunity and which are deliberate positioning?
+    </p>
+  </section>
+
+  <section class="card" style="max-width: 720px;">
+    <div class="eyebrow">How to bring this to leadership</div>
+    <p class="body-p">
+      A portfolio conversation calls for two things: a picture of where you
+      hang and a picture of where you are moving. This matrix does the
+      first. The direct question for leadership: which customers depend on
+      one product line, and which product lines hang on one customer?
+      Verlinden Vis on Stretch wrapper is the sharpest example, two years in
+      a row red and only there.
+    </p>
+    <p class="body-p" style="margin-top: 8px;">
+      The sub-sector grouping makes a second layer visible: all five Bakery
+      customers lean on Tray loader, Packing robot, or Labeling. That is a
+      coherent segment that can be served with a few product lines. Dairy
+      hangs on Packaging line (large but thin). Protein sits entirely on
+      Sleeve and Stretch wrapper, the same two types under the heaviest
+      margin pressure, a pattern that gets lost line by line in a customer
+      report.
+    </p>
+    <p class="body-p" style="margin-top: 8px; font-size: 13px; color: var(--fg-2);">
+      Recommendation that can roll out of this plot: not "broaden to more
+      customers" as a general course, but a targeted look at which
+      sub-sectors are underserved (herbs, canned goods) and whether there
+      are customers outside the current top who would fit an empty cell with
+      good margin.
+    </p>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    Demo with fictional data. Part of
+    <a href="https://github.com/thijsleufkens/datawijs-met-thijs">Datawijs met Thijs</a>.
+  </div>
+</footer>
+
+<script src="assets/data.js"></script>
+<script src="assets/format.js"></script>
+<script src="assets/spreiding-plot.js"></script>
+<script>
+  (function () {
+    window.PA.spreidingPlot({
+      container: document.getElementById("plot"),
+      tabel: document.getElementById("tabel"),
+      projecten: window.PA.projecten,
+    });
+  })();
+</script>
+
+</body>
+</html>

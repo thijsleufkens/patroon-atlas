@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Migration — Pattern Atlas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="brand">Pattern Atlas</a>
+    <div class="meta">
+      <div class="label">Demo</div>
+      <div class="value">Korver Machinebouw, Helmond</div>
+    </div>
+  </div>
+  <nav class="nav">
+    <a href="klanten.html">Customers</a>
+    <a href="producten.html">Product lines</a>
+    <a href="spreiding.html">Spread</a>
+    <a href="migratie.html" class="active">Migration</a>
+    <div class="lang-switch">
+      <a href="../migratie.html">NL</a>
+      <span class="sep">|</span>
+      <span class="active">EN</span>
+    </div>
+  </nav>
+</header>
+
+<main class="main">
+
+  <section style="margin-bottom: 24px;">
+    <div class="eyebrow">Plot 4 — Migration</div>
+    <h1 class="h1">Which customers are different from last year?</h1>
+    <p class="body-p">
+      The same customers in 2024 and 2025, in the same scatterplot. One
+      small arrow per customer between the two years. Customers who carry
+      the arrow horizontally or vertically are stable; the diagonal arrows
+      tell the story that is normally hidden behind an annual figure.
+    </p>
+  </section>
+
+  <section class="plot-page split" style="margin-bottom: 24px;">
+    <div class="card">
+      <div id="plot"></div>
+      <p class="plot-caption">
+        Each arrow is one customer. Open circle = 2024, filled circle =
+        2025. Color follows the direction of the margin change: green up,
+        red down, gray if the margin barely moves. Loose open circles
+        (dotted) are customers who did not return in 2025; filled circles
+        with an amber border are new customers in 2025. Revenue and margin
+        are aggregated at customer level (revenue-weighted margin where
+        there are multiple projects).
+      </p>
+      <p class="plot-bridge">
+        <strong>With your own data:</strong> project data over two or more
+        years from your project records (Exact, AFAS, Ridder, Isah,
+        Plan-de-CAMpagne), grouped by customer number. Every customer who
+        appears in both years becomes an arrow, every new or dropped
+        customer a loose marker. The leadership conversation "who is
+        different from last year?" becomes a picture instead of two annual
+        summaries with absolute differences.
+      </p>
+    </div>
+    <div id="tabel"></div>
+  </section>
+
+  <section class="card" style="max-width: 720px;">
+    <div class="eyebrow">How to read this</div>
+    <ul class="uitleg-lijst">
+      <li><strong>Short arrow:</strong> stable customer. Same revenue, same margin, same spot in the quadrant. No story to tell, and that in itself is an outcome.</li>
+      <li><strong>Horizontal to the right:</strong> customer grows in revenue without losing margin. Often a repeat order or follow-up machine, worth a conversation about why this works.</li>
+      <li><strong>Diagonal downward:</strong> revenue rises, margin drops. Usually a larger project where the pricing does not scale with the complexity. You do not see this in an annual report where revenue comes first.</li>
+      <li><strong>Straight down:</strong> comparable order but thinner. This is usually where the real question sits: is this a one-off or structural?</li>
+    </ul>
+    <p class="body-p" style="margin-top: 16px; font-size: 13px; color: var(--fg-2);">
+      Quadrant migration over two years is hard to replicate in standard
+      dashboards. That is exactly what makes it useful here: the plot shows
+      in one picture what is otherwise scattered across a year-over-year
+      table, a margin report, and a customer-revenue overview.
+    </p>
+  </section>
+
+  <section class="card" style="max-width: 720px;">
+    <div class="eyebrow">How to bring this to leadership</div>
+    <p class="body-p">
+      A year-over-year report usually speaks in volume (revenue grows or
+      shrinks) or margin (the average goes up or down). What this plot adds
+      is the direction per customer: growth without margin loss is a
+      different conversation than growth with margin loss.
+    </p>
+    <p class="body-p" style="margin-top: 8px;">
+      Vink Diepvries is the pattern that stands out most here: large in
+      revenue but arrow steeply down in margin, with a shift to Packaging
+      line as the cause. The recommendation that can roll out of this is not
+      "bring customer Vink back to the old margin level" (often unachievable
+      with a product-line shift) but "what is an acceptable margin level on
+      Packaging line and can we calibrate the quote to it".
+    </p>
+    <p class="body-p" style="margin-top: 8px; font-size: 13px; color: var(--fg-2);">
+      The still arrows (short arrow, little movement) are usually not the
+      trigger for a leadership conversation. But together they are the
+      signal that the stable base is still there, which tempers how much
+      panic the diagonal arrows deserve.
+    </p>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    Demo with fictional data. Part of
+    <a href="https://github.com/thijsleufkens/datawijs-met-thijs">Datawijs met Thijs</a>.
+  </div>
+</footer>
+
+<script src="assets/data.js"></script>
+<script src="assets/format.js"></script>
+<script src="assets/migratie-plot.js"></script>
+<script>
+  (function () {
+    window.PA.migratiePlot({
+      container: document.getElementById("plot"),
+      tabel: document.getElementById("tabel"),
+      projecten: window.PA.projecten,
+    });
+  })();
+</script>
+
+</body>
+</html>
