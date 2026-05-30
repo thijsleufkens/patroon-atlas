@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Product lines — Pattern Atlas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="brand">Pattern Atlas</a>
+    <div class="meta">
+      <div class="label">Demo</div>
+      <div class="value">Korver Machinebouw, Helmond</div>
+    </div>
+  </div>
+  <nav class="nav">
+    <a href="klanten.html">Customers</a>
+    <a href="producten.html" class="active">Product lines</a>
+    <a href="spreiding.html">Spread</a>
+    <a href="migratie.html">Migration</a>
+    <div class="lang-switch">
+      <a href="../producten.html">NL</a>
+      <span class="sep">|</span>
+      <span class="active">EN</span>
+    </div>
+  </nav>
+</header>
+
+<main class="main">
+
+  <section style="margin-bottom: 24px;">
+    <div class="eyebrow">Plot 2 — Product lines</div>
+    <h1 class="h1">Which product lines pay off, and which are moving the wrong way?</h1>
+    <p class="body-p">
+      Margin per project is in order for most manufacturers, but the
+      pattern across a product line only emerges once you aggregate across
+      multiple projects. One thin-margin Sleeve machine project is an
+      incident. Three thin-margin Sleeve machines with an arrow pointing
+      down over two years is something else. The difference between "S22
+      sits top left" and "S22 is moving further top left" changes which
+      decision a leadership team makes.
+    </p>
+  </section>
+
+  <section class="plot-page split" style="margin-bottom: 24px;">
+    <div class="card">
+      <div id="plot"></div>
+      <p class="plot-caption">
+        One arrow per machine type, from the 2024 position to the 2025
+        position in revenue × margin space. Open marker = 2024, filled
+        marker = 2025. Color of bubble and arrow follows the engineering
+        overrun in 2025: green under 15%, amber between 15 and 50%, red
+        above 50%. Packaging line L100 is new in 2025 and has no arrow,
+        just a marker with an amber border. Dashed lines are medians across
+        the 2025 endpoints.
+      </p>
+      <p class="plot-bridge">
+        <strong>With your own data:</strong> project data from your project
+        records (Exact, AFAS, Ridder, Isah, Plan-de-CAMpagne) grouped by
+        product line (machine type, service category, or whatever group you
+        steer on internally) and by year. Revenue-weighted margin and
+        weighted engineering overrun per year. The arrow between two years
+        shows where each product line is heading; the color warns on the
+        engineering side. Both sit implicitly in margin-per-year reports.
+      </p>
+    </div>
+    <div id="tabel"></div>
+  </section>
+
+  <section class="card" style="max-width: 720px;">
+    <div class="eyebrow">How to read this</div>
+    <ul class="uitleg-lijst">
+      <li><strong>Arrow toward top right:</strong> product line grows in revenue and gains on margin. Labeling machine E12 does that: revenue nearly doubled, margin stable.</li>
+      <li><strong>Arrow toward bottom left:</strong> shrinking and margin drop. Sleeve machine S22 is the sharpest example here, on top of a red color because the engineering overrun sits well above half.</li>
+      <li><strong>Short arrow top right or bottom right:</strong> workhorse. Tray loader T15 stable top right, green because overrun is minimal.</li>
+      <li><strong>Red bubble bottom left with a short arrow:</strong> small, thin-margin product line with extreme engineering overrun. Stretch wrapper W8 falls through zero toward negative on this side. Even without a big arrow, that is the leadership topic.</li>
+      <li><strong>Marker with an amber border and no arrow:</strong> product line new in 2025. Packaging line L100 sits large and with a healthy margin, but the amber border says there is no comparison point yet and the bubble color (amber) says the engineering overrun is already elevated.</li>
+    </ul>
+    <p class="body-p" style="margin-top: 16px; font-size: 13px; color: var(--fg-2);">
+      At <a href="klanten.html">customer level</a> this plot explains the
+      sub-sector pattern: the Protein customers hang on Sleeve and Stretch
+      wrapper, and those are the two product lines that turn red and move
+      the wrong way on margin. The customers are red because their product
+      line is red and getting redder.
+    </p>
+  </section>
+
+  <section class="card" style="max-width: 720px;">
+    <div class="eyebrow">How to bring this to leadership</div>
+    <p class="body-p">
+      A margin question at product-line level is a different question than
+      at project level. Project level usually ends in "we will do it
+      differently next time". Product-line level ends in a choice: keep
+      going under existing terms, raise the estimate, raise the price, or
+      stop. The arrow adds one more dimension, direction, and that is the
+      difference between "we monitor" and "we decide".
+    </p>
+    <p class="body-p" style="margin-top: 8px;">
+      Concretely for this data: Sleeve machine S22 and Stretch wrapper W8
+      both sit bottom left, both red from extreme engineering overrun. The
+      Sleeve arrow points bottom left: smaller in revenue, lower in margin
+      than in 2024. Stretch wrapper has a short arrow but falls through zero
+      toward negative on the margin axis. The recommendation that can roll
+      out of this plot is not "do Sleeve better next time" but "only quote
+      Sleeve for 2026 with a type-specific hours surcharge, and pause
+      Stretch wrapper until we understand the engineering underestimation on
+      that product line". The choice is grounded in two years of pattern,
+      not one year's outcome.
+    </p>
+    <p class="body-p" style="margin-top: 8px;">
+      Packaging line L100 is interesting in another way: new in 2025 but
+      already large in revenue, with a healthy 15% margin weighted across
+      two orders. That is positive, but on one order (Vink Diepvries) the
+      margin was only 7%. Recommendation: set the estimate tighter for the
+      third and fourth L100 quote than at Vink, otherwise the weighted
+      margin shifts down in 2026 and this product line tips the same way.
+    </p>
+    <p class="body-p" style="margin-top: 8px; font-size: 13px; color: var(--fg-2);">
+      Tray loader T15 and Filling station M60 sit top right with short
+      arrows, both green from low overrun. There is nothing to change
+      there, and a leadership decision on the bad product lines should not
+      come at the expense of engineering capacity for these workhorses.
+      Filling station M40 does have a big arrow to the left (Bremer
+      Frisdrank bought in 2024 but not in 2025), but the margin went up:
+      that is a mix effect, not a product-line question.
+    </p>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    Demo with fictional data. Part of
+    <a href="https://github.com/thijsleufkens/datawijs-met-thijs">Datawijs met Thijs</a>.
+  </div>
+</footer>
+
+<script src="assets/data.js"></script>
+<script src="assets/format.js"></script>
+<script src="assets/producten-plot.js"></script>
+<script>
+  (function () {
+    window.PA.productenPlot({
+      container: document.getElementById("plot"),
+      tabel: document.getElementById("tabel"),
+      projecten: window.PA.projecten,
+    });
+  })();
+</script>
+
+</body>
+</html>
